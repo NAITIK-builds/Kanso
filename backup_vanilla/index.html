@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KANSO LIVING — Curated Indian Architectural Stays & Sanctuaries</title>
+  <meta name="description" content="Discover mindful living spaces, coastal stone villas, and mountain sanctuaries across India. Thoughtfully designed homes for the discerning traveler.">
+
+  <!-- Google Fonts: Fraunces (Editorial Display) & Plus Jakarta Sans (Modern Geometric UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=20261020_v7">
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-ribbon">
+    <div class="ribbon-content">
+      <span class="ribbon-tag">VOL. 01 / 2026 ARCHIVE</span>
+      <span class="ribbon-text">Mindful living spaces across India — Verified architectural sanctuaries</span>
+      <span class="ribbon-coords">28°36'N · 77°12'E</span>
+    </div>
+  </div>
+
+  <!-- Header Navigation -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-emblem" id="brandLogo">
+        <span class="brand-monogram">K</span>
+        <div class="brand-text">
+          <span class="brand-name">KANSO</span>
+          <span class="brand-sub">LIVING · आवास</span>
+        </div>
+      </a>
+
+      <!-- Quick Search Bar (Editorial Pill) -->
+      <div class="nav-search" id="quickSearchTrigger">
+        <span class="search-indicator"></span>
+        <span class="search-prompt">Search by sanctuary, state, or architect...</span>
+        <kbd class="search-shortcut">⌘K</kbd>
+      </div>
+
+      <!-- Action Items -->
+      <div class="header-actions">
+        <!-- Wishlist Counter -->
+        <button class="nav-icon-btn" id="wishlistNavBtn" title="Saved Sanctuaries">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <span class="badge-count" id="wishlistCount">0</span>
+        </button>
+
+        <!-- View My Bookings -->
+        <button class="nav-pill-btn" id="myBookingsBtn">
+          <span>My Reservations</span>
+          <span class="badge-count" id="reservationsCount">0</span>
+        </button>
+
+        <!-- Host Switcher Button -->
+        <button class="host-cta-btn" id="hostPortalBtn">
+          <span class="btn-dot"></span>
+          <span id="hostBtnText">List Sanctuary</span>
+        </button>
+
+        <!-- Unauthenticated Guest Auth Actions (Shown when NO user is logged in) -->
+        <div class="nav-auth-cluster" id="navAuthCluster">
+          <button type="button" class="nav-btn-signin" id="navSignInBtn">
+            Sign In
+          </button>
+          <button type="button" class="nav-btn-register" id="navRegisterBtn">
+            Create Account
+          </button>
+        </div>
+
+        <!-- Authenticated User Profile & Dropdown (Shown ONLY when a user is logged in) -->
+        <div class="user-menu-wrap hidden" id="userMenuWrap">
+          <button class="user-avatar-btn" id="userMenuBtn" aria-label="User Account" title="Your Account & Suite">
+            <span class="avatar-initials" id="userInitials">KL</span>
+            <span class="status-indicator" id="userStatusDot"></span>
+          </button>
+
+          <!-- Dropdown Popover -->
+          <div class="user-dropdown-popover hidden" id="userDropdownMenu">
+            <div class="dropdown-header">
+              <strong id="dropdownUserName">Guest Traveler</strong>
+              <span class="dropdown-badge" id="dropdownUserRole">Seeking Stays</span>
+            </div>
+            <div class="dropdown-items">
+              <button class="dropdown-item" id="menuMyReservations">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                My Reservations
+              </button>
+              <button class="dropdown-item" id="menuWishlist">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                Saved Sanctuaries
+              </button>
+              <button class="dropdown-item" id="menuHostPortal">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Host Custodian Suite
+              </button>
+              <div class="dropdown-divider"></div>
+              <button class="dropdown-item text-earth" id="menuSwitchAccount">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                Switch Account
+              </button>
+              <button class="dropdown-item text-muted" id="menuSignOut">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                Sign Out
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main id="mainApp">
+
+    <!-- Non-Traditional Split Hero Section -->
+    <section class="hero-split container">
+      <!-- Left Editorial Column -->
+      <div class="hero-left">
+        <div class="hero-curation-stamp">
+          <span class="stamp-border"></span>
+          <span>CURATED COLLECTION // 2026</span>
+        </div>
+        <h1 class="hero-headline">
+          The art of <em>mindful shelter</em> across India.
+        </h1>
+        <p class="hero-manifesto">
+          Private sanctuaries rooted in silence, local stone, and timeless craft. From Portuguese villas in Goa to cedarwood retreats in the high Himalayas.
+        </p>
+
+        <!-- Interactive Search & Filter Capsule -->
+        <div class="hero-search-capsule">
+          <div class="search-cell">
+            <label for="heroLocation">DESTINATION</label>
+            <select id="heroLocation" aria-label="Select Destination">
+              <option value="all">All Indian Regions</option>
+              <option value="Goa">Goa (Konkan Coast)</option>
+              <option value="Himachal Pradesh">Himachal (Manali & Parvati)</option>
+              <option value="Rajasthan">Rajasthan (Udaipur & Jaipur)</option>
+              <option value="Karnataka">Karnataka (Coorg & Kabini)</option>
+              <option value="Kerala">Kerala (Munnar & Backwaters)</option>
+              <option value="Puducherry">Puducherry (French Quarter)</option>
+              <option value="Uttarakhand">Uttarakhand (Rishikesh)</option>
+            </select>
+          </div>
+
+          <div class="search-cell">
+            <label for="heroCheckIn">CHECK-IN</label>
+            <input type="date" id="heroCheckIn" aria-label="Check-in date">
+          </div>
+
+          <div class="search-cell">
+            <label for="heroCheckOut">CHECK-OUT</label>
+            <input type="date" id="heroCheckOut" aria-label="Check-out date">
+          </div>
+
+          <div class="search-cell">
+            <label for="heroGuests">GUESTS</label>
+            <select id="heroGuests" aria-label="Number of Guests">
+              <option value="1">1 Guest</option>
+              <option value="2" selected>2 Guests</option>
+              <option value="4">4 Guests</option>
+              <option value="6">6+ Guests (Entire Villa)</option>
+            </select>
+          </div>
+
+          <button class="hero-submit-btn" id="heroSearchBtn" aria-label="Search Sanctuaries">
+            <span>Discover</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Regional Quick Coordinates -->
+        <div class="hero-micro-pills">
+          <span class="micro-label">Quick Jump:</span>
+          <button class="micro-pill active" data-region="all">All</button>
+          <button class="micro-pill" data-region="Goa">Goa</button>
+          <button class="micro-pill" data-region="Himachal Pradesh">Manali</button>
+          <button class="micro-pill" data-region="Rajasthan">Udaipur</button>
+          <button class="micro-pill" data-region="Karnataka">Coorg</button>
+          <button class="micro-pill" data-region="Kerala">Kerala</button>
+        </div>
+      </div>
+
+      <!-- Right Architectural Exhibition Showcase Frame (Upgraded with Carousel & Tags) -->
+      <div class="hero-right">
+        <div class="exhibit-frame" id="heroShowcaseCard">
+          <div class="exhibit-header-ctrls">
+            <span class="exhibit-stamp" id="heroShowcaseStamp">SANCTUARY № 01</span>
+            <div class="exhibit-nav-arrows">
+              <button class="exhibit-arrow-btn" id="heroPrevShowcase" aria-label="Previous sanctuary">←</button>
+              <span class="exhibit-counter" id="heroShowcaseCounter">1 / 8</span>
+              <button class="exhibit-arrow-btn" id="heroNextShowcase" aria-label="Next sanctuary">→</button>
+            </div>
+          </div>
+          <div class="exhibit-image-wrap">
+            <img id="heroShowcaseImg" src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80" alt="Villa Terra, Goa" loading="lazy">
+            <div class="exhibit-overlay"></div>
+          </div>
+          <div class="exhibit-meta">
+            <div class="exhibit-info">
+              <span class="exhibit-loc" id="heroShowcaseLoc">MORJIM, GOA · KONKAN COAST</span>
+              <h3 class="exhibit-title" id="heroShowcaseTitle">Villa Terra Cotta</h3>
+              <p class="exhibit-desc" id="heroShowcaseDesc">Hand-poured red laterite stone, private courtyard with ancient frangipani tree, and salt-water plunge pool.</p>
+              <div class="exhibit-tags-row" id="heroShowcaseTags">
+                <span class="amenity-tag">Laterite Stone</span>
+                <span class="amenity-tag">Plunge Pool</span>
+                <span class="amenity-tag">Teak Beams</span>
+              </div>
+            </div>
+            <div class="exhibit-price-cta">
+              <div class="exhibit-price">
+                <span class="price-val" id="heroShowcasePrice">₹18,500</span>
+                <span class="price-unit">/ night (+ 12% GST)</span>
+              </div>
+              <button class="btn-architectural" id="heroReserveBtn">View Space</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Exhibition Controls Bar -->
+    <section class="filter-strip-section">
+      <div class="container filter-strip-inner">
+        <!-- Property Type Tabs -->
+        <div class="type-scroll-track" id="typeFilters">
+          <button class="type-tab active" data-type="all">
+            <span class="tab-dot"></span> All Sanctuaries
+          </button>
+          <button class="type-tab" data-type="Villa">
+            <span>Stone & Coastal Villas</span>
+          </button>
+          <button class="type-tab" data-type="Chalet">
+            <span>Mountain & Cedar Chalets</span>
+          </button>
+          <button class="type-tab" data-type="Haveli">
+            <span>Heritage Havelis</span>
+          </button>
+          <button class="type-tab" data-type="Bungalow">
+            <span>Plantation Bungalows</span>
+          </button>
+          <button class="type-tab" data-type="Loft">
+            <span>Atelier & Urban Lofts</span>
+          </button>
+        </div>
+
+        <!-- Secondary Filters & Sort Controls -->
+        <div class="filter-actions">
+          <div class="price-display-pill">
+            <label for="priceMaxRange">Max: <strong id="priceLabel">₹45,000</strong></label>
+            <input type="range" id="priceMaxRange" min="4000" max="60000" step="1000" value="60000">
+          </div>
+
+          <button class="filter-drawer-btn" id="openFiltersBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            <span>Amenities (<span id="amenitiesFilterCount">0</span>)</span>
+          </button>
+
+          <select class="sort-select" id="sortSelect" aria-label="Sort listings">
+            <option value="curated">Curated Order</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Highest Rated</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architectural Gallery Grid -->
+    <section class="gallery-section container">
+      <div class="gallery-header">
+        <div class="section-title-wrap">
+          <span class="catalogue-badge">INDEX // SPACES</span>
+          <h2 class="section-title">Verified Sanctuaries</h2>
+        </div>
+        <div class="results-stats">
+          <span id="resultsCount">Showing 8 spaces</span> · Prices in Indian Rupees (₹)
+        </div>
+      </div>
+
+      <!-- Grid of Architectural Cards -->
+      <div class="sanctuary-grid" id="sanctuaryGrid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state hidden" id="emptyState">
+        <div class="empty-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M4 21V10a8 8 0 0 1 16 0v11"/>
+            <path d="M9 21v-6a3 3 0 0 1 6 0v6"/>
+          </svg>
+        </div>
+        <h3>No Sanctuaries Found</h3>
+        <p>No retreats match your selected filters. Try broadening your dates, budget, or amenities.</p>
+        <button class="btn-architectural" id="resetFiltersBtn">Reset All Filters</button>
+      </div>
+    </section>
+
+    <!-- Philosophy & Craft Section (Editorial Interlude) -->
+    <section class="craft-manifesto-section">
+      <div class="container craft-inner">
+        <div class="craft-stamp">KANSO PHILOSOPHY</div>
+        <blockquote class="craft-quote">
+          "Architecture is not merely walls and beams; it is the curation of stillness, light, and natural shadow."
+        </blockquote>
+        <div class="craft-pillars">
+          <div class="pillar-card">
+            <span class="pillar-num">01</span>
+            <h4>Indigenous Craft</h4>
+            <p>Built with regional materials: Goa laterite stone, Himalayan deodar wood, and Rajasthan sandstone.</p>
+          </div>
+          <div class="pillar-card">
+            <span class="pillar-num">02</span>
+            <h4>Transparent Living</h4>
+            <p>Every rate in ₹ is direct from host to guest with verified amenities, zero hidden costs, and standard 12% GST.</p>
+          </div>
+          <div class="pillar-card">
+            <span class="pillar-num">03</span>
+            <h4>Host Sanctuary Care</h4>
+            <p>Each home is managed by passionate local hosts and architectural custodians dedicated to high hospitality.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== HOST PORTAL VIEW (MODAL / OVERLAY) ==================== -->
+  <section class="host-portal-overlay hidden" id="hostPortalOverlay">
+    <div class="host-portal-window">
+      <div class="host-header">
+        <div class="host-title-meta">
+          <span class="host-badge">HOST CUSTODIAN PORTAL</span>
+          <h2>Manage Your Sanctuaries & Guests</h2>
+        </div>
+        <div class="host-header-actions">
+          <button class="btn-architectural btn-primary" id="openAddListingBtn">+ List New Sanctuary</button>
+          <button class="close-overlay-btn" id="closeHostPortalBtn" aria-label="Close Host Portal">✕</button>
+        </div>
+      </div>
+
+      <!-- Host Stats Row -->
+      <div class="host-metrics-grid">
+        <div class="metric-card">
+          <span class="metric-label">ACTIVE SPACES</span>
+          <span class="metric-val" id="metricActiveSpaces">3</span>
+          <span class="metric-sub">Listed on Kanso Marketplace</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">RESERVATIONS RECEIVED</span>
+          <span class="metric-val" id="metricReservations">4</span>
+          <span class="metric-sub">Confirmed instant bookings</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-label">TOTAL HOST PAYOUT</span>
+          <span class="metric-val" id="metricEarnings">₹1,42,800</span>
+          <span class="metric-sub">Accumulated earnings in ₹</span>
+        </div>
+      </div>
+
+      <!-- Host Tabs -->
+      <div class="host-tabs">
+        <button class="host-tab active" data-tab="listings">Your Listed Sanctuaries</button>
+        <button class="host-tab" data-tab="bookings">Guest Reservations & Inquiries</button>
+      </div>
+
+      <!-- Tab Content: Listings -->
+      <div class="host-tab-content active" id="tabContentListings">
+        <div class="host-listings-table" id="hostListingsContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- Tab Content: Reservations -->
+      <div class="host-tab-content" id="tabContentBookings">
+        <div class="host-bookings-list" id="hostBookingsContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ADD NEW LISTING MODAL ==================== -->
+  <div class="modal-backdrop hidden" id="addListingModal">
+    <div class="modal-box modal-lg">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">HOST SUBMISSION</span>
+          <h3 class="modal-title">Publish an Architectural Sanctuary</h3>
+        </div>
+        <button class="modal-close-btn" id="closeAddListingModal">✕</button>
+      </div>
+      <form id="newListingForm" class="modal-body form-grid">
+        <div class="form-group span-2">
+          <label for="listingTitle">Sanctuary Name *</label>
+          <input type="text" id="listingTitle" required placeholder="e.g. The Courtyard Villa">
+        </div>
+
+        <div class="form-group">
+          <label for="listingType">Property Type *</label>
+          <select id="listingType" required>
+            <option value="Villa">Stone & Coastal Villa</option>
+            <option value="Chalet">Mountain & Cedar Chalet</option>
+            <option value="Haveli">Heritage Haveli</option>
+            <option value="Bungalow">Plantation Bungalow</option>
+            <option value="Loft">Atelier & Urban Loft</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="listingState">State / Region *</label>
+          <select id="listingState" required>
+            <option value="Goa">Goa</option>
+            <option value="Himachal Pradesh">Himachal Pradesh</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Karnataka">Karnataka</option>
+            <option value="Kerala">Kerala</option>
+            <option value="Puducherry">Puducherry</option>
+            <option value="Uttarakhand">Uttarakhand</option>
+            <option value="Maharashtra">Maharashtra (Alibaug)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="listingLocation">Specific City / Town *</label>
+          <input type="text" id="listingLocation" required placeholder="e.g. Morjim, North Goa">
+        </div>
+
+        <div class="form-group">
+          <label for="listingPrice">Price per Night (₹ INR) *</label>
+          <input type="number" id="listingPrice" required min="1000" step="500" placeholder="15000">
+        </div>
+
+        <div class="form-group">
+          <label for="listingGuests">Max Guests</label>
+          <input type="number" id="listingGuests" min="1" max="20" value="4">
+        </div>
+
+        <div class="form-group">
+          <label for="listingBedrooms">Bedrooms & Bathrooms</label>
+          <input type="text" id="listingBedrooms" placeholder="2 Beds · 2 Baths">
+        </div>
+
+        <div class="form-group span-2">
+          <label for="listingImage">Cover Image URL (High-Res Architectural Photo) *</label>
+          <input type="url" id="listingImage" required placeholder="https://images.unsplash.com/..." value="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80">
+          <span class="field-hint">Defaults to a verified architectural photograph. You can paste any valid image URL.</span>
+        </div>
+
+        <div class="form-group span-2">
+          <label for="listingDesc">Sanctuary Narrative / Description *</label>
+          <textarea id="listingDesc" rows="3" required placeholder="Describe the materials, architectural flow, light, and natural surroundings..."></textarea>
+        </div>
+
+        <div class="form-group span-2">
+          <label>Sanctuary Amenities</label>
+          <div class="amenities-checkbox-grid">
+            <label><input type="checkbox" name="amenity" value="Plunge Pool" checked> Plunge Pool</label>
+            <label><input type="checkbox" name="amenity" value="High-Speed WiFi" checked> High-Speed WiFi</label>
+            <label><input type="checkbox" name="amenity" value="Private Chef" checked> Private Chef on Call</label>
+            <label><input type="checkbox" name="amenity" value="Mountain Panorama"> Mountain Panorama</label>
+            <label><input type="checkbox" name="amenity" value="Yoga Deck"> Yoga & Meditation Deck</label>
+            <label><input type="checkbox" name="amenity" value="Pet Friendly"> Pet Friendly</label>
+            <label><input type="checkbox" name="amenity" value="Air Conditioning" checked> Air Conditioning</label>
+            <label><input type="checkbox" name="amenity" value="Dedicated Workspace"> Dedicated Workspace</label>
+          </div>
+        </div>
+
+        <div class="modal-footer span-2">
+          <button type="button" class="btn-text" id="cancelAddListingBtn">Cancel</button>
+          <button type="submit" class="btn-architectural btn-primary">Publish to Marketplace</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== PROPERTY DETAIL MODAL ==================== -->
+  <div class="modal-backdrop hidden" id="detailModal">
+    <div class="modal-box modal-xl">
+      <div class="detail-header-bar">
+        <div class="detail-breadcrumbs">
+          <span id="detailRegionBadge">GOA</span> // <span id="detailTypeBadge">VILLA</span> // <span id="detailCode">KN-01</span>
+        </div>
+        <div class="detail-top-actions">
+          <button class="action-icon-pill" id="detailWishlistBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+            <span id="detailWishlistText">Save to Wishlist</span>
+          </button>
+          <button class="modal-close-btn" id="closeDetailModal">✕</button>
+        </div>
+      </div>
+
+      <div class="detail-grid">
+        <!-- Visual Gallery -->
+        <div class="detail-gallery">
+          <div class="main-gallery-view">
+            <img id="detailMainImg" src="" alt="Main Sanctuary View">
+          </div>
+          <div class="gallery-thumbs" id="detailThumbs">
+            <!-- Thumbs injected via JS -->
+          </div>
+        </div>
+
+        <!-- Space Narrative & Specs -->
+        <div class="detail-info-pane">
+          <div class="detail-title-group">
+            <h2 id="detailTitle">Villa Terra Cotta</h2>
+            <div class="detail-location-rating">
+              <span id="detailLocation">Morjim, Goa</span> · 
+              <span class="rating-badge">★ <strong id="detailRating">4.96</strong> (<span id="detailReviewsCount">24</span> reviews)</span>
+            </div>
+          </div>
+
+          <div class="detail-specs-bar" id="detailSpecs">
+            <!-- 4 Guests · 2 Beds · 2 Baths · 2,400 sq.ft -->
+          </div>
+
+          <div class="detail-narrative">
+            <h4>THE ARCHITECTURAL NARRATIVE</h4>
+            <p id="detailNarrative"></p>
+          </div>
+
+          <!-- Amenities Icons -->
+          <div class="detail-amenities-section">
+            <h4>SANCTUARY PROVISIONS</h4>
+            <div class="amenities-pill-grid" id="detailAmenitiesList">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Host Identity Card -->
+          <div class="detail-host-card">
+            <div class="host-avatar-box">
+              <span id="detailHostAvatar">AN</span>
+            </div>
+            <div class="host-card-info">
+              <div class="host-name-role">
+                <h5 id="detailHostName">Ananya & Rohan Varma</h5>
+                <span class="verified-host-tag">VERIFIED CUSTODIAN</span>
+              </div>
+              <p id="detailHostBio">Architects based in Goa restoring mid-century coastal stone houses.</p>
+            </div>
+            <button class="btn-architectural btn-sm" id="detailMessageHostBtn">Inquire</button>
+          </div>
+
+          <!-- Quick Reserve Floating Action Box -->
+          <div class="detail-booking-action-box">
+            <div class="box-rate">
+              <span class="rate-amount" id="detailPrice">₹18,500</span>
+              <span class="rate-period">/ night (+ 12% GST)</span>
+            </div>
+            <button class="btn-architectural btn-primary btn-book" id="detailBookNowBtn">
+              Book Instantly
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guest Reviews Section -->
+      <div class="detail-reviews-section">
+        <div class="reviews-header">
+          <h3>Guest Impressions (<span id="reviewSectionCount">24</span>)</h3>
+          <button class="btn-architectural btn-sm" id="openAddReviewBtn">+ Write Impression</button>
+        </div>
+        <div class="reviews-masonry" id="detailReviewsContainer">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== THE KANSO RESERVATION SLIP / BOOKING MODAL ==================== -->
+  <div class="modal-backdrop hidden" id="bookingModal">
+    <div class="modal-box modal-ticket">
+      <!-- Boarding Pass Header -->
+      <div class="ticket-header">
+        <div class="ticket-brand">
+          <span class="ticket-brand-mark">KL</span>
+          <div>
+            <strong>KANSO LIVING</strong>
+            <span>ARCHITECTURAL STAY SLIP · आवास</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="closeBookingModal">✕</button>
+      </div>
+
+      <!-- Booking Form & Price Calculator View -->
+      <div id="bookingFormView">
+        <div class="ticket-body">
+          <div class="ticket-property-preview">
+            <img id="ticketPropertyImg" src="" alt="Property Preview">
+            <div>
+              <span class="ticket-cat" id="ticketPropertyCat">COASTAL VILLA</span>
+              <h3 id="ticketPropertyTitle">Villa Terra Cotta</h3>
+              <span id="ticketPropertyLoc">Morjim, North Goa</span>
+            </div>
+          </div>
+
+          <!-- Step 1: Dates & Guests Form -->
+          <form id="reservationForm" class="ticket-inputs-grid">
+            <div class="form-group">
+              <label for="bookCheckIn">Check-in Date *</label>
+              <input type="date" id="bookCheckIn" required>
+            </div>
+            <div class="form-group">
+              <label for="bookCheckOut">Check-out Date *</label>
+              <input type="date" id="bookCheckOut" required>
+            </div>
+            <div class="form-group">
+              <label for="bookGuests">Number of Guests</label>
+              <select id="bookGuests">
+                <option value="1">1 Guest</option>
+                <option value="2" selected>2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="6">6 Guests</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="guestFullName">Full Name *</label>
+              <input type="text" id="guestFullName" required placeholder="e.g. Kabir Sen">
+            </div>
+            <div class="form-group">
+              <label for="guestEmail">Email Address *</label>
+              <input type="email" id="guestEmail" required placeholder="kabir@example.com">
+            </div>
+            <div class="form-group">
+              <label for="guestPhone">Phone / WhatsApp *</label>
+              <input type="tel" id="guestPhone" required placeholder="+91 98765 43210">
+            </div>
+            <div class="form-group span-2">
+              <label for="specialRequests">Arrival Time & Notes</label>
+              <input type="text" id="specialRequests" placeholder="e.g. Expected arrival at 3:00 PM, quiet workspace needed">
+            </div>
+
+            <!-- Price Breakdown Calculation -->
+            <div class="ticket-calculation span-2">
+              <div class="calc-row">
+                <span id="calcNightsLabel">₹18,500 × 2 nights</span>
+                <span id="calcBasePrice">₹37,000</span>
+              </div>
+              <div class="calc-row">
+                <span>Sanctuary Cleaning & Prep Fee</span>
+                <span id="calcCleaning">₹1,500</span>
+              </div>
+              <div class="calc-row">
+                <span>Hospitality GST (12%)</span>
+                <span id="calcTax">₹4,620</span>
+              </div>
+              <div class="perforated-line"></div>
+              <div class="calc-row total-row">
+                <span>Total Payable (INR)</span>
+                <span class="total-amount" id="calcTotal">₹43,120</span>
+              </div>
+            </div>
+
+            <div class="modal-footer span-2">
+              <button type="button" class="btn-text" id="cancelBookingBtn">Cancel</button>
+              <button type="submit" class="btn-architectural btn-primary" id="confirmBookingBtn">
+                Confirm & Issue Boarding Pass
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Generated Boarding Pass Receipt (Success State) -->
+      <div id="bookingReceiptView" class="hidden">
+        <div class="ticket-receipt" id="printableTicketReceipt">
+          <!-- Top Slip Header with Stamp & Thumbnail -->
+          <div class="receipt-header-strip">
+            <div class="receipt-badge-wrap">
+              <span class="receipt-stamp-mark">OFFICIALLY CONFIRMED · पुष्टि</span>
+              <span class="receipt-class-label">ARCHITECTURAL PASS // PRIORITY GUEST</span>
+            </div>
+            <div class="receipt-thumb-wrap">
+              <img id="receiptThumb" src="" alt="Sanctuary Thumbnail" class="receipt-thumb-img">
+            </div>
+          </div>
+          
+          <div class="receipt-row">
+            <div class="receipt-col">
+              <label>PASSENGER / GUEST</label>
+              <strong id="receiptGuestName">Kabir Sen</strong>
+              <span id="receiptContactDetails">kabir@example.com</span>
+            </div>
+            <div class="receipt-col">
+              <label>BOARDING PASS NO.</label>
+              <strong id="receiptBookingId" class="receipt-booking-id">KN-2026-8841</strong>
+              <span class="badge-confirmed">Instant Host Confirmation</span>
+            </div>
+          </div>
+
+          <div class="receipt-row">
+            <div class="receipt-col">
+              <label>SANCTUARY & CUSTODIAN</label>
+              <strong id="receiptTitle">Villa Terra Cotta</strong>
+              <span id="receiptLocation">Morjim, Goa</span>
+              <span id="receiptHostInfo" class="receipt-host-sub">Custodian: Ananya & Rohan Varma</span>
+            </div>
+            <div class="receipt-col">
+              <label>STAY DATES & TIMINGS</label>
+              <strong id="receiptNights">3 Nights (2 Guests)</strong>
+              <span id="receiptDates">Oct 24, 2026 → Oct 27, 2026</span>
+              <span class="receipt-timing-sub">Check-in: 14:00 IST · Check-out: 11:00 IST</span>
+            </div>
+          </div>
+
+          <div class="receipt-row">
+            <div class="receipt-col">
+              <label>TOTAL SETTLED (INR)</label>
+              <strong class="receipt-total" id="receiptTotal">₹43,120</strong>
+              <span id="receiptTaxNote">Includes 12% Hospitality GST & Prep</span>
+            </div>
+            <div class="receipt-col">
+              <label>SECURITY & ACCESS</label>
+              <strong class="receipt-access">VERIFIED DIGITAL KEY</strong>
+              <span class="receipt-access-sub">Key code sent to WhatsApp 2h before arrival</span>
+            </div>
+          </div>
+
+          <!-- Physical Perforation Tear with Dual Punch Cutouts -->
+          <div class="receipt-tear-line">
+            <span class="tear-label">TEAR OR DETACH ALONG PERFORATION FOR ACCESS RECORD</span>
+          </div>
+
+          <div class="ticket-barcode-wrap">
+            <div class="barcode-graphic"></div>
+            <span class="barcode-code" id="receiptBarcodeCode">KN-STAY-VERIFIED-AUTH-INDIA-2026</span>
+            <p class="ticket-legal-micro">ISSUED UNDER KANSO LIVING ARCHITECTURAL CHARTER · VALID ACROSS VERIFIED RESIDENCES</p>
+          </div>
+
+          <div class="receipt-actions">
+            <button class="btn-architectural btn-secondary" id="receiptContactHostBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Message Custodian
+            </button>
+            <button class="btn-architectural btn-secondary" id="printReceiptBtn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+              Print / Save Slip
+            </button>
+            <button class="btn-architectural btn-primary" id="doneBookingBtn">View My Reservations</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== GUEST RESERVATIONS DRAWER ==================== -->
+  <div class="modal-backdrop hidden" id="myReservationsModal">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">YOUR JOURNEYS</span>
+          <h3 class="modal-title">Reserved Sanctuaries</h3>
+        </div>
+        <button class="modal-close-btn" id="closeReservationsModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="reservationsListContainer" class="reservations-list">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== INQUIRY / MESSAGE HOST MODAL ==================== -->
+  <div class="modal-backdrop hidden" id="inquiryModal">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">DIRECT INQUIRY</span>
+          <h3 class="modal-title" id="inquiryHostTitle">Message Sanctuary Host</h3>
+        </div>
+        <button class="modal-close-btn" id="closeInquiryModal">✕</button>
+      </div>
+      <div class="modal-body chat-thread-body">
+        <div class="chat-thread" id="chatThreadContainer">
+          <!-- Initial Welcome Message from Host -->
+        </div>
+        <form id="chatForm" class="chat-input-row">
+          <input type="text" id="chatInput" placeholder="Ask about early check-in, local cuisine, workspace..." required>
+          <button type="submit" class="btn-architectural btn-primary">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== WRITE REVIEW MODAL ==================== -->
+  <div class="modal-backdrop hidden" id="addReviewModal">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">GUEST IMPRESSION</span>
+          <h3 class="modal-title">Share Your Experience</h3>
+        </div>
+        <button class="modal-close-btn" id="closeAddReviewModal">✕</button>
+      </div>
+      <form id="addReviewForm" class="modal-body form-grid">
+        <div class="form-group span-2">
+          <label for="reviewAuthor">Your Name</label>
+          <input type="text" id="reviewAuthor" required placeholder="e.g. Maya Patel">
+        </div>
+        <div class="form-group span-2">
+          <label for="reviewRating">Overall Score</label>
+          <select id="reviewRating">
+            <option value="5">★★★★★ — Exceptional Sanctuary (5.0)</option>
+            <option value="4.8">★★★★☆ — Peaceful & High Quality (4.8)</option>
+            <option value="4.5">★★★★☆ — Very Good Stay (4.5)</option>
+            <option value="4.0">★★★★☆ — Good (4.0)</option>
+          </select>
+        </div>
+        <div class="form-group span-2">
+          <label for="reviewText">Your Impression & Notes</label>
+          <textarea id="reviewText" rows="3" required placeholder="Describe the atmosphere, quietness, light, and host hospitality..."></textarea>
+        </div>
+        <div class="modal-footer span-2">
+          <button type="button" class="btn-text" id="cancelReviewBtn">Cancel</button>
+          <button type="submit" class="btn-architectural btn-primary">Submit Impression</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== AMENITIES FILTER MODAL ==================== -->
+  <div class="modal-backdrop hidden" id="amenitiesModal">
+    <div class="modal-box modal-md">
+      <div class="modal-header">
+        <div>
+          <span class="modal-tag">FILTER BY FEATURE</span>
+          <h3 class="modal-title">Sanctuary Provisions</h3>
+        </div>
+        <button class="modal-close-btn" id="closeAmenitiesModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="amenities-checkbox-grid filter-provisions-grid">
+          <label><input type="checkbox" class="amenity-filter-check" value="Plunge Pool"> Private Plunge Pool</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="High-Speed WiFi"> High-Speed WiFi</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="Private Chef"> Private Chef on Call</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="Mountain Panorama"> Mountain Panorama</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="Yoga Deck"> Yoga & Meditation Deck</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="Pet Friendly"> Pet Friendly</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="Dedicated Workspace"> Dedicated Workspace</label>
+          <label><input type="checkbox" class="amenity-filter-check" value="Air Conditioning"> Air Conditioning</label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-text" id="clearAmenitiesBtn">Clear</button>
+          <button type="button" class="btn-architectural btn-primary" id="applyAmenitiesBtn">Apply Provisions</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FULL-SCREEN DEDICATED AUTHENTICATION PAGE ==================== -->
+  <div class="fullscreen-auth-page hidden" id="authModal">
+    <!-- Full-Screen Auth Topbar -->
+    <header class="auth-page-topbar">
+      <div class="auth-topbar-brand">
+        <div class="brand-emblem">
+          <span class="brand-monogram">K</span>
+          <div class="brand-text">
+            <span class="brand-name">KANSO LIVING</span>
+            <span class="brand-sub">ARCHITECTURAL ACCESS</span>
+          </div>
+        </div>
+      </div>
+      <div class="auth-topbar-actions">
+        <button type="button" class="btn-return-sanctuaries" id="closeAuthModal">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>Return to Sanctuaries</span>
+          <span class="close-icon-pill">✕</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Full-Screen Split Content -->
+    <div class="auth-split-wrapper">
+      
+      <!-- Left Column: Editorial Architectural Identity & Imagery -->
+      <div class="auth-visual-col">
+        <div class="auth-visual-inner">
+          <div class="auth-brand-stamp">
+            <span class="auth-kanso-mark">K</span>
+            <div>
+              <strong>KANSO LIVING</strong>
+              <span>ARCHITECTURAL HOSPITALITY INDIA</span>
+            </div>
+          </div>
+
+          <div class="auth-quote-wrap">
+            <div class="auth-tag-pill">ARCHITECTURAL MANIFESTO</div>
+            <h2 class="auth-visual-heading">Dwell in silence.<br>Share regional craft.</h2>
+            <p class="auth-manifesto-quote">
+              "A sanctuary begins with the custodian who tends its walls, and finds life with the traveler who seeks its silence."
+            </p>
+            <span class="auth-quote-author">— Kanso Living Philosophy</span>
+          </div>
+
+          <!-- Dual Persona Value Offerings -->
+          <div class="auth-perks-list">
+            <div class="auth-perk-card">
+              <div class="perk-badge guest">✦ FOR SEEKERS (ROOMS & HOUSES)</div>
+              <p>Reserve handcrafted rooms, coastal laterite villas, and cedar mountain chalets across India with transparent pricing in INR (₹) and verified architectural materials.</p>
+            </div>
+            <div class="auth-perk-card">
+              <div class="perk-badge host">🏛️ FOR HOSTS & SELLERS (LIST ARCHITECTURE)</div>
+              <p>List your boutique properties, showcase your architectural work, connect directly with quiet travelers, and manage seasonal guest reservations with prompt settlements.</p>
+            </div>
+          </div>
+
+          <div class="auth-trust-footer">
+            <span class="trust-item">✓ Verified Regional Materials</span>
+            <span class="trust-item">✓ Transparent INR (₹) Breakdown</span>
+            <span class="trust-item">✓ Direct Custodian Care</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dual-Persona Auth Form -->
+      <div class="auth-form-col">
+        <div class="auth-form-container">
+          <div class="auth-header-bar">
+            <span class="modal-tag" id="authSubTag">SECURE ACCESS</span>
+            <h1 class="auth-main-title" id="authTitle">Welcome to Kanso Living</h1>
+            <p class="auth-intro-sub" id="authSubDesc">Sign in to your account or register to explore and host boutique Indian architecture.</p>
+          </div>
+
+          <!-- Role Persona Switcher (Seeking Stay vs Listing / Hosting) -->
+          <div class="auth-role-tabs">
+            <button type="button" class="auth-role-tab active" id="roleTabGuest" data-role="guest">
+              <span class="role-icon">✦</span>
+              <div class="role-text-wrap">
+                <span class="role-heading">Seeking Stays</span>
+                <span class="role-sub">Rooms, Villas & Chalets</span>
+              </div>
+            </button>
+            <button type="button" class="auth-role-tab" id="roleTabHost" data-role="host">
+              <span class="role-icon">🏛️</span>
+              <div class="role-text-wrap">
+                <span class="role-heading">Host Custodian</span>
+                <span class="role-sub">List & Rent Architecture</span>
+              </div>
+            </button>
+          </div>
+
+          <!-- Form Mode Toggle (Sign In vs Register) -->
+          <div class="auth-mode-toggle">
+            <button type="button" class="mode-tab active" id="modeTabLogin">Sign In</button>
+            <button type="button" class="mode-tab" id="modeTabRegister">Create Account</button>
+          </div>
+
+          <!-- Main Auth Form -->
+          <form id="authForm" class="auth-fields-grid">
+            <!-- Full Name (Only for registration) -->
+            <div class="form-group span-2 hidden" id="groupFullName">
+              <label for="authFullName">Full Name *</label>
+              <input type="text" id="authFullName" placeholder="e.g. Kabir Sen or Ananya Varma">
+            </div>
+
+            <!-- Host Property Name (Only for host registration) -->
+            <div class="form-group span-2 hidden" id="groupPropertyName">
+              <label for="authPropertyName">Property / Architectural Practice Name *</label>
+              <input type="text" id="authPropertyName" placeholder="e.g. Varma Studio Architecture / The Courtyard Villa">
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group span-2">
+              <label for="authEmail" id="authEmailLabel">Email Address *</label>
+              <input type="email" id="authEmail" required placeholder="name@example.com" value="kabir@example.com">
+            </div>
+
+            <!-- Phone / WhatsApp Number (Only for registration) -->
+            <div class="form-group span-2 hidden" id="groupPhone">
+              <label for="authPhone">WhatsApp / Mobile Number *</label>
+              <input type="tel" id="authPhone" placeholder="+91 98765 43210">
+            </div>
+
+            <!-- Password -->
+            <div class="form-group span-2">
+              <div class="label-with-link">
+                <label for="authPassword">Password *</label>
+                <a href="#" class="forgot-link" id="authForgotLink">Forgot?</a>
+              </div>
+              <input type="password" id="authPassword" required placeholder="••••••••" value="kanso2026">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group span-2">
+              <button type="submit" class="btn-architectural btn-primary btn-block btn-lg" id="authSubmitBtn">
+                Sign In as Traveler
+              </button>
+            </div>
+          </form>
+
+          <!-- Quick One-Click Demo Credentials -->
+          <div class="auth-demo-shortcuts">
+            <span class="demo-label">OR INSTANT 1-CLICK DEMO ACCESS:</span>
+            <div class="demo-buttons-row">
+              <button type="button" class="demo-quick-btn" id="demoGuestBtn">
+                <span class="demo-dot guest"></span>
+                <span>Demo Guest (Kabir Sen)</span>
+              </button>
+              <button type="button" class="demo-quick-btn" id="demoHostBtn">
+                <span class="demo-dot host"></span>
+                <span>Demo Host (Ananya Varma)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="toast-notification hidden" id="toastNotification">
+    <span class="toast-symbol">✦</span>
+    <span class="toast-message" id="toastMessage">Sanctuary added to wishlist.</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand-col">
+        <div class="brand-emblem">
+          <span class="brand-monogram">K</span>
+          <div class="brand-text">
+            <span class="brand-name">KANSO LIVING</span>
+            <span class="brand-sub">ARCHITECTURAL HOSPITALITY INDIA</span>
+          </div>
+        </div>
+        <p class="footer-desc">
+          Honoring regional materials, peaceful dwellings, and unhurried living across India. Handcrafted by local architects and custodians.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h5>SANCTUARIES</h5>
+        <ul>
+          <li><a href="#" data-region="Goa" class="footer-region-link">Goa Coastal Villas</a></li>
+          <li><a href="#" data-region="Himachal Pradesh" class="footer-region-link">Himalayan Cedar Cabins</a></li>
+          <li><a href="#" data-region="Rajasthan" class="footer-region-link">Udaipur Stone Havelis</a></li>
+          <li><a href="#" data-region="Karnataka" class="footer-region-link">Coorg Coffee Retreats</a></li>
+          <li><a href="#" data-region="Kerala" class="footer-region-link">Malabar Backwater Dwellings</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h5>HOST PARTNERSHIP</h5>
+        <ul>
+          <li><a href="#" id="footerBecomeHost">List Your Sanctuary</a></li>
+          <li><a href="#" id="footerHostStandards">Architectural Standards</a></li>
+          <li><a href="#" id="footerCustodianFAQ">Custodian Guidelines</a></li>
+          <li><a href="#">Hospitality & GST in INR</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-legal-col">
+        <h5>VERIFIED DISCLOSURE</h5>
+        <p>All listings are independently verified. Prices are transparent in INR (₹) inclusive of applicable taxes.</p>
+        <span class="copyright">© 2026 KANSO LIVING · All Rights Reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
