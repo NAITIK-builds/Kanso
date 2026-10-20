@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
+import SmoothImage from '../components/SmoothImage';
 
 export default function SanctuaryDetailPage() {
   const { id } = useParams();
@@ -99,7 +100,7 @@ export default function SanctuaryDetailPage() {
           {/* Gallery Showcase */}
           <div className="detail-gallery-showcase">
             <div className="detail-hero-frame">
-              <img src={activeImg} alt={sanctuary.title} />
+              <SmoothImage src={activeImg} alt={sanctuary.title} />
               <span className="gallery-counter">
                 {activeImgIndex + 1} / {gallery.length} Views
               </span>
@@ -115,7 +116,7 @@ export default function SanctuaryDetailPage() {
                     onClick={() => setActiveImgIndex(idx)}
                     aria-label={`View photo ${idx + 1}`}
                   >
-                    <img src={imgUrl} alt={`${sanctuary.title} preview ${idx + 1}`} />
+                    <SmoothImage src={imgUrl} alt={`${sanctuary.title} preview ${idx + 1}`} />
                   </button>
                 ))}
               </div>
@@ -141,13 +142,13 @@ export default function SanctuaryDetailPage() {
           </div>
 
           {/* Architectural Narrative */}
-          <div className="detail-section-block">
+          <div className="detail-section-block scroll-reveal">
             <h3 className="section-eyebrow">THE ARCHITECTURAL NARRATIVE</h3>
             <p className="detail-narrative-body">{sanctuary.narrative}</p>
           </div>
 
           {/* Provisions & Amenities */}
-          <div className="detail-section-block">
+          <div className="detail-section-block scroll-reveal">
             <h3 className="section-eyebrow">SANCTUARY PROVISIONS</h3>
             <div className="detail-amenities-cloud">
               {sanctuary.amenities.map((item, idx) => (
@@ -160,7 +161,7 @@ export default function SanctuaryDetailPage() {
           </div>
 
           {/* Host Custodian Card */}
-          <div className="detail-section-block">
+          <div className="detail-section-block scroll-reveal">
             <h3 className="section-eyebrow">RESIDENCE CUSTODIAN</h3>
             <div className="detail-custodian-card">
               <div className="custodian-avatar">
@@ -186,7 +187,7 @@ export default function SanctuaryDetailPage() {
           </div>
 
           {/* Guest Reviews */}
-          <div className="detail-section-block">
+          <div className="detail-section-block scroll-reveal">
             <div className="reviews-header-row">
               <div>
                 <h3 className="section-eyebrow">GUEST IMPRESSIONS</h3>
@@ -206,7 +207,7 @@ export default function SanctuaryDetailPage() {
             <div className="reviews-cards-grid">
               {sanctuary.reviews && sanctuary.reviews.length > 0 ? (
                 sanctuary.reviews.map((rev, idx) => (
-                  <div key={idx} className="guest-impression-card">
+                  <div key={idx} className="guest-impression-card scroll-reveal">
                     <div className="impression-top">
                       <span className="impression-author">{rev.author}</span>
                       <span className="impression-rating">★ {rev.score}</span>

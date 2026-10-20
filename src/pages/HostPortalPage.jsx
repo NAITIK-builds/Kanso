@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
+import SmoothImage from '../components/SmoothImage';
 
 export default function HostPortalPage() {
   const {
@@ -37,17 +38,17 @@ export default function HostPortalPage() {
 
       {/* Metrics Grid */}
       <div className="custodian-metrics-grid">
-        <div className="custodian-metric-box">
+        <div className="custodian-metric-box scroll-reveal">
           <span className="c-metric-label">ACTIVE SANCTUARIES</span>
           <strong className="c-metric-val">{listings.length}</strong>
           <span className="c-metric-hint">Verified residences on Kanso</span>
         </div>
-        <div className="custodian-metric-box">
+        <div className="custodian-metric-box scroll-reveal">
           <span className="c-metric-label">TOTAL GUEST ARRIVALS</span>
           <strong className="c-metric-val">{reservations.length}</strong>
           <span className="c-metric-hint">Confirmed reservations</span>
         </div>
-        <div className="custodian-metric-box">
+        <div className="custodian-metric-box scroll-reveal">
           <span className="c-metric-label">ESTIMATED DISBURSEMENTS</span>
           <strong className="c-metric-val">₹{totalPayout.toLocaleString('en-IN')}</strong>
           <span className="c-metric-hint">Total gross payout volume</span>
@@ -87,7 +88,7 @@ export default function HostPortalPage() {
                 : 'G';
 
               return (
-                <div key={res.bookingId} className="custodian-booking-card">
+                <div key={res.bookingId} className="custodian-booking-card scroll-reveal">
                   {/* Guest Identity */}
                   <div className="c-guest-identity">
                     <div className="c-guest-avatar">{initials}</div>
@@ -168,9 +169,9 @@ export default function HostPortalPage() {
         <div className="custodian-listings-wrapper">
           <div className="custodian-listings-grid">
             {listings.map((item) => (
-              <div key={item.id} className="custodian-listing-card">
+              <div key={item.id} className="custodian-listing-card scroll-reveal">
                 <div className="c-listing-image">
-                  <img src={item.coverImg} alt={item.title} />
+                  <SmoothImage src={item.coverImg} alt={item.title} />
                   <span className="c-listing-type">{item.type}</span>
                 </div>
                 <div className="c-listing-content">

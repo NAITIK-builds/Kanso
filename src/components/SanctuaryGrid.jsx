@@ -63,7 +63,7 @@ export default function SanctuaryGrid() {
 
   return (
     <section className="gallery-section container" id="sanctuaryGridSection">
-      <div className="gallery-header">
+      <div className="gallery-header scroll-reveal">
         <div className="section-title-wrap">
           <span className="catalogue-badge">INDEX // SPACES</span>
           <h2 className="section-title">Verified Sanctuaries</h2>

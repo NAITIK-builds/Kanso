@@ -25,7 +25,7 @@ export default function Footer() {
 
   return (
     <footer className="site-footer">
-      <div className="container footer-grid">
+      <div className="container footer-grid scroll-reveal">
         <div className="footer-brand-col">
           <div className="brand-emblem">
             <span className="brand-monogram">K</span>

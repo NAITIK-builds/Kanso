@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
+import SmoothImage from '../components/SmoothImage';
 
 export default function ReservationsPage() {
   const {
@@ -38,11 +39,11 @@ export default function ReservationsPage() {
           reservations.map((res) => {
             const sanctuary = listings.find((s) => s.id === res.propertyId);
             return (
-              <article key={res.bookingId} className="journey-card">
+              <article key={res.bookingId} className="journey-card scroll-reveal">
                 {/* Visual Strip */}
                 {sanctuary && (
                   <div className="journey-card-media">
-                    <img src={sanctuary.coverImg} alt={res.title} />
+                    <SmoothImage src={sanctuary.coverImg} alt={res.title} />
                     <span className="journey-id-tag">{res.bookingId}</span>
                   </div>
                 )}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useKanso } from '../context/KansoContext';
+import SmoothImage from './SmoothImage';
 
 export default function DetailModal() {
   const {
@@ -85,7 +86,7 @@ export default function DetailModal() {
           {/* Visual Gallery */}
           <div className="detail-gallery">
             <div className="main-gallery-view">
-              <img src={activeImg} alt={sanctuary.title} />
+              <SmoothImage src={activeImg} alt={sanctuary.title} />
             </div>
             {gallery.length > 1 && (
               <div className="gallery-thumbs">
@@ -96,7 +97,7 @@ export default function DetailModal() {
                     className={`thumb-btn ${idx === activeImgIndex ? 'active' : ''}`}
                     onClick={() => setActiveImgIndex(idx)}
                   >
-                    <img src={imgUrl} alt={`${sanctuary.title} view ${idx + 1}`} />
+                    <SmoothImage src={imgUrl} alt={`${sanctuary.title} view ${idx + 1}`} />
                   </button>
                 ))}
               </div>

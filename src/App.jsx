@@ -1,5 +1,5 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import TopRibbon from './components/TopRibbon';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -24,9 +24,74 @@ import AuthModal from './components/AuthModal';
 import QuickSearchModal from './components/QuickSearchModal';
 import Toast from './components/Toast';
 
+/**
+ * ScrollToTop: Smoothly animates window scroll position to top on route change
+ */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [pathname]);
+
+  return null;
+}
+
+/**
+ * ScrollAnimator: IntersectionObserver system to dynamically trigger
+ * elegant scroll-reveal animations across cards, sections, and galleries
+ */
+function ScrollAnimator() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.08
+      }
+    );
+
+    const observeElements = () => {
+      const targets = document.querySelectorAll('.scroll-reveal:not(.is-revealed)');
+      targets.forEach((el) => observer.observe(el));
+    };
+
+    observeElements();
+    const timer = setTimeout(observeElements, 120);
+
+    const mutationObserver = new MutationObserver(() => {
+      observeElements();
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+      mutationObserver.disconnect();
+    };
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <>
+      {/* Route Smooth Scroll to Top & Global Scroll Animation Observer */}
+      <ScrollToTop />
+      <ScrollAnimator />
+
       {/* Top Announcement Bar */}
       <TopRibbon />
 
@@ -61,4 +126,5 @@ export default function App() {
     </>
   );
 }
+
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
+import SmoothImage from './SmoothImage';
 
 const AUTOPLAY_INTERVAL = 4800; // 4.8 seconds per slide for a comfortable reading cadence
 
@@ -123,10 +124,10 @@ export default function Hero() {
     setDragOffset(0);
   };
 
-  // Search form submit
+  // Search form submit with smooth scroll to collection
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    const grid = document.getElementById('sanctuaryGrid');
+    const grid = document.getElementById('sanctuaryGridSection') || document.getElementById('sanctuaryGrid');
     if (grid) {
       grid.scrollIntoView({ behavior: 'smooth' });
     }
@@ -137,13 +138,25 @@ export default function Hero() {
       ...prev,
       region
     }));
+    const grid = document.getElementById('sanctuaryGridSection') || document.getElementById('sanctuaryGrid');
+    if (grid) {
+      grid.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleScrollToGrid = () => {
+    const grid = document.getElementById('sanctuaryGridSection') || document.getElementById('sanctuaryGrid');
+    if (grid) {
+      grid.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   if (!currentSanctuary) return null;
 
   return (
-    <section className="hero-split container">
-      {/* Left Editorial Column */}
+    <section className="hero-fullscreen-wrap" aria-label="Welcome and Featured Sanctuaries">
+      <div className="hero-split container">
+        {/* Left Editorial Column */}
       <div className="hero-left">
         <div className="hero-curation-stamp">
           <span className="stamp-border"></span>
@@ -363,7 +376,7 @@ export default function Hero() {
               key={`slide-${currentSanctuary.id}-${slideAnimKey}`}
               className={`exhibit-slide-layer slide-dir-${direction}`}
             >
-              <img
+              <SmoothImage
                 src={currentSanctuary.coverImg}
                 alt={currentSanctuary.title}
                 loading="eager"
@@ -414,6 +427,22 @@ export default function Hero() {
           </div>
         </div>
       </div>
+    </div>
+
+    {/* Architectural Scroll-Down Indicator for Full-Screen Experience */}
+    <button
+      type="button"
+      className="hero-scroll-cue"
+        onClick={handleScrollToGrid}
+        aria-label="Scroll to curated sanctuaries collection"
+      >
+        <span className="scroll-cue-text">Scroll to Explore</span>
+        <span className="scroll-cue-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 5v14M19 12l-7 7-7-7" />
+          </svg>
+        </span>
+      </button>
     </section>
   );
 }

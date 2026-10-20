@@ -2,6 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
 
+import SmoothImage from './SmoothImage';
+
 export default function SanctuaryCard({ sanctuary, index }) {
   const navigate = useNavigate();
   const { wishlist, toggleWishlist, setBookingSanctuaryId } = useKanso();
@@ -18,7 +20,7 @@ export default function SanctuaryCard({ sanctuary, index }) {
   };
 
   return (
-    <article className="sanctuary-card" data-id={sanctuary.id}>
+    <article className="sanctuary-card scroll-reveal" data-id={sanctuary.id}>
       {/* Visual Frame */}
       <div
         className="card-media"
@@ -26,7 +28,7 @@ export default function SanctuaryCard({ sanctuary, index }) {
         role="button"
         tabIndex={0}
       >
-        <img src={sanctuary.coverImg} alt={sanctuary.title} loading="lazy" />
+        <SmoothImage src={sanctuary.coverImg} alt={sanctuary.title} />
         <span className="card-index-tag">LOC // {indexNumber}</span>
         <button
           type="button"
