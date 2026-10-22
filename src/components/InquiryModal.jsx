@@ -12,7 +12,7 @@ export default function InquiryModal() {
   const messages = (propertyId && inquiries[propertyId]) || [
     {
       sender: 'host',
-      text: `Namaste! I am ${sanctuary?.host?.name || 'the host custodian'} of ${sanctuary?.title || 'this sanctuary'}. How may I help you plan your quiet stay?`,
+      text: `Namaste! I am ${sanctuary?.host?.name || 'the room host'} of ${sanctuary?.title || 'this room'}. Feel free to ask about move-in dates, fiber WiFi, kitchen access, or schedule an in-person room visit!`,
       time: 'Just now'
     }
   ];
@@ -38,9 +38,9 @@ export default function InquiryModal() {
       <div className="modal-box modal-md" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="modal-tag">DIRECT INQUIRY</span>
+            <span className="modal-tag">DIRECT OWNER / FLATMATE CHAT</span>
             <h3 className="modal-title">
-              Message Host: {sanctuary?.host?.name || 'Custodian'}
+              Chat with: {sanctuary?.host?.name || 'Room Host'}
             </h3>
           </div>
           <button
@@ -61,7 +61,7 @@ export default function InquiryModal() {
                 className={`chat-bubble ${msg.sender === 'guest' ? 'guest-msg' : 'host-msg'}`}
               >
                 <div className="chat-sender-tag">
-                  {msg.sender === 'guest' ? 'You' : sanctuary?.host?.name || 'Custodian'}
+                  {msg.sender === 'guest' ? 'You' : sanctuary?.host?.name || 'Room Host'}
                 </div>
                 <p>{msg.text}</p>
                 <span className="chat-time">{msg.time}</span>
@@ -73,7 +73,7 @@ export default function InquiryModal() {
           <form onSubmit={handleSubmit} className="chat-input-row">
             <input
               type="text"
-              placeholder="Ask about early check-in, local cuisine, workspace..."
+              placeholder="Ask about move-in dates, WiFi speed, visits, house rules..."
               required
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useKanso } from '../context/KansoContext';
+import { useRental } from '../context/RentalContext';
 
 export default function BookingModal() {
   const {
@@ -12,15 +12,15 @@ export default function BookingModal() {
     createReservation,
     setInquiryTarget,
     setIsReservationsOpen
-  } = useKanso();
+  } = useRental();
 
   const sanctuary = listings.find((s) => s.id === bookingSanctuaryId) ||
     (activeReceipt ? listings.find((s) => s.id === activeReceipt.propertyId) : null);
 
   // Form fields
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [guests, setGuests] = useState('2');
+  const [moveInDate, setMoveInDate] = useState('');
+  const [durationMonths, setDurationMonths] = useState('11');
+  const [guests, setGuests] = useState('1');
   const [guestName, setGuestName] = useState('');
   const [guestEmail, setGuestEmail] = useState('');
   const [guestPhone, setGuestPhone] = useState('');
@@ -30,12 +30,9 @@ export default function BookingModal() {
   useEffect(() => {
     const today = new Date();
     const d1 = new Date(today);
-    d1.setDate(today.getDate() + 4);
-    const d2 = new Date(today);
-    d2.setDate(today.getDate() + 7);
+    d1.setDate(today.getDate() + 3);
 
-    setCheckIn(d1.toISOString().split('T')[0]);
-    setCheckOut(d2.toISOString().split('T')[0]);
+    setMoveInDate(d1.toISOString().split('T')[0]);
 
     if (currentUser) {
       setGuestName(currentUser.name || '');
@@ -51,19 +48,10 @@ export default function BookingModal() {
   if (!bookingSanctuaryId && !activeReceipt) return null;
   if (!sanctuary) return null;
 
-  // Nights calculation
-  let nights = 3;
-  if (checkIn && checkOut) {
-    const date1 = new Date(checkIn);
-    const date2 = new Date(checkOut);
-    const diff = Math.round((date2 - date1) / (1000 * 60 * 60 * 24));
-    nights = diff > 0 ? diff : 1;
-  }
-
-  const basePrice = (sanctuary.price || 15000) * nights;
-  const cleaningFee = 1500;
-  const tax = Math.round((basePrice + cleaningFee) * 0.12);
-  const total = basePrice + cleaningFee + tax;
+  const monthlyRent = sanctuary.price || 14500;
+  const tokenAdvance = 2500; // Standard room hold token amount
+  const depositRefundable = sanctuary.deposit || (monthlyRent * 2); // 100% refundable deposit
+  const brokerageFee = 0; // ZERO BROKERAGE
 
   const handleClose = () => {
     setBookingSanctuaryId(null);
@@ -76,14 +64,16 @@ export default function BookingModal() {
       propertyId: sanctuary.id,
       title: sanctuary.title,
       location: sanctuary.location,
-      guestName: guestName || 'Guest Traveler',
-      guestEmail: guestEmail || 'guest@example.com',
+      guestName: guestName || 'Tenant',
+      guestEmail: guestEmail || 'tenant@example.com',
       guestPhone: guestPhone || '+91 98765 43210',
-      checkIn,
-      checkOut,
-      nights,
+      checkIn: moveInDate,
+      checkOut: `Lease for ${durationMonths} month(s)`,
+      nights: Number(durationMonths) * 30,
       guests: Number(guests),
-      total,
+      total: tokenAdvance,
+      monthlyRent,
+      depositRefundable,
       specialRequests
     });
   };
@@ -104,13 +94,13 @@ export default function BookingModal() {
   return (
     <div className="modal-backdrop" onClick={handleClose}>
       <div className="modal-box modal-ticket" onClick={(e) => e.stopPropagation()}>
-        {/* Boarding Pass Header */}
+        {/* Room Pass Header */}
         <div className="ticket-header">
           <div className="ticket-brand">
-            <span className="ticket-brand-mark">KL</span>
+            <span className="ticket-brand-mark">RR</span>
             <div>
-              <strong>KANSO LIVING</strong>
-              <span>ARCHITECTURAL STAY SLIP · आवास</span>
+              <strong>RENTAL ROOMS</strong>
+              <span>ROOM LEASE SLIP · कमरा टोकन</span>
             </div>
           </div>
           <button
@@ -139,44 +129,44 @@ export default function BookingModal() {
               {/* Form */}
               <form onSubmit={handleSubmit} className="ticket-inputs-grid">
                 <div className="form-group">
-                  <label htmlFor="bookCheckIn">Check-in Date *</label>
+                  <label htmlFor="bookMoveIn">Move-in Date *</label>
                   <input
                     type="date"
-                    id="bookCheckIn"
+                    id="bookMoveIn"
                     required
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
+                    value={moveInDate}
+                    onChange={(e) => setMoveInDate(e.target.value)}
                   />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="bookCheckOut">Check-out Date *</label>
-                  <input
-                    type="date"
-                    id="bookCheckOut"
-                    required
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                  />
+                  <label htmlFor="bookDuration">Lease Duration *</label>
+                  <select
+                    id="bookDuration"
+                    value={durationMonths}
+                    onChange={(e) => setDurationMonths(e.target.value)}
+                  >
+                    <option value="11">11 Months (Standard Registered Agreement)</option>
+                    <option value="6">6 Months (Mid-Term Lease)</option>
+                    <option value="12">12+ Months (Multi-Year Long-Term)</option>
+                    <option value="3">3 Months (Short Lock-In)</option>
+                  </select>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="bookGuests">Number of Guests</label>
+                  <label htmlFor="bookGuests">Occupants</label>
                   <select
                     id="bookGuests"
                     value={guests}
                     onChange={(e) => setGuests(e.target.value)}
                   >
-                    <option value="1">1 Guest</option>
-                    <option value="2">2 Guests</option>
-                    <option value="3">3 Guests</option>
-                    <option value="4">4 Guests</option>
-                    <option value="6">6 Guests</option>
+                    <option value="1">1 Person (Solo)</option>
+                    <option value="2">2 Persons (Sharing / Couple)</option>
                   </select>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="guestFullName">Full Name *</label>
+                  <label htmlFor="guestFullName">Tenant Full Name *</label>
                   <input
                     type="text"
                     id="guestFullName"
@@ -200,7 +190,7 @@ export default function BookingModal() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="guestPhone">Phone / WhatsApp *</label>
+                  <label htmlFor="guestPhone">WhatsApp / Mobile *</label>
                   <input
                     type="tel"
                     id="guestPhone"
@@ -212,11 +202,11 @@ export default function BookingModal() {
                 </div>
 
                 <div className="form-group span-2">
-                  <label htmlFor="specialRequests">Arrival Time & Notes</label>
+                  <label htmlFor="specialRequests">Move-in Time & Notes for Owner</label>
                   <input
                     type="text"
                     id="specialRequests"
-                    placeholder="e.g. Expected arrival at 3:00 PM, quiet workspace needed"
+                    placeholder="e.g. Bringing desktop PC, vegetarian kitchen, quiet hours"
                     value={specialRequests}
                     onChange={(e) => setSpecialRequests(e.target.value)}
                   />
@@ -225,22 +215,25 @@ export default function BookingModal() {
                 {/* Price Breakdown Calculation */}
                 <div className="ticket-calculation span-2">
                   <div className="calc-row">
-                    <span>₹{sanctuary.price.toLocaleString('en-IN')} × {nights} {nights === 1 ? 'night' : 'nights'}</span>
-                    <span>₹{basePrice.toLocaleString('en-IN')}</span>
+                    <span>Monthly Rent (₹)</span>
+                    <span>₹{monthlyRent.toLocaleString('en-IN')}/month</span>
                   </div>
                   <div className="calc-row">
-                    <span>Sanctuary Cleaning & Prep Fee</span>
-                    <span>₹{cleaningFee.toLocaleString('en-IN')}</span>
+                    <span>Brokerage Fee</span>
+                    <span style={{ color: 'var(--accent-moss)', fontWeight: 600 }}>₹0 (Zero Brokerage)</span>
                   </div>
                   <div className="calc-row">
-                    <span>Hospitality GST (12%)</span>
-                    <span>₹{tax.toLocaleString('en-IN')}</span>
+                    <span>Security Deposit (Refundable at move-out)</span>
+                    <span>₹{depositRefundable.toLocaleString('en-IN')}</span>
                   </div>
                   <div className="perforated-line"></div>
                   <div className="calc-row total-row">
-                    <span>Total Payable (INR)</span>
-                    <span className="total-amount">₹{total.toLocaleString('en-IN')}</span>
+                    <span>Room Hold Token Amount (Payable Now)</span>
+                    <span className="total-amount">₹{tokenAdvance.toLocaleString('en-IN')}</span>
                   </div>
+                  <p style={{ fontSize: '11px', color: 'var(--ink-tertiary)', marginTop: '4px' }}>
+                    * Token amount is 100% credited against your 1st month rent upon room handover.
+                  </p>
                 </div>
 
                 <div className="modal-footer span-2">
@@ -248,26 +241,26 @@ export default function BookingModal() {
                     Cancel
                   </button>
                   <button type="submit" className="btn-architectural btn-primary">
-                    Confirm & Issue Boarding Pass
+                    Hold Room & Issue Reservation Slip
                   </button>
                 </div>
               </form>
             </div>
           </div>
         ) : (
-          /* View 2: Generated Boarding Pass Receipt */
+          /* View 2: Generated Room Slip Receipt */
           <div id="bookingReceiptView">
             <div className="ticket-receipt" id="printableTicketReceipt">
               {/* Header strip */}
               <div className="receipt-header-strip">
                 <div className="receipt-badge-wrap">
-                  <span className="receipt-stamp-mark">OFFICIALLY CONFIRMED · पुष्टि</span>
-                  <span className="receipt-class-label">ARCHITECTURAL PASS // PRIORITY GUEST</span>
+                  <span className="receipt-stamp-mark">ROOM HELD · कमरा आरक्षित</span>
+                  <span className="receipt-class-label">ROOM SLIP // VERIFIED TENANT</span>
                 </div>
                 <div className="receipt-thumb-wrap">
                   <img
                     src={sanctuary.coverImg}
-                    alt="Sanctuary Thumbnail"
+                    alt="Room Thumbnail"
                     className="receipt-thumb-img"
                   />
                 </div>
@@ -276,63 +269,63 @@ export default function BookingModal() {
               {/* Rows */}
               <div className="receipt-row">
                 <div className="receipt-col">
-                  <label>PASSENGER / GUEST</label>
+                  <label>TENANT NAME</label>
                   <strong>{activeReceipt.guestName}</strong>
                   <span>{activeReceipt.guestEmail} · {activeReceipt.guestPhone}</span>
                 </div>
                 <div className="receipt-col">
-                  <label>BOARDING PASS NO.</label>
+                  <label>RESERVATION ID</label>
                   <strong className="receipt-booking-id">{activeReceipt.bookingId}</strong>
-                  <span className="badge-confirmed">Instant Host Confirmation</span>
+                  <span className="badge-confirmed">Zero Brokerage Verified</span>
                 </div>
               </div>
 
               <div className="receipt-row">
                 <div className="receipt-col">
-                  <label>SANCTUARY & CUSTODIAN</label>
+                  <label>ROOM & OWNER / FLATMATE</label>
                   <strong>{activeReceipt.title}</strong>
                   <span>{activeReceipt.location}</span>
                   <span className="receipt-host-sub">
-                    Custodian: {sanctuary.host?.name || 'Verified Architect'}
+                    Owner/Host: {sanctuary.host?.name || 'Verified Resident'}
                   </span>
                 </div>
                 <div className="receipt-col">
-                  <label>STAY DATES & TIMINGS</label>
+                  <label>MOVE-IN DATE & TERM</label>
                   <strong>
-                    {activeReceipt.nights} Nights ({activeReceipt.guests || 2} Guests)
+                    Move-in: {activeReceipt.checkIn}
                   </strong>
-                  <span>{activeReceipt.checkIn} → {activeReceipt.checkOut}</span>
-                  <span className="receipt-timing-sub">Check-in: 14:00 IST · Check-out: 11:00 IST</span>
+                  <span>Duration: {activeReceipt.checkOut} ({activeReceipt.guests || 1} Tenant)</span>
+                  <span className="receipt-timing-sub">Monthly Rent: ₹{monthlyRent.toLocaleString('en-IN')}/mo</span>
                 </div>
               </div>
 
               <div className="receipt-row">
                 <div className="receipt-col">
-                  <label>TOTAL SETTLED (INR)</label>
+                  <label>TOKEN SETTLED (INR)</label>
                   <strong className="receipt-total">
                     ₹{Number(activeReceipt.total).toLocaleString('en-IN')}
                   </strong>
-                  <span>Includes 12% Hospitality GST & Prep</span>
+                  <span>Adjustable in 1st Month Rent · 0 Brokerage</span>
                 </div>
                 <div className="receipt-col">
-                  <label>SECURITY & ACCESS</label>
-                  <strong className="receipt-access">VERIFIED DIGITAL KEY</strong>
-                  <span className="receipt-access-sub">Key code sent to WhatsApp 2h before arrival</span>
+                  <label>ROOM ACCESS & KEYS</label>
+                  <strong className="receipt-access">DIGITAL ROOM PASS</strong>
+                  <span className="receipt-access-sub">Owner contact & key passcode dispatched via WhatsApp</span>
                 </div>
               </div>
 
               {/* Physical Perforation Tear with Dual Punch Cutouts */}
               <div className="receipt-tear-line">
                 <span className="tear-label">
-                  TEAR OR DETACH ALONG PERFORATION FOR ACCESS RECORD
+                  TEAR OR DETACH ALONG PERFORATION FOR MOVE-IN CHECK-IN
                 </span>
               </div>
 
               <div className="ticket-barcode-wrap">
                 <div className="barcode-graphic"></div>
-                <span className="barcode-code">KN-STAY-VERIFIED-AUTH-INDIA-2026</span>
+                <span className="barcode-code">RENTAL-ROOM-LEASE-TOKEN-INDIA-2026</span>
                 <p className="ticket-legal-micro">
-                  ISSUED UNDER KANSO LIVING ARCHITECTURAL CHARTER · VALID ACROSS VERIFIED RESIDENCES
+                  ISSUED UNDER RENTAL ROOMS ZERO-BROKERAGE CHARTER · VALID FOR DIRECT TENANT MOVE-IN
                 </p>
               </div>
 
@@ -343,7 +336,7 @@ export default function BookingModal() {
                   onClick={handleContactHost}
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '6px' }}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
-                  Message Custodian
+                  Chat with Owner
                 </button>
                 <button
                   type="button"
@@ -358,7 +351,7 @@ export default function BookingModal() {
                   className="btn-architectural btn-primary"
                   onClick={handleViewAllReservations}
                 >
-                  View My Reservations
+                  View My Room Bookings
                 </button>
               </div>
             </div>

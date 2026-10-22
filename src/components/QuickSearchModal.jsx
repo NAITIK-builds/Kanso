@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useKanso } from '../context/KansoContext';
+import { useRental } from '../context/RentalContext';
 
 export default function QuickSearchModal() {
   const {
@@ -7,7 +7,7 @@ export default function QuickSearchModal() {
     setIsQuickSearchOpen,
     listings,
     setDetailSanctuaryId
-  } = useKanso();
+  } = useRental();
 
   const [query, setQuery] = useState('');
   const inputRef = useRef(null);
@@ -28,6 +28,9 @@ export default function QuickSearchModal() {
         return (
           item.title.toLowerCase().includes(q) ||
           item.location.toLowerCase().includes(q) ||
+          item.localArea?.toLowerCase().includes(q) ||
+          item.metroProximity?.toLowerCase().includes(q) ||
+          item.techParkProximity?.toLowerCase().includes(q) ||
           item.region.toLowerCase().includes(q) ||
           item.type.toLowerCase().includes(q) ||
           item.host?.name?.toLowerCase().includes(q) ||
@@ -50,8 +53,8 @@ export default function QuickSearchModal() {
       >
         <div className="modal-header" style={{ paddingBottom: '12px' }}>
           <div>
-            <span className="modal-tag">QUICK ARCHITECTURAL SEARCH</span>
-            <h3 className="modal-title">Search Sanctuaries</h3>
+            <span className="modal-tag">QUICK ROOM SEARCH</span>
+            <h3 className="modal-title">Search Available Rooms</h3>
           </div>
           <button
             type="button"
@@ -82,7 +85,7 @@ export default function QuickSearchModal() {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Search by name, Goa, Manali, pool, architect..."
+              placeholder="Search by room type, Bangalore, Bandra, attached bath, AC..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               style={{
@@ -124,7 +127,7 @@ export default function QuickSearchModal() {
               marginBottom: '10px'
             }}
           >
-            {query.trim() ? `Found ${filtered.length} Results` : 'Featured Sanctuaries'}
+            {query.trim() ? `Found ${filtered.length} Results` : 'Featured Verified Rooms'}
           </span>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -159,7 +162,7 @@ export default function QuickSearchModal() {
                     {item.title}
                   </strong>
                   <span style={{ fontSize: '12px', color: 'var(--ink-tertiary)' }}>
-                    {item.location} · {item.type}
+                    {item.localArea ? `📍 ${item.localArea} · ` : ''}{item.location} · {item.type}
                   </span>
                 </div>
                 <div style={{ textAlign: 'right' }}>
@@ -167,7 +170,7 @@ export default function QuickSearchModal() {
                     ₹{item.price.toLocaleString('en-IN')}
                   </span>
                   <span style={{ display: 'block', fontSize: '11px', color: 'var(--ink-tertiary)' }}>
-                    / night
+                    {item.pricePeriod || '/ month'}
                   </span>
                 </div>
               </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useKanso } from '../context/KansoContext';
+import { useRental } from '../context/RentalContext';
 import SmoothImage from './SmoothImage';
 
 export default function DetailModal() {
@@ -12,7 +12,7 @@ export default function DetailModal() {
     setBookingSanctuaryId,
     setInquiryTarget,
     setAddReviewTarget
-  } = useKanso();
+  } = useRental();
 
   const [activeImgIndex, setActiveImgIndex] = useState(0);
 
@@ -44,37 +44,29 @@ export default function DetailModal() {
 
   return (
     <div className="modal-backdrop" onClick={handleClose}>
-      <div className="modal-box modal-xl" onClick={(e) => e.stopPropagation()}>
-        {/* Top bar */}
-        <div className="detail-header-bar">
-          <div className="detail-breadcrumbs">
-            <span>{sanctuary.region.toUpperCase()}</span> //{' '}
-            <span>{sanctuary.type.toUpperCase()}</span> //{' '}
-            <span>{sanctuary.id.toUpperCase()}</span>
+      <div className="modal-box modal-detail" onClick={(e) => e.stopPropagation()}>
+        {/* Modal Topbar */}
+        <div className="detail-modal-topbar">
+          <div className="topbar-left">
+            <span className="room-id-tag">ROOM // {sanctuary.id.toUpperCase()}</span>
+            <span className="room-type-tag">📍 {sanctuary.localArea?.toUpperCase()} · {sanctuary.city?.toUpperCase() || sanctuary.region?.toUpperCase()}</span>
           </div>
-          <div className="detail-top-actions">
+          <div className="topbar-right">
             <button
               type="button"
-              className={`action-icon-pill ${isSaved ? 'active' : ''}`}
+              className={`btn-save-round ${isSaved ? 'active' : ''}`}
               onClick={() => toggleWishlist(sanctuary.id)}
+              aria-label={isSaved ? 'Remove from saved' : 'Save room'}
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill={isSaved ? 'var(--accent-earth)' : 'none'}
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill={isSaved ? 'var(--accent-earth)' : 'none'} stroke="currentColor" strokeWidth="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
-              <span>{isSaved ? 'Saved to Wishlist' : 'Save to Wishlist'}</span>
             </button>
             <button
               type="button"
               className="modal-close-btn"
               onClick={handleClose}
-              aria-label="Close detail modal"
+              aria-label="Close details"
             >
               ✕
             </button>
@@ -118,14 +110,50 @@ export default function DetailModal() {
 
             <div className="detail-specs-bar">{sanctuary.specs}</div>
 
+            {/* Long-Stay Lease & Local Transit Specs */}
+            <div className="detail-longstay-box">
+              <div className="longstay-row">
+                <span className="ls-label">📋 Lease Agreement:</span>
+                <span className="ls-val">{sanctuary.leaseTerm || '11-Month Renewable Agreement'} (Lock-in: {sanctuary.lockInPeriod || '3 Mos'})</span>
+              </div>
+              <div className="longstay-row">
+                <span className="ls-label">💰 Security Deposit:</span>
+                <span className="ls-val">{sanctuary.depositText || `₹${(sanctuary.price * 2).toLocaleString('en-IN')} (Refundable)`}</span>
+              </div>
+              {sanctuary.metroProximity && (
+                <div className="longstay-row">
+                  <span className="ls-label">🚇 Transit & Metro:</span>
+                  <span className="ls-val">{sanctuary.metroProximity}</span>
+                </div>
+              )}
+              {sanctuary.techParkProximity && (
+                <div className="longstay-row">
+                  <span className="ls-label">🏢 Work Proximity:</span>
+                  <span className="ls-val">{sanctuary.techParkProximity}</span>
+                </div>
+              )}
+              {sanctuary.dailyEssentials && (
+                <div className="longstay-row">
+                  <span className="ls-label">🛒 Daily Essentials:</span>
+                  <span className="ls-val">{sanctuary.dailyEssentials}</span>
+                </div>
+              )}
+              {sanctuary.utilityBillSharing && (
+                <div className="longstay-row">
+                  <span className="ls-label">⚡ Bills & Utilities:</span>
+                  <span className="ls-val">{sanctuary.utilityBillSharing}</span>
+                </div>
+              )}
+            </div>
+
             <div className="detail-narrative">
-              <h4>THE ARCHITECTURAL NARRATIVE</h4>
+              <h4>ROOM OVERVIEW & LIVING DETAILS</h4>
               <p>{sanctuary.narrative}</p>
             </div>
 
             {/* Amenities Pills */}
             <div className="detail-amenities-section">
-              <h4>SANCTUARY PROVISIONS</h4>
+              <h4>INCLUDED ROOM AMENITIES</h4>
               <div className="amenities-pill-grid">
                 {sanctuary.amenities.map((item, idx) => (
                   <span key={idx} className="amenity-pill-item">
@@ -138,70 +166,69 @@ export default function DetailModal() {
             {/* Host Identity Card */}
             <div className="detail-host-card">
               <div className="host-avatar-box">
-                <span>{sanctuary.host?.initials || 'AC'}</span>
+                <span>{sanctuary.host?.initials || 'RO'}</span>
               </div>
               <div className="host-card-info">
                 <div className="host-name-role">
-                  <h5>{sanctuary.host?.name || 'Architect Custodian'}</h5>
-                  <span className="verified-host-tag">VERIFIED CUSTODIAN</span>
+                  <h5>{sanctuary.host?.name || 'Verified Room Owner'}</h5>
+                  <span className="verified-host-tag">VERIFIED RESIDENT</span>
                 </div>
-                <p>{sanctuary.host?.bio || 'Preserving regional architectural heritage.'}</p>
+                <p>{sanctuary.host?.bio || 'Welcoming respectful, clean, and quiet flatmates.'}</p>
               </div>
               <button
                 type="button"
                 className="btn-architectural btn-sm"
                 onClick={handleInquire}
               >
-                Inquire
+                Chat with Owner
               </button>
             </div>
 
             {/* Quick Reserve Floating Action Box */}
             <div className="detail-booking-action-box">
-              <div className="box-rate">
-                <span className="rate-amount">₹{sanctuary.price.toLocaleString('en-IN')}</span>
-                <span className="rate-period">/ night (+ 12% GST)</span>
+              <div className="action-price-block">
+                <span className="action-rent">₹{sanctuary.price.toLocaleString('en-IN')}</span>
+                <span className="action-period">{sanctuary.pricePeriod || '/ month'} · Zero Brokerage</span>
               </div>
-              <button
-                type="button"
-                className="btn-architectural btn-primary btn-book"
-                onClick={handleBookNow}
-              >
-                Book Instantly
-              </button>
+              <div className="action-buttons-group">
+                <button
+                  type="button"
+                  className="btn-architectural btn-primary"
+                  onClick={handleBookNow}
+                >
+                  Apply & Reserve Room
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
 
-        {/* Guest Reviews Section */}
-        <div className="detail-reviews-section">
-          <div className="reviews-header">
-            <h3>Guest Impressions ({sanctuary.reviews?.length || 0})</h3>
-            <button
-              type="button"
-              className="btn-architectural btn-sm"
-              onClick={handleWriteImpression}
-            >
-              + Write Impression
-            </button>
-          </div>
-          <div className="reviews-masonry">
-            {sanctuary.reviews && sanctuary.reviews.length > 0 ? (
-              sanctuary.reviews.map((rev, idx) => (
-                <div key={idx} className="review-card">
-                  <div className="review-card-header">
-                    <span className="review-author">{rev.author}</span>
-                    <span className="review-score">★ {rev.score}</span>
+            {/* Tenant Impressions / Reviews */}
+            <div className="detail-impressions-list">
+              <div className="impressions-header">
+                <h4>VERIFIED TENANT EXPERIENCES</h4>
+                <button
+                  type="button"
+                  className="btn-add-impression-link"
+                  onClick={handleWriteImpression}
+                >
+                  + Add Review
+                </button>
+              </div>
+
+              {sanctuary.reviews && sanctuary.reviews.length > 0 ? (
+                sanctuary.reviews.map((r, i) => (
+                  <div key={i} className="impression-item">
+                    <div className="impression-author-bar">
+                      <span className="author-name">{r.author}</span>
+                      <span className="author-score">★ {r.score}</span>
+                      <span className="author-date">{r.date}</span>
+                    </div>
+                    <p className="impression-text">"{r.text}"</p>
                   </div>
-                  <span className="review-date">{rev.date}</span>
-                  <p className="review-text">"{rev.text}"</p>
-                </div>
-              ))
-            ) : (
-              <p style={{ color: 'var(--ink-tertiary)', fontStyle: 'italic', padding: '16px 0' }}>
-                No guest impressions yet. Be the first to share your experience.
-              </p>
-            )}
+                ))
+              ) : (
+                <p className="no-reviews-text">No reviews recorded yet for this room.</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
