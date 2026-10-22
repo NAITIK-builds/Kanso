@@ -33,8 +33,8 @@ export default function AddReviewModal() {
       <div className="modal-box modal-md" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="modal-tag">GUEST IMPRESSION</span>
-            <h3 className="modal-title">Share Your Experience</h3>
+            <span className="modal-tag">TENANT REVIEW</span>
+            <h3 className="modal-title">Share Your Room Experience</h3>
           </div>
           <button
             type="button"
@@ -66,20 +66,20 @@ export default function AddReviewModal() {
               value={rating}
               onChange={(e) => setRating(e.target.value)}
             >
-              <option value="5">★★★★★ — Exceptional Sanctuary (5.0)</option>
-              <option value="4.8">★★★★☆ — Peaceful & High Quality (4.8)</option>
-              <option value="4.5">★★★★☆ — Very Good Stay (4.5)</option>
-              <option value="4.0">★★★★☆ — Good (4.0)</option>
+              <option value="5">★★★★★ — Outstanding Room & Quiet Living (5.0)</option>
+              <option value="4.8">★★★★☆ — Peaceful & Clean Room (4.8)</option>
+              <option value="4.5">★★★★☆ — Very Good Stay & Fast WiFi (4.5)</option>
+              <option value="4.0">★★★★☆ — Good Room (4.0)</option>
             </select>
           </div>
 
           <div className="form-group span-2">
-            <label htmlFor="reviewText">Your Impression & Notes *</label>
+            <label htmlFor="reviewText">Your Review & Notes *</label>
             <textarea
               id="reviewText"
               rows={3}
               required
-              placeholder="Describe the atmosphere, quietness, light, and host hospitality..."
+              placeholder="Describe room cleanliness, ventilation, WiFi stability, noise levels, and owner/flatmate friendliness..."
               value={text}
               onChange={(e) => setText(e.target.value)}
             ></textarea>
@@ -94,7 +94,7 @@ export default function AddReviewModal() {
               Cancel
             </button>
             <button type="submit" className="btn-architectural btn-primary">
-              Submit Impression
+              Submit Room Review
             </button>
           </div>
         </form>

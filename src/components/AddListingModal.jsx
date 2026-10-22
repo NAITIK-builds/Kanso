@@ -2,35 +2,39 @@ import React, { useState } from 'react';
 import { useKanso } from '../context/KansoContext';
 
 const AMENITY_OPTIONS = [
-  'Plunge Pool',
+  'Attached Bath',
   'High-Speed WiFi',
-  'Private Chef',
-  'Mountain Panorama',
-  'Yoga Deck',
-  'Pet Friendly',
   'Air Conditioning',
-  'Dedicated Workspace'
+  'Furnished',
+  'Work Desk',
+  'Shared Kitchen',
+  'Power Backup',
+  'Housekeeping',
+  'Food / Meal Option',
+  'Pet Friendly'
 ];
 
 export default function AddListingModal() {
   const { isAddListingOpen, setIsAddListingOpen, createListing } = useKanso();
 
   const [title, setTitle] = useState('');
-  const [type, setType] = useState('Villa');
-  const [region, setRegion] = useState('Goa');
+  const [type, setType] = useState('Private Room');
+  const [region, setRegion] = useState('Bangalore');
   const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('18000');
-  const [guests, setGuests] = useState('4');
-  const [specs, setSpecs] = useState('2 Suites · 2 Baths · Garden Courtyard');
+  const [price, setPrice] = useState('14500');
+  const [guests, setGuests] = useState('1');
+  const [tenantPreference, setTenantPreference] = useState('Any (Working Professional)');
+  const [specs, setSpecs] = useState('Queen Bed · Attached Bath · Balcony · 220 sq.ft');
   const [coverImg, setCoverImg] = useState(
-    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80'
+    'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80'
   );
   const [narrative, setNarrative] = useState('');
   const [selectedAmenities, setSelectedAmenities] = useState([
-    'Plunge Pool',
+    'Attached Bath',
     'High-Speed WiFi',
-    'Private Chef',
-    'Air Conditioning'
+    'Air Conditioning',
+    'Furnished',
+    'Work Desk'
   ]);
 
   if (!isAddListingOpen) return null;
@@ -50,9 +54,11 @@ export default function AddListingModal() {
       type,
       region,
       location: location.trim(),
-      price: Number(price) || 15000,
-      guests: Number(guests) || 4,
-      specs: `${guests} Guests · ${specs}`,
+      price: Number(price) || 12000,
+      pricePeriod: '/ month',
+      guests: Number(guests) || 1,
+      tenantPreference,
+      specs: `${guests} Tenant(s) · ${specs}`,
       coverImg: coverImg.trim(),
       narrative: narrative.trim(),
       amenities: selectedAmenities
@@ -64,8 +70,8 @@ export default function AddListingModal() {
       <div className="modal-box modal-lg" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="modal-tag">HOST SUBMISSION</span>
-            <h3 className="modal-title">Publish an Architectural Sanctuary</h3>
+            <span className="modal-tag">ROOM SUBMISSION // ZERO BROKERAGE</span>
+            <h3 className="modal-title">Post a Room for Rent</h3>
           </div>
           <button
             type="button"
@@ -79,103 +85,117 @@ export default function AddListingModal() {
 
         <form onSubmit={handleSubmit} className="modal-body form-grid">
           <div className="form-group span-2">
-            <label htmlFor="listingTitle">Sanctuary Name *</label>
+            <label htmlFor="listingTitle">Room Title *</label>
             <input
               type="text"
               id="listingTitle"
               required
-              placeholder="e.g. The Courtyard Villa"
+              placeholder="e.g. Sunlit Master Bedroom with Private Balcony"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="listingType">Property Type *</label>
+            <label htmlFor="listingType">Room Type *</label>
             <select
               id="listingType"
               required
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
-              <option value="Villa">Stone & Coastal Villa</option>
-              <option value="Chalet">Mountain & Cedar Chalet</option>
-              <option value="Haveli">Heritage Haveli</option>
-              <option value="Bungalow">Plantation Bungalow</option>
-              <option value="Loft">Atelier & Urban Loft</option>
+              <option value="Private Room">Private Bedroom</option>
+              <option value="Single Room">Single / Solo Room</option>
+              <option value="Shared Room">Shared / Twin Sharing</option>
+              <option value="Studio Room">Studio Room / 1RK</option>
+              <option value="Co-Living">Co-Living Suite</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="listingState">State / Region *</label>
+            <label htmlFor="listingState">City / Hub *</label>
             <select
               id="listingState"
               required
               value={region}
               onChange={(e) => setRegion(e.target.value)}
             >
+              <option value="Bangalore">Bangalore</option>
+              <option value="Mumbai">Mumbai</option>
               <option value="Goa">Goa</option>
               <option value="Himachal Pradesh">Himachal Pradesh</option>
               <option value="Rajasthan">Rajasthan</option>
-              <option value="Karnataka">Karnataka</option>
-              <option value="Kerala">Kerala</option>
               <option value="Puducherry">Puducherry</option>
-              <option value="Uttarakhand">Uttarakhand</option>
-              <option value="Maharashtra">Maharashtra (Alibaug)</option>
+              <option value="Delhi NCR">Delhi NCR</option>
+              <option value="Pune">Pune</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="listingLocation">Specific City / Town *</label>
+            <label htmlFor="listingLocation">Neighborhood / Area *</label>
             <input
               type="text"
               id="listingLocation"
               required
-              placeholder="e.g. Morjim, North Goa"
+              placeholder="e.g. Indiranagar 100ft Rd, Bangalore"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="listingPrice">Price per Night (₹ INR) *</label>
+            <label htmlFor="listingPrice">Monthly Rent (₹ INR / month) *</label>
             <input
               type="number"
               id="listingPrice"
               required
               min="1000"
               step="500"
-              placeholder="15000"
+              placeholder="14500"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="listingGuests">Max Guests</label>
-            <input
-              type="number"
+            <label htmlFor="listingGuests">Max Occupants</label>
+            <select
               id="listingGuests"
-              min="1"
-              max="20"
               value={guests}
               onChange={(e) => setGuests(e.target.value)}
-            />
+            >
+              <option value="1">1 Person (Solo)</option>
+              <option value="2">2 Persons (Double Sharing / Couple)</option>
+            </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="listingBedrooms">Bedrooms & Bathrooms</label>
+            <label htmlFor="listingTenantPref">Tenant Preference</label>
+            <select
+              id="listingTenantPref"
+              value={tenantPreference}
+              onChange={(e) => setTenantPreference(e.target.value)}
+            >
+              <option value="Any (Working Professional)">Any (Working Professional)</option>
+              <option value="Male Only (Bachelor / Student)">Male Only (Bachelor / Student)</option>
+              <option value="Female Only (Working / Student)">Female Only (Working / Student)</option>
+              <option value="Couple Friendly">Couple Friendly</option>
+            </select>
+          </div>
+
+          <div className="form-group span-2">
+            <label htmlFor="listingBedrooms">Room Specs & Dimensions</label>
             <input
               type="text"
               id="listingBedrooms"
-              placeholder="2 Beds · 2 Baths"
+              placeholder="Queen Bed · Attached Bath · Balcony · 220 sq.ft"
               value={specs}
               onChange={(e) => setSpecs(e.target.value)}
             />
           </div>
 
           <div className="form-group span-2">
-            <label htmlFor="listingImage">Cover Image URL (High-Res Architectural Photo) *</label>
+            <label htmlFor="listingImage">Cover Image URL (Clean Bedroom Photo) *</label>
             <input
               type="url"
               id="listingImage"
@@ -184,23 +204,23 @@ export default function AddListingModal() {
               value={coverImg}
               onChange={(e) => setCoverImg(e.target.value)}
             />
-            <span className="field-hint">Defaults to a verified architectural photograph. You can paste any valid image URL.</span>
+            <span className="field-hint">Defaults to a verified room photograph. You can paste any valid image URL.</span>
           </div>
 
           <div className="form-group span-2">
-            <label htmlFor="listingDesc">Sanctuary Narrative / Description *</label>
+            <label htmlFor="listingDesc">Room Description & Flat Rules *</label>
             <textarea
               id="listingDesc"
               rows={3}
               required
-              placeholder="Describe the materials, architectural flow, light, and natural surroundings..."
+              placeholder="Describe ventilation, sunlight, study desk, attached washroom, flatmates, and kitchen access..."
               value={narrative}
               onChange={(e) => setNarrative(e.target.value)}
             ></textarea>
           </div>
 
           <div className="form-group span-2">
-            <label>Sanctuary Amenities</label>
+            <label>Included Amenities & Comforts</label>
             <div className="amenities-checkbox-grid">
               {AMENITY_OPTIONS.map((amenity) => (
                 <label key={amenity}>
@@ -224,7 +244,7 @@ export default function AddListingModal() {
               Cancel
             </button>
             <button type="submit" className="btn-architectural btn-primary">
-              Publish to Marketplace
+              Post Room Listing
             </button>
           </div>
         </form>

@@ -12,7 +12,7 @@ export default function AuthModal() {
   const [propertyName, setPropertyName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('kanso2026');
+  const [password, setPassword] = useState('rental2026');
 
   useEffect(() => {
     if (authModalState) {
@@ -79,10 +79,10 @@ export default function AuthModal() {
       <header className="auth-page-topbar">
         <div className="auth-topbar-brand">
           <div className="brand-emblem">
-            <span className="brand-monogram">K</span>
+            <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">KANSO LIVING</span>
-              <span className="brand-sub">ARCHITECTURAL ACCESS</span>
+              <span className="brand-name">RENTAL ROOMS</span>
+              <span className="brand-sub">VERIFIED ACCESS</span>
             </div>
           </div>
         </div>
@@ -105,44 +105,44 @@ export default function AuthModal() {
         <div className="auth-visual-col">
           <div className="auth-visual-inner">
             <div className="auth-brand-stamp">
-              <span className="auth-kanso-mark">K</span>
+              <span className="auth-rental-mark auth-kanso-mark">R</span>
               <div>
-                <strong>KANSO LIVING</strong>
-                <span>ARCHITECTURAL HOSPITALITY INDIA</span>
+                <strong>RENTAL ROOMS</strong>
+                <span>VERIFIED ROOMS & CO-LIVING</span>
               </div>
             </div>
 
             <div className="auth-quote-wrap">
-              <div className="auth-tag-pill">ARCHITECTURAL MANIFESTO</div>
+              <div className="auth-tag-pill">MINDFUL ROOM LIVING</div>
               <h2 className="auth-visual-heading">
-                Dwell in silence.<br />Share regional craft.
+                Live peacefully.<br />Find verified rooms.
               </h2>
               <p className="auth-manifesto-quote">
-                "A sanctuary begins with the custodian who tends its walls, and finds life with the traveler who seeks its silence."
+                "A great room gives you quiet focus, high-speed fiber internet, and respectful flatmates without the stress of broker commissions."
               </p>
-              <span className="auth-quote-author">— Kanso Living Philosophy</span>
+              <span className="auth-quote-author">— Rental Rooms Ethos</span>
             </div>
 
             {/* Dual Persona Value Offerings */}
             <div className="auth-perks-list">
               <div className="auth-perk-card">
-                <div className="perk-badge guest">✦ FOR SEEKERS (ROOMS & HOUSES)</div>
+                <div className="perk-badge guest">✦ FOR TENANTS & SEEKERS</div>
                 <p>
-                  Reserve handcrafted rooms, coastal laterite villas, and cedar mountain chalets across India with transparent pricing in INR (₹) and verified architectural materials.
+                  Find verified furnished private bedrooms, master suites, and shared flats across top Indian hubs with zero brokerage and transparent monthly rent.
                 </p>
               </div>
               <div className="auth-perk-card">
-                <div className="perk-badge host">🏛️ FOR HOSTS & SELLERS (LIST ARCHITECTURE)</div>
+                <div className="perk-badge host">🛏️ FOR ROOM OWNERS & FLATMATES</div>
                 <p>
-                  List your boutique properties, showcase your architectural work, connect directly with quiet travelers, and manage seasonal guest reservations with prompt settlements.
+                  List your spare bedroom, connect directly with background-checked professionals and students, and manage rent reservations with zero middleman fees.
                 </p>
               </div>
             </div>
 
             <div className="auth-trust-footer">
-              <span className="trust-item">✓ Verified Regional Materials</span>
-              <span className="trust-item">✓ Transparent INR (₹) Breakdown</span>
-              <span className="trust-item">✓ Direct Custodian Care</span>
+              <span className="trust-item">✓ Verified Room Amenities</span>
+              <span className="trust-item">✓ Zero Brokerage Fees</span>
+              <span className="trust-item">✓ Direct Owner Connect</span>
             </div>
           </div>
         </div>
@@ -152,9 +152,9 @@ export default function AuthModal() {
           <div className="auth-form-container">
             <div className="auth-header-bar">
               <span className="modal-tag">SECURE ACCESS</span>
-              <h1 className="auth-main-title">Welcome to Kanso Living</h1>
+              <h1 className="auth-main-title">Welcome to Rental Rooms</h1>
               <p className="auth-intro-sub">
-                Sign in to your account or register to explore and host boutique Indian architecture.
+                Sign in to your account or register to rent or list verified furnished rooms across India.
               </p>
             </div>
 
@@ -270,7 +270,7 @@ export default function AuthModal() {
                     className="forgot-link"
                     onClick={(e) => {
                       e.preventDefault();
-                      alert("Demo password is pre-filled: kanso2026");
+                      alert("Demo password is pre-filled: rental2026");
                     }}
                   >
                     Forgot?

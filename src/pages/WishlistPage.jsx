@@ -12,10 +12,10 @@ export default function WishlistPage() {
     <div className="wishlist-page container">
       {/* Header */}
       <div className="page-header-block">
-        <div className="page-stamp-tag">SAVED ARCHITECTURAL RETREATS</div>
-        <h1 className="page-heading">Your Saved Sanctuaries ({savedSanctuaries.length})</h1>
+        <div className="page-stamp-tag">SAVED ROOMS & FLATSHARES</div>
+        <h1 className="page-heading">Your Saved Rooms ({savedSanctuaries.length})</h1>
         <p className="page-subheading">
-          Hand-picked residences, mountain chalets, and private estates saved for future mindful escapes.
+          Curated private bedrooms, studios, and verified flatshares saved for your next move.
         </p>
       </div>
 
@@ -29,10 +29,10 @@ export default function WishlistPage() {
       ) : (
         <div className="journeys-empty-card">
           <div className="empty-icon-wrap">♡</div>
-          <h3>Your Wishlist is Empty</h3>
-          <p>Tap the heart icon on any sanctuary while browsing to save it to your private collection.</p>
+          <h3>Your Room Shortlist is Empty</h3>
+          <p>Tap the bookmark heart icon on any room while browsing to save it to your private shortlist.</p>
           <Link to="/" className="btn-architectural btn-primary">
-            Discover Sanctuaries
+            Discover Available Rooms
           </Link>
         </div>
       )}

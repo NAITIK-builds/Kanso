@@ -20,10 +20,10 @@ export default function HostPortalPage() {
       {/* Top Header */}
       <div className="host-page-header">
         <div>
-          <span className="host-badge-pill">CUSTODIAN SUITE // 2026</span>
-          <h1 className="host-main-heading">Manage Your Sanctuaries & Guests</h1>
+          <span className="host-badge-pill">ROOM OWNER & HOST SUITE // 2026</span>
+          <h1 className="host-main-heading">Manage Your Rooms & Tenants</h1>
           <p className="host-subtitle">
-            Oversee architectural listings, track arrivals, and dispatch keyless credentials to travelers.
+            Oversee room listings, review tenant move-in reservations, and dispatch digital access passes.
           </p>
         </div>
 
@@ -32,26 +32,26 @@ export default function HostPortalPage() {
           className="btn-architectural btn-primary"
           onClick={() => setIsAddListingOpen(true)}
         >
-          <span>+ List New Sanctuary</span>
+          <span>+ Post a Room</span>
         </button>
       </div>
 
       {/* Metrics Grid */}
       <div className="custodian-metrics-grid">
         <div className="custodian-metric-box scroll-reveal">
-          <span className="c-metric-label">ACTIVE SANCTUARIES</span>
+          <span className="c-metric-label">ACTIVE ROOMS</span>
           <strong className="c-metric-val">{listings.length}</strong>
-          <span className="c-metric-hint">Verified residences on Kanso</span>
+          <span className="c-metric-hint">Verified rooms on Rental</span>
         </div>
         <div className="custodian-metric-box scroll-reveal">
-          <span className="c-metric-label">TOTAL GUEST ARRIVALS</span>
+          <span className="c-metric-label">TOTAL TENANT RESERVATIONS</span>
           <strong className="c-metric-val">{reservations.length}</strong>
-          <span className="c-metric-hint">Confirmed reservations</span>
+          <span className="c-metric-hint">Confirmed room hold slips</span>
         </div>
         <div className="custodian-metric-box scroll-reveal">
-          <span className="c-metric-label">ESTIMATED DISBURSEMENTS</span>
+          <span className="c-metric-label">ESTIMATED MONTHLY VOLUME</span>
           <strong className="c-metric-val">₹{totalPayout.toLocaleString('en-IN')}</strong>
-          <span className="c-metric-hint">Total gross payout volume</span>
+          <span className="c-metric-hint">Total monthly rental volume</span>
         </div>
       </div>
 
@@ -62,14 +62,14 @@ export default function HostPortalPage() {
           className={`c-tab-btn ${activeTab === 'bookings' ? 'active' : ''}`}
           onClick={() => setActiveTab('bookings')}
         >
-          Guest Reservations ({reservations.length})
+          Tenant Bookings ({reservations.length})
         </button>
         <button
           type="button"
           className={`c-tab-btn ${activeTab === 'listings' ? 'active' : ''}`}
           onClick={() => setActiveTab('listings')}
         >
-          Listed Sanctuaries ({listings.length})
+          Listed Rooms ({listings.length})
         </button>
       </div>
 

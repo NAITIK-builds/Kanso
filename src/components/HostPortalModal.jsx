@@ -24,8 +24,8 @@ export default function HostPortalModal() {
         {/* Header */}
         <div className="host-header">
           <div className="host-title-meta">
-            <span className="host-badge">HOST CUSTODIAN PORTAL</span>
-            <h2>Manage Your Sanctuaries & Guests</h2>
+            <span className="host-badge">ROOM OWNER & HOST PORTAL</span>
+            <h2>Manage Your Rooms & Tenants</h2>
           </div>
           <div className="host-header-actions">
             <button
@@ -33,7 +33,7 @@ export default function HostPortalModal() {
               className="btn-architectural btn-primary"
               onClick={() => setIsAddListingOpen(true)}
             >
-              + List New Sanctuary
+              + Post a Room
             </button>
             <button
               type="button"
@@ -49,19 +49,19 @@ export default function HostPortalModal() {
         {/* Metrics Grid */}
         <div className="host-metrics-grid">
           <div className="metric-card">
-            <span className="metric-label">ACTIVE SPACES</span>
+            <span className="metric-label">ACTIVE ROOMS</span>
             <span className="metric-val">{listings.length}</span>
-            <span className="metric-sub">Listed on Kanso Marketplace</span>
+            <span className="metric-sub">Listed on Rental Rooms</span>
           </div>
           <div className="metric-card">
-            <span className="metric-label">RESERVATIONS RECEIVED</span>
+            <span className="metric-label">TENANT BOOKINGS</span>
             <span className="metric-val">{reservations.length}</span>
-            <span className="metric-sub">Confirmed instant bookings</span>
+            <span className="metric-sub">Confirmed room reservations</span>
           </div>
           <div className="metric-card">
-            <span className="metric-label">TOTAL HOST PAYOUT</span>
+            <span className="metric-label">MONTHLY VOLUME</span>
             <span className="metric-val">₹{totalPayout.toLocaleString('en-IN')}</span>
-            <span className="metric-sub">Accumulated earnings in ₹</span>
+            <span className="metric-sub">Rental volume in ₹</span>
           </div>
         </div>
 
@@ -72,14 +72,14 @@ export default function HostPortalModal() {
             className={`host-tab ${activeTab === 'listings' ? 'active' : ''}`}
             onClick={() => setActiveTab('listings')}
           >
-            Your Listed Sanctuaries ({listings.length})
+            Your Listed Rooms ({listings.length})
           </button>
           <button
             type="button"
             className={`host-tab ${activeTab === 'bookings' ? 'active' : ''}`}
             onClick={() => setActiveTab('bookings')}
           >
-            Guest Reservations & Inquiries ({reservations.length})
+            Tenant Reservations ({reservations.length})
           </button>
         </div>
 

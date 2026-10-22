@@ -4,25 +4,25 @@ export default function CraftPhilosophy() {
   return (
     <section className="craft-manifesto-section">
       <div className="container craft-inner scroll-reveal">
-        <div className="craft-stamp">KANSO PHILOSOPHY</div>
+        <div className="craft-stamp">RENTAL ROOMS ETHOS</div>
         <blockquote className="craft-quote">
-          "Architecture is not merely walls and beams; it is the curation of stillness, light, and natural shadow."
+          "A mindful room is more than four walls; it is your personal sanctuary for deep work, restful sleep, and peaceful daily focus."
         </blockquote>
         <div className="craft-pillars">
           <div className="pillar-card scroll-reveal">
             <span className="pillar-num">01</span>
-            <h4>Indigenous Craft</h4>
-            <p>Built with regional materials: Goa laterite stone, Himalayan deodar wood, and Rajasthan sandstone.</p>
+            <h4>Zero Brokerage & Direct</h4>
+            <p>Every monthly rent in ₹ is direct from room owner or lead flatmate. No hidden agent commissions or inflated fees.</p>
           </div>
           <div className="pillar-card scroll-reveal">
             <span className="pillar-num">02</span>
-            <h4>Transparent Living</h4>
-            <p>Every rate in ₹ is direct from host to guest with verified amenities, zero hidden costs, and standard 12% GST.</p>
+            <h4>Verified Comforts</h4>
+            <p>Real bedroom photographs, confirmed fiber WiFi speeds, attached bath specifications, and clear utility sharing.</p>
           </div>
           <div className="pillar-card scroll-reveal">
             <span className="pillar-num">03</span>
-            <h4>Host Sanctuary Care</h4>
-            <p>Each home is managed by passionate local hosts and architectural custodians dedicated to high hospitality.</p>
+            <h4>Peaceful Flatshares</h4>
+            <p>Connect with quiet, like-minded flatmates and hosts who respect personal privacy, study hours, and clean shared spaces.</p>
           </div>
         </div>
       </div>

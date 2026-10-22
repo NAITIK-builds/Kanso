@@ -23,8 +23,8 @@ export default function ReservationsModal() {
       <div className="modal-box modal-md" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="modal-tag">YOUR JOURNEYS</span>
-            <h3 className="modal-title">Reserved Sanctuaries</h3>
+            <span className="modal-tag">YOUR ROOM RESERVATIONS</span>
+            <h3 className="modal-title">My Room Bookings & Lease Slips</h3>
           </div>
           <button
             type="button"
@@ -63,23 +63,23 @@ export default function ReservationsModal() {
 
                     <div className="res-item-schedule">
                       <div className="schedule-pill">
-                        <span className="pill-lbl">CHECK-IN</span>
+                        <span className="pill-lbl">MOVE-IN</span>
                         <strong>{res.checkIn}</strong>
                       </div>
                       <span className="sched-arrow">→</span>
                       <div className="schedule-pill">
-                        <span className="pill-lbl">CHECK-OUT</span>
+                        <span className="pill-lbl">LEASE TERM</span>
                         <strong>{res.checkOut}</strong>
                       </div>
                       <div className="schedule-pill duration">
-                        <span className="pill-lbl">STAY</span>
-                        <strong>{res.nights} Nights · {res.guests || 2} Guests</strong>
+                        <span className="pill-lbl">TENANT</span>
+                        <strong>{res.guests || 1} Tenant · Zero Brokerage</strong>
                       </div>
                     </div>
 
                     <div className="res-item-meta">
                       <div className="meta-cell">
-                        <span className="res-lbl">Boarding Pass:</span>
+                        <span className="res-lbl">Reservation Slip:</span>
                         <code className="res-code-badge">{res.bookingId}</code>
                       </div>
                       {res.specialRequests && (
@@ -92,10 +92,10 @@ export default function ReservationsModal() {
 
                     <div className="res-item-footer">
                       <div className="res-price">
-                        <span className="price-label">Total Settled:</span>
+                        <span className="price-label">Token Advance:</span>
                         <div className="price-figure-wrap">
                           <strong>₹{Number(res.total).toLocaleString('en-IN')}</strong>
-                          <span className="res-tax-note">incl. 12% GST</span>
+                          <span className="res-tax-note">Credited in 1st month rent</span>
                         </div>
                       </div>
                       <button
@@ -103,7 +103,7 @@ export default function ReservationsModal() {
                         className="btn-architectural btn-sm btn-primary"
                         onClick={() => handleOpenReceipt(res)}
                       >
-                        View Boarding Pass
+                        View Room Slip
                       </button>
                     </div>
                   </div>
@@ -111,7 +111,7 @@ export default function ReservationsModal() {
               })
             ) : (
               <div style={{ textAlign: 'center', padding: '40px 16px', color: 'var(--ink-tertiary)' }}>
-                <p>You have no active journeys or reservations.</p>
+                <p>You have no active room reservations or hold slips.</p>
               </div>
             )}
           </div>

@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { useKanso } from '../context/KansoContext';
 
 const ALL_PROVISIONS = [
-  'Plunge Pool',
+  'Attached Bath',
   'High-Speed WiFi',
-  'Private Chef',
-  'Mountain Panorama',
-  'Yoga Deck',
-  'Pet Friendly',
-  'Dedicated Workspace',
-  'Air Conditioning'
+  'Air Conditioning',
+  'Furnished',
+  'Work Desk',
+  'Shared Kitchen',
+  'Power Backup',
+  'Housekeeping',
+  'Food / Meal Option',
+  'Pet Friendly'
 ];
 
 export default function AmenitiesModal() {
@@ -41,13 +43,40 @@ export default function AmenitiesModal() {
     setIsAmenitiesModalOpen(false);
   };
 
+  const getLabel = (item) => {
+    switch (item) {
+      case 'Attached Bath':
+        return 'Attached Private Bathroom';
+      case 'High-Speed WiFi':
+        return 'High-Speed Fiber WiFi';
+      case 'Air Conditioning':
+        return 'Air Conditioning (AC)';
+      case 'Furnished':
+        return 'Fully Furnished (Bed & Wardrobe)';
+      case 'Work Desk':
+        return 'Dedicated Study / Work Desk';
+      case 'Shared Kitchen':
+        return 'Shared Kitchen / Self Cooking';
+      case 'Power Backup':
+        return '24x7 Power Backup (Inverter)';
+      case 'Housekeeping':
+        return 'Regular Room Housekeeping';
+      case 'Food / Meal Option':
+        return 'Home-Cooked Meals Option';
+      case 'Pet Friendly':
+        return 'Pet Friendly Flatshare';
+      default:
+        return item;
+    }
+  };
+
   return (
     <div className="modal-backdrop" onClick={() => setIsAmenitiesModalOpen(false)}>
       <div className="modal-box modal-md" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="modal-tag">FILTER BY FEATURE</span>
-            <h3 className="modal-title">Sanctuary Provisions</h3>
+            <span className="modal-tag">FILTER BY ROOM FEATURES</span>
+            <h3 className="modal-title">Room Amenities & Comforts</h3>
           </div>
           <button
             type="button"
@@ -69,13 +98,7 @@ export default function AmenitiesModal() {
                   checked={selected.includes(item)}
                   onChange={() => handleToggle(item)}
                 />{' '}
-                {item === 'Plunge Pool'
-                  ? 'Private Plunge Pool'
-                  : item === 'Private Chef'
-                  ? 'Private Chef on Call'
-                  : item === 'Yoga Deck'
-                  ? 'Yoga & Meditation Deck'
-                  : item}
+                {getLabel(item)}
               </label>
             ))}
           </div>
@@ -89,7 +112,7 @@ export default function AmenitiesModal() {
               className="btn-architectural btn-primary"
               onClick={handleApply}
             >
-              Apply Provisions ({selected.length})
+              Apply Amenities ({selected.length})
             </button>
           </div>
         </div>

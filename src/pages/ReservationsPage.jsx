@@ -26,10 +26,10 @@ export default function ReservationsPage() {
     <div className="reservations-page container">
       {/* Editorial Header */}
       <div className="page-header-block">
-        <div className="page-stamp-tag">YOUR JOURNEYS // 2026 ARCHIVE</div>
-        <h1 className="page-heading">Reserved Sanctuaries</h1>
+        <div className="page-stamp-tag">YOUR ROOM RESERVATIONS // 2026 ARCHIVE</div>
+        <h1 className="page-heading">My Room Bookings & Lease Slips</h1>
         <p className="page-subheading">
-          All verified bookings, digital keys, and architectural retreat passes issued under your name.
+          All confirmed room hold tokens, verified move-in slips, and direct owner contacts.
         </p>
       </div>
 
@@ -66,20 +66,20 @@ export default function ReservationsPage() {
                   {/* Dates & Schedule Grid */}
                   <div className="journey-schedule-grid">
                     <div className="schedule-box">
-                      <span className="schedule-label">CHECK-IN</span>
+                      <span className="schedule-label">MOVE-IN DATE</span>
                       <strong className="schedule-date">{res.checkIn}</strong>
-                      <span className="schedule-sub">14:00 IST</span>
+                      <span className="schedule-sub">Move-in Ready</span>
                     </div>
                     <div className="schedule-arrow">→</div>
                     <div className="schedule-box">
-                      <span className="schedule-label">CHECK-OUT</span>
+                      <span className="schedule-label">LEASE TERM</span>
                       <strong className="schedule-date">{res.checkOut}</strong>
-                      <span className="schedule-sub">11:00 IST</span>
+                      <span className="schedule-sub">Flexible / Standard</span>
                     </div>
                     <div className="schedule-box">
-                      <span className="schedule-label">DURATION & GUESTS</span>
-                      <strong className="schedule-duration">{res.nights} Nights</strong>
-                      <span className="schedule-sub">{res.guests || 2} Guests Registered</span>
+                      <span className="schedule-label">TENANT OCCUPANCY</span>
+                      <strong className="schedule-duration">{res.guests || 1} Tenant</strong>
+                      <span className="schedule-sub">Zero Brokerage</span>
                     </div>
                   </div>
 
@@ -139,11 +139,11 @@ export default function ReservationsPage() {
           })
         ) : (
           <div className="journeys-empty-card">
-            <div className="empty-icon-wrap">✈</div>
-            <h3>No Journeys Scheduled Yet</h3>
-            <p>You have no active sanctuaries reserved. Discover mindful architectural shelters across India.</p>
+            <div className="empty-icon-wrap">🛏️</div>
+            <h3>No Room Bookings Yet</h3>
+            <p>You have no active room reservations or hold slips. Discover verified furnished rooms with zero brokerage across India.</p>
             <Link to="/" className="btn-architectural btn-primary">
-              Explore Sanctuaries
+              Explore Verified Rooms
             </Link>
           </div>
         )}
