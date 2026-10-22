@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { useKanso } from '../context/KansoContext';
+import { useRental } from '../context/RentalContext';
 import SmoothImage from './SmoothImage';
 
 const AUTOPLAY_INTERVAL = 4800; // 4.8 seconds per slide for a comfortable reading cadence
 
 export default function Hero() {
-  const { listings, activeFilter, setActiveFilter, setDetailSanctuaryId } = useKanso();
+  const { listings, activeFilter, setActiveFilter, setDetailSanctuaryId } = useRental();
   const [showcaseIndex, setShowcaseIndex] = useState(0);
   const [direction, setDirection] = useState('next');
   const [isAutoPlayActive, setIsAutoPlayActive] = useState(true);
@@ -144,6 +144,36 @@ export default function Hero() {
     }
   };
 
+  const handleLocationSelect = (e) => {
+    const val = e.target.value;
+    if (val === 'all') {
+      setActiveFilter((prev) => ({ ...prev, region: 'all', localArea: 'all' }));
+    } else if (val.startsWith('city:')) {
+      const cityName = val.replace('city:', '');
+      setActiveFilter((prev) => ({ ...prev, region: cityName, localArea: 'all' }));
+    } else {
+      const areaToCityMap = {
+        'Indiranagar': 'Bengaluru',
+        'HSR Layout': 'Bengaluru',
+        'Koramangala': 'Bengaluru',
+        'Whitefield': 'Bengaluru',
+        'BTM Layout': 'Bengaluru',
+        'Bandra West': 'Mumbai',
+        'Andheri West': 'Mumbai',
+        'Powai': 'Mumbai',
+        'Cyber City Gurgaon': 'Delhi-NCR',
+        'Noida Sector 62': 'Delhi-NCR',
+        'Hauz Khas': 'Delhi-NCR',
+        'Hinjawadi': 'Pune',
+        'Koregaon Park': 'Pune',
+        'Hitec City': 'Hyderabad',
+        'Gachibowli': 'Hyderabad'
+      };
+      const city = areaToCityMap[val] || 'all';
+      setActiveFilter((prev) => ({ ...prev, region: city, localArea: val }));
+    }
+  };
+
   const handleScrollToGrid = () => {
     const grid = document.getElementById('sanctuaryGridSection') || document.getElementById('sanctuaryGrid');
     if (grid) {
@@ -153,6 +183,13 @@ export default function Hero() {
 
   if (!currentSanctuary) return null;
 
+  const selectedLocationValue =
+    activeFilter.localArea && activeFilter.localArea !== 'all'
+      ? activeFilter.localArea
+      : activeFilter.region !== 'all'
+      ? `city:${activeFilter.region}`
+      : 'all';
+
   return (
     <section className="hero-fullscreen-wrap" aria-label="Welcome and Featured Sanctuaries">
       <div className="hero-split container">
@@ -160,101 +197,152 @@ export default function Hero() {
       <div className="hero-left">
         <div className="hero-curation-stamp">
           <span className="stamp-border"></span>
-          <span>CURATED COLLECTION // 2026</span>
+          <span>LOCAL RESIDENTIAL DIRECTORY // LONG-TERM STAYS 2026</span>
         </div>
         <h1 className="hero-headline">
-          The art of <em>mindful shelter</em> across India.
+          Find verified rooms in your <em>local area</em>.
         </h1>
         <p className="hero-manifesto">
-          Private sanctuaries rooted in silence, local stone, and timeless craft. From Portuguese villas in Goa to cedarwood retreats in the high Himalayas.
+          Verified private bedrooms, master suites, and studios in prime residential layouts & tech corridors. Built for long-term peaceful living — 11-month agreements, zero brokerage, and direct verified owner connections.
         </p>
 
         {/* Interactive Search & Filter Capsule */}
         <form className="hero-search-capsule" onSubmit={handleSearchSubmit}>
           <div className="search-cell">
-            <label htmlFor="heroLocation">DESTINATION</label>
+            <label htmlFor="heroLocation">LOCAL AREA / CITY</label>
             <select
               id="heroLocation"
-              aria-label="Select Destination"
-              value={activeFilter.region}
-              onChange={(e) => setActiveFilter((prev) => ({ ...prev, region: e.target.value }))}
+              aria-label="Select Local Area or City"
+              value={selectedLocationValue}
+              onChange={handleLocationSelect}
             >
-              <option value="all">All Indian Regions</option>
-              <option value="Goa">Goa (Konkan Coast)</option>
-              <option value="Himachal Pradesh">Himachal (Manali & Parvati)</option>
-              <option value="Rajasthan">Rajasthan (Udaipur & Jaipur)</option>
-              <option value="Karnataka">Karnataka (Coorg & Kabini)</option>
-              <option value="Kerala">Kerala (Munnar & Backwaters)</option>
-              <option value="Puducherry">Puducherry (French Quarter)</option>
-              <option value="Uttarakhand">Uttarakhand (Rishikesh)</option>
+              <option value="all">All Local Areas</option>
+
+              <optgroup label="Bengaluru Neighborhoods">
+                <option value="city:Bengaluru">All Bengaluru (All Layouts)</option>
+                <option value="Indiranagar">Indiranagar (100ft Rd / Defense Colony)</option>
+                <option value="HSR Layout">HSR Layout (Sector 2 & 27th Main)</option>
+                <option value="Koramangala">Koramangala (4th & 5th Block)</option>
+                <option value="Whitefield">Whitefield (ITPB & Hope Farm)</option>
+                <option value="BTM Layout">BTM Layout (Stage 2 / Silk Board)</option>
+              </optgroup>
+
+              <optgroup label="Mumbai MMR Suburbs">
+                <option value="city:Mumbai">All Mumbai (All Suburbs)</option>
+                <option value="Bandra West">Bandra West (Pali Hill & Turner Rd)</option>
+                <option value="Andheri West">Andheri West (Lokhandwala Complex)</option>
+                <option value="Powai">Powai (Hiranandani Gardens / Lake)</option>
+              </optgroup>
+
+              <optgroup label="Delhi-NCR Sectors">
+                <option value="city:Delhi-NCR">All Delhi-NCR (All Sectors)</option>
+                <option value="Cyber City Gurgaon">Gurgaon (DLF Phase 3 & Cyber City)</option>
+                <option value="Noida Sector 62">Noida (Sector 62 & Electronic City)</option>
+                <option value="Hauz Khas">South Delhi (Hauz Khas & Deer Park)</option>
+              </optgroup>
+
+              <optgroup label="Pune Local Areas">
+                <option value="city:Pune">All Pune (All Localities)</option>
+                <option value="Hinjawadi">Hinjawadi (Phase 1 Infotech Park)</option>
+                <option value="Koregaon Park">Koregaon Park (Lane 5 / North Main Rd)</option>
+              </optgroup>
+
+              <optgroup label="Hyderabad Tech Corridors">
+                <option value="city:Hyderabad">All Hyderabad (All Zones)</option>
+                <option value="Hitec City">Hitec City (Madhapur & Cyber Towers)</option>
+                <option value="Gachibowli">Gachibowli (Financial District / Wipro)</option>
+              </optgroup>
             </select>
           </div>
 
           <div className="search-cell">
-            <label htmlFor="heroCheckIn">CHECK-IN</label>
+            <label htmlFor="heroType">ROOM TYPE</label>
+            <select
+              id="heroType"
+              aria-label="Select Room Type"
+              value={activeFilter.type || 'all'}
+              onChange={(e) => setActiveFilter((prev) => ({ ...prev, type: e.target.value }))}
+            >
+              <option value="all">All Room Types</option>
+              <option value="Private Room">Private Master Room</option>
+              <option value="Single Room">Single Room</option>
+              <option value="Shared Room">Shared Room / Twin</option>
+              <option value="Studio Room">Independent Studio (1RK)</option>
+              <option value="Co-Living">Co-Living Society Suite</option>
+            </select>
+          </div>
+
+          <div className="search-cell">
+            <label htmlFor="heroMoveIn">TARGET MOVE-IN</label>
             <input
               type="date"
-              id="heroCheckIn"
-              aria-label="Check-in date"
+              id="heroMoveIn"
+              aria-label="Target move-in date"
               value={activeFilter.checkIn || ''}
               onChange={(e) => setActiveFilter((prev) => ({ ...prev, checkIn: e.target.value }))}
             />
           </div>
 
           <div className="search-cell">
-            <label htmlFor="heroCheckOut">CHECK-OUT</label>
-            <input
-              type="date"
-              id="heroCheckOut"
-              aria-label="Check-out date"
-              value={activeFilter.checkOut || ''}
-              onChange={(e) => setActiveFilter((prev) => ({ ...prev, checkOut: e.target.value }))}
-            />
-          </div>
-
-          <div className="search-cell">
-            <label htmlFor="heroGuests">GUESTS</label>
+            <label htmlFor="heroGuests">OCCUPANTS</label>
             <select
               id="heroGuests"
-              aria-label="Number of Guests"
-              value={activeFilter.guests || '2'}
+              aria-label="Number of Tenants"
+              value={activeFilter.guests || '1'}
               onChange={(e) => setActiveFilter((prev) => ({ ...prev, guests: e.target.value }))}
             >
-              <option value="1">1 Guest</option>
-              <option value="2">2 Guests</option>
-              <option value="4">4 Guests</option>
-              <option value="6">6+ Guests (Entire Villa)</option>
+              <option value="1">1 Person (Solo)</option>
+              <option value="2">2 Persons (Couple / Sharing)</option>
             </select>
           </div>
 
-          <button type="submit" className="hero-submit-btn" aria-label="Search Sanctuaries">
-            <span>Discover</span>
+          <button type="submit" className="hero-submit-btn" aria-label="Search Verified Local Rooms">
+            <span>Find Rooms</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </button>
         </form>
 
-        {/* Regional Quick Coordinates */}
+        {/* Local Area Quick Coordinates */}
         <div className="hero-micro-pills">
-          <span className="micro-label">Quick Jump:</span>
+          <span className="micro-label">Popular Local Areas:</span>
           {[
-            { label: 'All', value: 'all' },
-            { label: 'Goa', value: 'Goa' },
-            { label: 'Manali', value: 'Himachal Pradesh' },
-            { label: 'Udaipur', value: 'Rajasthan' },
-            { label: 'Coorg', value: 'Karnataka' },
-            { label: 'Kerala', value: 'Kerala' }
-          ].map((item) => (
-            <button
-              key={item.value}
-              type="button"
-              className={`micro-pill ${activeFilter.region === item.value ? 'active' : ''}`}
-              onClick={() => handleMicroPillClick(item.value)}
-            >
-              {item.label}
-            </button>
-          ))}
+            { label: 'All Cities', region: 'all', localArea: 'all' },
+            { label: 'Indiranagar', region: 'Bengaluru', localArea: 'Indiranagar' },
+            { label: 'HSR Layout', region: 'Bengaluru', localArea: 'HSR Layout' },
+            { label: 'Koramangala', region: 'Bengaluru', localArea: 'Koramangala' },
+            { label: 'Whitefield', region: 'Bengaluru', localArea: 'Whitefield' },
+            { label: 'Bandra West', region: 'Mumbai', localArea: 'Bandra West' },
+            { label: 'Powai', region: 'Mumbai', localArea: 'Powai' },
+            { label: 'Cyber City Gurgaon', region: 'Delhi-NCR', localArea: 'Cyber City Gurgaon' },
+            { label: 'Hinjawadi', region: 'Pune', localArea: 'Hinjawadi' },
+            { label: 'Hitec City', region: 'Hyderabad', localArea: 'Hitec City' }
+          ].map((item) => {
+            const isActive =
+              (item.localArea === 'all' && activeFilter.region === 'all' && activeFilter.localArea === 'all') ||
+              (activeFilter.localArea === item.localArea);
+            return (
+              <button
+                key={item.label}
+                type="button"
+                className={`micro-pill ${isActive ? 'active' : ''}`}
+                onClick={() => {
+                  setActiveFilter((prev) => ({
+                    ...prev,
+                    region: item.region,
+                    localArea: item.localArea
+                  }));
+                  const target = document.getElementById('sanctuaryGridSection');
+                  if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                {item.label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
@@ -279,7 +367,7 @@ export default function Hero() {
           <div className="exhibit-header-ctrls">
             <div className="exhibit-header-left">
               <span className="exhibit-stamp" key={`badge-${showcaseIndex}`}>
-                SANCTUARY № {String(showcaseIndex + 1).padStart(2, '0')}
+                VERIFIED ROOM № {String(showcaseIndex + 1).padStart(2, '0')}
               </span>
               <span className={`exhibit-status-pill ${isPaused ? 'paused' : 'live'}`}>
                 {isHovered ? 'PAUSED' : isAutoPlayActive ? 'AUTO-TOUR' : 'PAUSED'}
@@ -412,13 +500,13 @@ export default function Hero() {
             <div className="exhibit-price-cta anim-stagger-5">
               <div className="exhibit-price">
                 <span className="price-val">₹{currentSanctuary.price.toLocaleString('en-IN')}</span>
-                <span className="price-unit">/ night (+ 12% GST)</span>
+                <span className="price-unit">{currentSanctuary.pricePeriod || '/ month'} · Zero Brokerage</span>
               </div>
               <Link
                 to={`/sanctuary/${currentSanctuary.id}`}
                 className="btn-architectural"
               >
-                <span>View Space</span>
+                <span>View Room</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{ marginLeft: '6px' }}>
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -433,17 +521,17 @@ export default function Hero() {
     <button
       type="button"
       className="hero-scroll-cue"
-        onClick={handleScrollToGrid}
-        aria-label="Scroll to curated sanctuaries collection"
-      >
-        <span className="scroll-cue-text">Scroll to Explore</span>
-        <span className="scroll-cue-icon">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 5v14M19 12l-7 7-7-7" />
-          </svg>
-        </span>
-      </button>
-    </section>
-  );
+      onClick={handleScrollToGrid}
+      aria-label="Scroll to curated room collection"
+    >
+      <span className="scroll-cue-text">Scroll to Explore Rooms</span>
+      <span className="scroll-cue-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 5v14M19 12l-7 7-7-7" />
+        </svg>
+      </span>
+    </button>
+  </section>
+);
 }
 

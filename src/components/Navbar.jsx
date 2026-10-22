@@ -78,10 +78,10 @@ export default function Navbar() {
         <div className="header-inner container">
           {/* Brand Logo */}
           <Link to="/" className="brand-emblem" onClick={handleBrandClick}>
-            <span className="brand-monogram">K</span>
+            <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">KANSO</span>
-              <span className="brand-sub">LIVING · आवास</span>
+              <span className="brand-name">RENTAL</span>
+              <span className="brand-sub">ROOMS · आवास</span>
             </div>
           </Link>
 
@@ -91,10 +91,10 @@ export default function Navbar() {
             onClick={() => setIsQuickSearchOpen(true)}
             role="button"
             tabIndex={0}
-            aria-label="Open search sanctuaries dialog"
+            aria-label="Open search rooms dialog"
           >
             <span className="search-indicator"></span>
-            <span className="search-prompt">Search by sanctuary, state, or architect...</span>
+            <span className="search-prompt">Search by room type, city, attached bath, flatmate...</span>
             <kbd className="search-shortcut">⌘K</kbd>
           </div>
 
@@ -104,8 +104,8 @@ export default function Navbar() {
             <Link
               to="/wishlist"
               className="nav-icon-btn"
-              title="Saved Sanctuaries"
-              aria-label={`Saved Sanctuaries (${wishlist.length})`}
+              title="Saved Rooms"
+              aria-label={`Saved Rooms (${wishlist.length})`}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill={wishlist.length > 0 ? "var(--accent-earth)" : "none"} stroke="currentColor" strokeWidth="1.8">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -115,7 +115,7 @@ export default function Navbar() {
 
             {/* View My Bookings Route */}
             <Link to="/reservations" className="nav-pill-btn">
-              <span>My Reservations</span>
+              <span>My Room Bookings</span>
               <span className="badge-count">{reservations.length}</span>
             </Link>
 
@@ -131,7 +131,7 @@ export default function Navbar() {
               }}
             >
               <span className="btn-dot"></span>
-              <span>List Sanctuary</span>
+              <span>+ List a Room</span>
             </Link>
 
             {/* Unauthenticated Guest Auth Actions */}
@@ -306,10 +306,10 @@ export default function Navbar() {
         {/* Drawer Header */}
         <div className="drawer-header">
           <div className="brand-emblem" onClick={handleBrandClick}>
-            <span className="brand-monogram">K</span>
+            <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">KANSO</span>
-              <span className="brand-sub">LIVING · आवास</span>
+              <span className="brand-name">RENTAL</span>
+              <span className="brand-sub">ROOMS · आवास</span>
             </div>
           </div>
 
@@ -357,8 +357,8 @@ export default function Navbar() {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </div>
             <div className="nav-item-text">
-              <span className="item-title">Explore Sanctuaries</span>
-              <span className="item-sub">Curated Indian architectural stays</span>
+              <span className="item-title">Explore Rooms</span>
+              <span className="item-sub">Verified private, shared & studio rooms</span>
             </div>
             <span className="drawer-arrow">→</span>
           </button>
@@ -373,12 +373,12 @@ export default function Navbar() {
             </div>
             <div className="nav-item-text">
               <span className="item-title">
-                My Reservations
+                My Room Bookings
                 {reservations.length > 0 && (
                   <span className="drawer-badge-count">{reservations.length}</span>
                 )}
               </span>
-              <span className="item-sub">Confirmed trips & boarding passes</span>
+              <span className="item-sub">Hold receipts & lease slips</span>
             </div>
             <span className="drawer-arrow">→</span>
           </button>
@@ -393,12 +393,12 @@ export default function Navbar() {
             </div>
             <div className="nav-item-text">
               <span className="item-title">
-                Saved Sanctuaries
+                Saved Rooms
                 {wishlist.length > 0 && (
                   <span className="drawer-badge-count earth">{wishlist.length}</span>
                 )}
               </span>
-              <span className="item-sub">Personal architectural shortlist</span>
+              <span className="item-sub">Your personal room shortlist</span>
             </div>
             <span className="drawer-arrow">→</span>
           </button>
@@ -418,8 +418,8 @@ export default function Navbar() {
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
             </div>
             <div className="nav-item-text">
-              <span className="item-title">Host Custodian Suite</span>
-              <span className="item-sub">List your estate & manage guest stays</span>
+              <span className="item-title">Post a Room for Rent</span>
+              <span className="item-sub">List spare bedroom & find flatmates</span>
             </div>
             <span className="drawer-badge-live">HOST</span>
           </button>
@@ -503,7 +503,7 @@ export default function Navbar() {
             <span>28°36'N · 77°12'E</span>
             <span>VOL. 01 / 2026 ARCHIVE</span>
           </div>
-          <span className="drawer-copy">KANSO LIVING · ALL RIGHTS RESERVED</span>
+          <span className="drawer-copy">RENTAL ROOMS · ALL RIGHTS RESERVED</span>
         </div>
       </aside>
     </>

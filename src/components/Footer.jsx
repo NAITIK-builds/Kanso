@@ -1,14 +1,15 @@
 import React from 'react';
-import { useKanso } from '../context/KansoContext';
+import { useRental } from '../context/RentalContext';
 
 export default function Footer() {
-  const { setActiveFilter, currentUser, setIsHostPortalOpen, setAuthModalState, showToast } = useKanso();
+  const { setActiveFilter, currentUser, setIsHostPortalOpen, setAuthModalState, showToast } = useRental();
 
-  const handleRegionClick = (e, region) => {
+  const handleRegionClick = (e, region, localArea = 'all') => {
     e.preventDefault();
     setActiveFilter((prev) => ({
       ...prev,
-      region
+      region,
+      localArea
     }));
     const grid = document.getElementById('sanctuaryGridSection');
     if (grid) grid.scrollIntoView({ behavior: 'smooth' });
@@ -28,54 +29,54 @@ export default function Footer() {
       <div className="container footer-grid scroll-reveal">
         <div className="footer-brand-col">
           <div className="brand-emblem">
-            <span className="brand-monogram">K</span>
+            <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">KANSO LIVING</span>
-              <span className="brand-sub">ARCHITECTURAL HOSPITALITY INDIA</span>
+              <span className="brand-name">RENTAL ROOMS</span>
+              <span className="brand-sub">VERIFIED ROOMS & CO-LIVING</span>
             </div>
           </div>
           <p className="footer-desc">
-            Honoring regional materials, peaceful dwellings, and unhurried living across India. Handcrafted by local architects and custodians.
+            Curating verified private bedrooms, modern studios, and mindful flatshares across top Indian hubs. Zero brokerage fees, transparent rent in ₹/month, and direct owner connections.
           </p>
         </div>
 
         <div className="footer-links-col">
-          <h5>SANCTUARIES</h5>
+          <h5>LOCAL RESIDENTIAL HUBS</h5>
           <ul>
             <li>
-              <a href="#" onClick={(e) => handleRegionClick(e, 'Goa')}>
-                Goa Coastal Villas
+              <a href="#" onClick={(e) => handleRegionClick(e, 'Bengaluru')}>
+                Bengaluru (Indiranagar, HSR & Koramangala)
               </a>
             </li>
             <li>
-              <a href="#" onClick={(e) => handleRegionClick(e, 'Himachal Pradesh')}>
-                Himalayan Cedar Cabins
+              <a href="#" onClick={(e) => handleRegionClick(e, 'Mumbai')}>
+                Mumbai (Bandra West & Powai)
               </a>
             </li>
             <li>
-              <a href="#" onClick={(e) => handleRegionClick(e, 'Rajasthan')}>
-                Udaipur Stone Havelis
+              <a href="#" onClick={(e) => handleRegionClick(e, 'Delhi-NCR')}>
+                Delhi-NCR (Gurgaon Cyber City & Noida)
               </a>
             </li>
             <li>
-              <a href="#" onClick={(e) => handleRegionClick(e, 'Karnataka')}>
-                Coorg Coffee Retreats
+              <a href="#" onClick={(e) => handleRegionClick(e, 'Pune')}>
+                Pune (Hinjawadi Infotech & Koregaon Park)
               </a>
             </li>
             <li>
-              <a href="#" onClick={(e) => handleRegionClick(e, 'Kerala')}>
-                Malabar Backwater Dwellings
+              <a href="#" onClick={(e) => handleRegionClick(e, 'Hyderabad')}>
+                Hyderabad (Hitec City & Gachibowli)
               </a>
             </li>
           </ul>
         </div>
 
         <div className="footer-links-col">
-          <h5>HOST PARTNERSHIP</h5>
+          <h5>ROOM OWNERS & FLATMATES</h5>
           <ul>
             <li>
               <a href="#" onClick={handleHostClick}>
-                List Your Sanctuary
+                Post Your Spare Room
               </a>
             </li>
             <li>
@@ -83,10 +84,10 @@ export default function Footer() {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  showToast("Architectural Standards: Regional stone, authentic wood, natural light & ventilation.", '🏛️');
+                  showToast("Room Standards: High-speed fiber WiFi, natural light, lockable doors & clean washrooms.", '🛏️');
                 }}
               >
-                Architectural Standards
+                Room Quality Standards
               </a>
             </li>
             <li>
@@ -94,10 +95,10 @@ export default function Footer() {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  showToast("Custodian Guidelines: Mindful check-in, pristine organic linens, 24/7 concierge.", '✦');
+                  showToast("Flatmate Guidelines: Mutual privacy, quiet work hours, clean shared kitchen & respect.", '✦');
                 }}
               >
-                Custodian Guidelines
+                Flatmate Guidelines
               </a>
             </li>
             <li>
@@ -105,10 +106,10 @@ export default function Footer() {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  showToast("Transparent billing: Straightforward 12% Hospitality GST with zero hidden fees.", '₹');
+                  showToast("Zero Brokerage Charter: 100% direct owner-to-tenant rent with no hidden commissions.", '₹');
                 }}
               >
-                Hospitality & GST in INR
+                Zero Brokerage Charter
               </a>
             </li>
           </ul>
@@ -116,8 +117,8 @@ export default function Footer() {
 
         <div className="footer-legal-col">
           <h5>VERIFIED DISCLOSURE</h5>
-          <p>All listings are independently verified. Prices are transparent in INR (₹) inclusive of applicable taxes.</p>
-          <span className="copyright">© 2026 KANSO LIVING · All Rights Reserved.</span>
+          <p>All room listings are verified for authenticity. Rents are direct in INR (₹/month) with zero broker commissions.</p>
+          <span className="copyright">© 2026 RENTAL ROOMS · All Rights Reserved.</span>
         </div>
       </div>
     </footer>
