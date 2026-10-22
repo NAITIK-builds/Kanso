@@ -1,16 +1,22 @@
 import React, { useMemo } from 'react';
-import { useKanso } from '../context/KansoContext';
+import { useRental } from '../context/RentalContext';
 import SanctuaryCard from './SanctuaryCard';
 
 export default function SanctuaryGrid() {
-  const { listings, activeFilter, setActiveFilter } = useKanso();
+  const { listings, activeFilter, setActiveFilter } = useRental();
 
   const filteredListings = useMemo(() => {
     return listings
       .filter((p) => {
-        // Region check
-        if (activeFilter.region !== 'all' && p.region !== activeFilter.region) {
+        // Region / City check
+        if (activeFilter.region !== 'all' && p.region !== activeFilter.region && p.city !== activeFilter.region) {
           return false;
+        }
+        // Local Area check
+        if (activeFilter.localArea && activeFilter.localArea !== 'all') {
+          if (p.localArea?.toLowerCase() !== activeFilter.localArea.toLowerCase()) {
+            return false;
+          }
         }
         // Type check
         if (activeFilter.type !== 'all' && p.type !== activeFilter.type) {
@@ -31,9 +37,12 @@ export default function SanctuaryGrid() {
           const matchTitle = p.title.toLowerCase().includes(q);
           const matchLoc = p.location.toLowerCase().includes(q);
           const matchReg = p.region.toLowerCase().includes(q);
+          const matchArea = p.localArea?.toLowerCase().includes(q);
+          const matchMetro = p.metroProximity?.toLowerCase().includes(q);
+          const matchTech = p.techParkProximity?.toLowerCase().includes(q);
           const matchNarrative = p.narrative.toLowerCase().includes(q);
-          const matchHost = p.host.name.toLowerCase().includes(q);
-          if (!matchTitle && !matchLoc && !matchReg && !matchNarrative && !matchHost) {
+          const matchHost = p.host?.name.toLowerCase().includes(q);
+          if (!matchTitle && !matchLoc && !matchReg && !matchArea && !matchMetro && !matchTech && !matchNarrative && !matchHost) {
             return false;
           }
         }
@@ -50,14 +59,15 @@ export default function SanctuaryGrid() {
   const handleResetFilters = () => {
     setActiveFilter({
       region: 'all',
+      localArea: 'all',
       type: 'all',
-      maxPrice: 60000,
+      maxPrice: 40000,
       amenities: [],
       sortBy: 'curated',
       searchQuery: '',
       checkIn: '',
       checkOut: '',
-      guests: '2'
+      guests: '1'
     });
   };
 
@@ -65,11 +75,11 @@ export default function SanctuaryGrid() {
     <section className="gallery-section container" id="sanctuaryGridSection">
       <div className="gallery-header scroll-reveal">
         <div className="section-title-wrap">
-          <span className="catalogue-badge">INDEX // SPACES</span>
-          <h2 className="section-title">Verified Sanctuaries</h2>
+          <span className="catalogue-badge">INDEX // ROOMS & FLATSHARES</span>
+          <h2 className="section-title">Verified Rooms for Rent</h2>
         </div>
         <div className="results-stats">
-          <span>Showing {filteredListings.length} spaces</span> · Prices in Indian Rupees (₹)
+          <span>Showing {filteredListings.length} verified rooms</span> · Zero Brokerage · Rent in ₹/month
         </div>
       </div>
 
@@ -89,8 +99,8 @@ export default function SanctuaryGrid() {
               <path d="M9 21v-6a3 3 0 0 1 6 0v6" />
             </svg>
           </div>
-          <h3>No Sanctuaries Found</h3>
-          <p>No retreats match your selected filters. Try broadening your dates, budget, or amenities.</p>
+          <h3>No Rooms Found</h3>
+          <p>No verified rooms match your selected filters. Try broadening your city, budget, or amenities.</p>
           <button type="button" className="btn-architectural" onClick={handleResetFilters}>
             Reset All Filters
           </button>

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useKanso } from '../context/KansoContext';
-
+import { useRental } from '../context/RentalContext';
 import SmoothImage from './SmoothImage';
 
 export default function SanctuaryCard({ sanctuary, index }) {
   const navigate = useNavigate();
-  const { wishlist, toggleWishlist, setBookingSanctuaryId } = useKanso();
+  const { wishlist, toggleWishlist, setBookingSanctuaryId } = useRental();
   const isSaved = wishlist.includes(sanctuary.id);
   const indexNumber = String(index + 1).padStart(2, '0');
 
@@ -29,7 +28,7 @@ export default function SanctuaryCard({ sanctuary, index }) {
         tabIndex={0}
       >
         <SmoothImage src={sanctuary.coverImg} alt={sanctuary.title} />
-        <span className="card-index-tag">LOC // {indexNumber}</span>
+        <span className="card-index-tag">{sanctuary.localArea?.toUpperCase() || 'LOCAL'} // {indexNumber}</span>
         <button
           type="button"
           className={`card-save-btn ${isSaved ? 'active' : ''}`}
@@ -53,19 +52,37 @@ export default function SanctuaryCard({ sanctuary, index }) {
       <div className="card-content">
         <div className="card-top-meta">
           <span className="card-region">
-            {sanctuary.region} · {sanctuary.type}
+            {sanctuary.city || sanctuary.region} · {sanctuary.type}
           </span>
           <span className="card-rating">
             ★ {sanctuary.rating} ({sanctuary.reviewsCount})
           </span>
         </div>
 
+        {/* Local Area & Transit Badge */}
+        <div className="card-local-meta-bar">
+          <span className="card-locality-tag">📍 {sanctuary.localArea}</span>
+          {sanctuary.metroProximity && (
+            <span className="card-transit-tag" title={sanctuary.metroProximity}>
+              🚇 {sanctuary.metroProximity.split('(')[0].replace('from', '').trim()}
+            </span>
+          )}
+        </div>
+
         <h3 className="card-title">
           <Link to={`/sanctuary/${sanctuary.id}`}>{sanctuary.title}</Link>
         </h3>
         <p className="card-specs">
-          {sanctuary.location} · {sanctuary.specs}
+          {sanctuary.location}
         </p>
+
+        {/* Long Stay Terms & Amenities */}
+        <div className="card-longstay-specs">
+          <span className="lease-tag">📋 {sanctuary.leaseTerm || '11-Mo Lease'}</span>
+          <span className="deposit-tag">
+            ₹{sanctuary.deposit ? sanctuary.deposit.toLocaleString('en-IN') : (sanctuary.price * 2).toLocaleString('en-IN')} Dep.
+          </span>
+        </div>
 
         <div className="card-amenities-tags">
           {sanctuary.amenities.slice(0, 3).map((a, i) => (
@@ -78,7 +95,7 @@ export default function SanctuaryCard({ sanctuary, index }) {
         <div className="card-footer">
           <div className="card-price-block">
             <span className="rate-val">₹{sanctuary.price.toLocaleString('en-IN')}</span>
-            <span className="rate-unit">/ night</span>
+            <span className="rate-unit">{sanctuary.pricePeriod || '/ mo'}</span>
           </div>
           <div className="card-actions-row">
             <Link
@@ -92,7 +109,7 @@ export default function SanctuaryCard({ sanctuary, index }) {
               className="btn-architectural btn-sm btn-primary"
               onClick={() => setBookingSanctuaryId(sanctuary.id)}
             >
-              Reserve
+              Reserve Room
             </button>
           </div>
         </div>
