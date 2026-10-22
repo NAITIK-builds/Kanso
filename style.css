@@ -1334,7 +1334,7 @@ button {
 /* Search Capsule with Warm Travertine Frame & Terracotta CTA */
 .hero-search-capsule {
   display: grid;
-  grid-template-columns: 1.2fr 0.9fr 0.9fr 0.9fr auto;
+  grid-template-columns: 1.45fr 1.05fr 1fr 0.95fr auto;
   background-color: var(--bg-surface-elevated);
   border: 2px solid var(--line-strong);
   border-radius: 20px 8px 20px 8px;
@@ -1344,12 +1344,13 @@ button {
 }
 
 .search-cell {
-  padding: 14px 18px;
+  padding: 12px 14px;
   border-right: 1px solid var(--line-hairline);
   display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: #FFFDF9;
+  min-width: 0;
 }
 
 .search-cell label {
@@ -1958,9 +1959,17 @@ button {
 
 .filter-strip-inner {
   display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.filter-main-row {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
+  width: 100%;
 }
 
 .type-scroll-track {
@@ -2623,7 +2632,8 @@ button {
   gap: 14px;
 }
 
-.auth-kanso-mark {
+.auth-kanso-mark,
+.auth-rental-mark {
   width: 44px;
   height: 44px;
   display: flex;
@@ -4473,6 +4483,12 @@ html, body {
   }
 
   .filter-strip-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+
+  .filter-main-row {
     flex-direction: column;
     align-items: stretch;
     gap: 14px;
@@ -7186,5 +7202,237 @@ html, body {
   }
 }
 
+/* ==========================================================================
+   11. LOCAL NEIGHBORHOOD & LONG-TERM STAY STYLES
+   ========================================================================== */
 
+/* Card Local Area & Transit Metadata */
+.card-local-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
 
+.card-locality-tag {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--accent-earth);
+  background-color: rgba(184, 83, 50, 0.08);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(184, 83, 50, 0.2);
+}
+
+.card-transit-tag {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--accent-moss);
+  background-color: rgba(43, 84, 66, 0.08);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(43, 84, 66, 0.2);
+}
+
+.card-longstay-specs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.card-longstay-specs .lease-tag {
+  color: var(--ink-secondary);
+  background: var(--bg-subtle);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.card-longstay-specs .deposit-tag {
+  color: var(--accent-moss);
+  background: rgba(43, 84, 66, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* Filter Strip Local Area Controls */
+.filter-local-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 10px;
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--line-hairline);
+  width: 100%;
+}
+
+.city-pill-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.local-area-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  padding: 2px 0 4px;
+}
+
+.local-area-pills-row::-webkit-scrollbar {
+  display: none;
+}
+
+.strip-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--ink-tertiary);
+  margin-right: 4px;
+}
+
+.city-pill {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--line-hairline);
+  background: var(--bg-surface-elevated);
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.city-pill:hover {
+  border-color: var(--accent-earth);
+  color: var(--accent-earth);
+}
+
+.city-pill.active {
+  background: var(--accent-earth);
+  color: #FFFDF9;
+  border-color: var(--accent-earth);
+  box-shadow: 0 2px 8px rgba(184, 83, 50, 0.25);
+}
+
+.area-pill {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line-hairline);
+  background: var(--bg-subtle);
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.area-pill:hover {
+  background: var(--bg-surface-elevated);
+  border-color: var(--accent-earth);
+  color: var(--accent-earth);
+}
+
+.area-pill.active {
+  background: var(--accent-moss);
+  color: #FFFDF9;
+  border-color: var(--accent-moss);
+}
+
+/* Detail Page Long-Stay Specs Grid */
+.detail-full-address {
+  font-size: 0.95rem;
+  color: var(--ink-secondary);
+  margin-top: -6px;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.longstay-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.longstay-spec-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+  background-color: var(--bg-subtle);
+  border: 1.5px solid var(--line-hairline);
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.longstay-spec-card:hover {
+  border-color: var(--accent-earth);
+}
+
+.longstay-spec-card .spec-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.longstay-spec-card .spec-content h5 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.longstay-spec-card .spec-content p {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--accent-earth);
+  margin-bottom: 4px;
+}
+
+.longstay-spec-card .spec-content .spec-sub {
+  font-size: 0.78rem;
+  color: var(--ink-tertiary);
+  display: block;
+}
+
+/* Detail Modal Long-Stay Box */
+.detail-longstay-box {
+  background-color: var(--bg-subtle);
+  border: 1.5px solid var(--line-hairline);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-longstay-box .longstay-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.84rem;
+  gap: 12px;
+}
+
+.detail-longstay-box .ls-label {
+  font-weight: 700;
+  color: var(--ink-primary);
+  flex-shrink: 0;
+}
+
+.detail-longstay-box .ls-val {
+  font-weight: 500;
+  color: var(--ink-secondary);
+  text-align: right;
+}
