@@ -2,6 +2,18 @@ import React, { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useRental } from '../context/RentalContext';
 import SmoothImage from '../components/SmoothImage';
+import {
+  IconPin,
+  IconStar,
+  IconLease,
+  IconDeposit,
+  IconMetro,
+  IconWork,
+  IconShopping,
+  IconUtility,
+  IconSparkle,
+  IconCheck
+} from '../components/Icons';
 
 export default function SanctuaryDetailPage() {
   const { id } = useParams();
@@ -124,10 +136,12 @@ export default function SanctuaryDetailPage() {
           <div className="detail-heading-block">
             <div className="detail-meta-tags">
               <span className="detail-tag-location">
-                📍 {sanctuary.localArea?.toUpperCase()} · {sanctuary.city?.toUpperCase() || sanctuary.region?.toUpperCase()}
+                <IconPin size={13} style={{ marginRight: '4px' }} />
+                {sanctuary.localArea?.toUpperCase()} · {sanctuary.city?.toUpperCase() || sanctuary.region?.toUpperCase()}
               </span>
               <span className="detail-tag-rating">
-                ★ <strong>{sanctuary.rating}</strong> ({sanctuary.reviewsCount} reviews)
+                <IconStar size={13} style={{ marginRight: '4px', color: 'var(--accent-earth)' }} />
+                <strong>{sanctuary.rating}</strong> ({sanctuary.reviewsCount} reviews)
               </span>
             </div>
             <h1 className="detail-main-title">{sanctuary.title}</h1>
@@ -153,7 +167,7 @@ export default function SanctuaryDetailPage() {
             <h3 className="section-eyebrow">LONG-TERM LEASE & LOCAL NEIGHBORHOOD SPECS</h3>
             <div className="longstay-specs-grid">
               <div className="longstay-spec-card">
-                <div className="spec-icon">📋</div>
+                <div className="spec-icon"><IconLease size={20} /></div>
                 <div className="spec-content">
                   <h5>Lease Agreement</h5>
                   <p>{sanctuary.leaseTerm || '11-Month Renewable Agreement'}</p>
@@ -162,7 +176,7 @@ export default function SanctuaryDetailPage() {
               </div>
 
               <div className="longstay-spec-card">
-                <div className="spec-icon">💰</div>
+                <div className="spec-icon"><IconDeposit size={20} /></div>
                 <div className="spec-content">
                   <h5>Security Deposit</h5>
                   <p>{sanctuary.depositText || `₹${(sanctuary.price * 2).toLocaleString('en-IN')} (2 months, 100% refundable)`}</p>
@@ -172,7 +186,7 @@ export default function SanctuaryDetailPage() {
 
               {sanctuary.metroProximity && (
                 <div className="longstay-spec-card">
-                  <div className="spec-icon">🚇</div>
+                  <div className="spec-icon"><IconMetro size={20} /></div>
                   <div className="spec-content">
                     <h5>Metro & Transit Connectivity</h5>
                     <p>{sanctuary.metroProximity}</p>
@@ -183,7 +197,7 @@ export default function SanctuaryDetailPage() {
 
               {sanctuary.techParkProximity && (
                 <div className="longstay-spec-card">
-                  <div className="spec-icon">🏢</div>
+                  <div className="spec-icon"><IconWork size={20} /></div>
                   <div className="spec-content">
                     <h5>Work & Tech Park Proximity</h5>
                     <p>{sanctuary.techParkProximity}</p>
@@ -194,7 +208,7 @@ export default function SanctuaryDetailPage() {
 
               {sanctuary.dailyEssentials && (
                 <div className="longstay-spec-card">
-                  <div className="spec-icon">🛒</div>
+                  <div className="spec-icon"><IconShopping size={20} /></div>
                   <div className="spec-content">
                     <h5>Daily Local Essentials</h5>
                     <p>{sanctuary.dailyEssentials}</p>
@@ -205,7 +219,7 @@ export default function SanctuaryDetailPage() {
 
               {sanctuary.utilityBillSharing && (
                 <div className="longstay-spec-card">
-                  <div className="spec-icon">⚡</div>
+                  <div className="spec-icon"><IconUtility size={20} /></div>
                   <div className="spec-content">
                     <h5>Utility & Maintenance Sharing</h5>
                     <p>{sanctuary.utilityBillSharing}</p>
@@ -222,7 +236,7 @@ export default function SanctuaryDetailPage() {
             <div className="detail-amenities-cloud">
               {sanctuary.amenities.map((item, idx) => (
                 <div key={idx} className="amenity-cloud-item">
-                  <span className="amenity-bullet">✦</span>
+                  <IconSparkle size={10} style={{ marginRight: '6px', color: 'var(--accent-earth)' }} />
                   <span>{item}</span>
                 </div>
               ))}
@@ -261,7 +275,8 @@ export default function SanctuaryDetailPage() {
               <div>
                 <h3 className="section-eyebrow">TENANT EXPERIENCES</h3>
                 <h4 className="reviews-subheading">
-                  ★ {sanctuary.rating} · {sanctuary.reviews?.length || 0} Verified Long-Stay Reviews
+                  <IconStar size={15} style={{ marginRight: '4px', color: 'var(--accent-earth)' }} />
+                  {sanctuary.rating} · {sanctuary.reviews?.length || 0} Verified Long-Stay Reviews
                 </h4>
               </div>
               <button
@@ -279,7 +294,10 @@ export default function SanctuaryDetailPage() {
                   <div key={idx} className="guest-impression-card scroll-reveal">
                     <div className="impression-top">
                       <span className="impression-author">{rev.author}</span>
-                      <span className="impression-rating">★ {rev.score}</span>
+                      <span className="impression-rating">
+                        <IconStar size={12} style={{ marginRight: '3px', color: 'var(--accent-earth)' }} />
+                        {rev.score}
+                      </span>
                     </div>
                     <span className="impression-date">{rev.date}</span>
                     <p className="impression-quote">"{rev.text}"</p>
@@ -340,19 +358,19 @@ export default function SanctuaryDetailPage() {
 
             <div className="widget-highlights-list">
               <div className="highlight-row">
-                <span className="highlight-icon">✓</span>
+                <IconCheck size={14} className="highlight-icon" />
                 <span>Direct owner & flatmate WhatsApp verification</span>
               </div>
               <div className="highlight-row">
-                <span className="highlight-icon">✓</span>
+                <IconCheck size={14} className="highlight-icon" />
                 <span>Lockable private room key provided</span>
               </div>
               <div className="highlight-row">
-                <span className="highlight-icon">✓</span>
+                <IconCheck size={14} className="highlight-icon" />
                 <span>Verified high-speed fiber internet & power backup</span>
               </div>
               <div className="highlight-row">
-                <span className="highlight-icon">✓</span>
+                <IconCheck size={14} className="highlight-icon" />
                 <span>Standard 11-month agreement format with 30-day notice</span>
               </div>
             </div>

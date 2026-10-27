@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { SEED_SANCTUARIES } from '../data/sanctuaries';
 
 export const RentalContext = createContext();
@@ -6,9 +6,9 @@ export const RentalContext = createContext();
 const DEFAULT_RESERVATIONS = [
   {
     bookingId: "RN-2026-7731",
-    propertyId: "rm-blr-01",
-    title: "Sunlit Balcony Master Room",
-    location: "Defense Colony, 100ft Road, Indiranagar, Bengaluru",
+    propertyId: "rm-knp-01",
+    title: "Garden-Facing AC Room near Motijheel & Medical College",
+    location: "Near Motijheel Lawns & Rave 3, Swaroop Nagar, Kanpur",
     guestName: "Priyanka Sharma",
     guestEmail: "priyanka@example.com",
     guestPhone: "+91 98200 12345",
@@ -16,7 +16,7 @@ const DEFAULT_RESERVATIONS = [
     checkOut: "2026-12-01",
     nights: 30,
     guests: 1,
-    total: 16500,
+    total: 11500,
     status: "Confirmed",
     specialRequests: "Quiet study corner & morning sunlight"
   }
@@ -27,7 +27,7 @@ export const DEMO_USERS = {
     name: "Kabir Sen",
     email: "kabir@example.com",
     role: "guest",
-    roleLabel: "Room Seeker / Tenant",
+    roleLabel: "Seeking Home / Tenant",
     initials: "KS",
     phone: "+91 98765 43210"
   },
@@ -43,19 +43,18 @@ export const DEMO_USERS = {
 };
 
 export function RentalProvider({ children }) {
-  // 1. Listings State (Automatically upgrade if cached data still has old whole-villas or outdated schema)
+  // 1. Listings State (Automatically initialized with Kanpur and major cities)
   const [listings, setListings] = useState(() => {
     try {
       const savedVersion = localStorage.getItem('rental_room_version') || localStorage.getItem('kanso_room_version');
       const saved = localStorage.getItem('rental_listings') || localStorage.getItem('kanso_listings');
-      if (saved && savedVersion === 'local_rooms_2026_v2') {
+      if (saved && savedVersion === 'local_rooms_2026_kanpur_v1') {
         const parsed = JSON.parse(saved);
         if (parsed?.length && parsed[0]?.localArea) {
           return parsed;
         }
       }
-      // Initialize with fresh local area room seed data
-      localStorage.setItem('rental_room_version', 'local_rooms_2026_v2');
+      localStorage.setItem('rental_room_version', 'local_rooms_2026_kanpur_v1');
       localStorage.setItem('rental_listings', JSON.stringify(SEED_SANCTUARIES));
       return SEED_SANCTUARIES;
     } catch {
@@ -67,9 +66,9 @@ export function RentalProvider({ children }) {
   const [wishlist, setWishlist] = useState(() => {
     try {
       const saved = localStorage.getItem('rental_wishlist') || localStorage.getItem('kanso_wishlist');
-      return saved ? JSON.parse(saved) : ["rm-blr-01"];
+      return saved ? JSON.parse(saved) : ["rm-knp-01", "rm-blr-01"];
     } catch {
-      return ["rm-blr-01"];
+      return ["rm-knp-01", "rm-blr-01"];
     }
   });
 
@@ -93,7 +92,7 @@ export function RentalProvider({ children }) {
     }
   });
 
-  // 5. Current User State (First time visitor defaults to null)
+  // 5. Current User State
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('rental_current_user') || localStorage.getItem('kanso_current_user');
@@ -124,14 +123,21 @@ export function RentalProvider({ children }) {
   const [isHostPortalOpen, setIsHostPortalOpen] = useState(false);
   const [isAddListingOpen, setIsAddListingOpen] = useState(false);
   const [isReservationsOpen, setIsReservationsOpen] = useState(false);
-  const [inquiryTarget, setInquiryTarget] = useState(null); // { propertyId, sanctuary }
-  const [addReviewTarget, setAddReviewTarget] = useState(null); // { propertyId, sanctuary }
+  const [inquiryTarget, setInquiryTarget] = useState(null);
+  const [addReviewTarget, setAddReviewTarget] = useState(null);
   const [isAmenitiesModalOpen, setIsAmenitiesModalOpen] = useState(false);
-  const [authModalState, setAuthModalState] = useState(null); // null or { initialRole: 'guest'|'host', initialMode: 'login'|'register' }
+  const [authModalState, setAuthModalState] = useState(null);
   const [isQuickSearchOpen, setIsQuickSearchOpen] = useState(false);
 
   // 8. Toast State
-  const [toast, setToast] = useState({ show: false, message: '', symbol: '✦' });
+  const [toast, setToast] = useState({ show: false, message: '', symbol: 'sparkle' });
+
+  const showToast = useCallback((message, symbol = 'sparkle') => {
+    setToast({ show: true, message, symbol });
+    setTimeout(() => {
+      setToast({ show: false, message: '', symbol: 'sparkle' });
+    }, 3500);
+  }, []);
 
   // Persistence Effects
   useEffect(() => {
@@ -204,7 +210,6 @@ export function RentalProvider({ children }) {
         e.preventDefault();
         setIsQuickSearchOpen((prev) => !prev);
       } else if (e.key === 'Escape') {
-        // Close topmost modal
         if (isQuickSearchOpen) setIsQuickSearchOpen(false);
         else if (isAmenitiesModalOpen) setIsAmenitiesModalOpen(false);
         else if (addReviewTarget) setAddReviewTarget(null);
@@ -235,21 +240,14 @@ export function RentalProvider({ children }) {
     authModalState
   ]);
 
-  // Helper actions
-  const showToast = (message, symbol = '✦') => {
-    setToast({ show: true, message, symbol });
-    setTimeout(() => {
-      setToast({ show: false, message: '', symbol: '✦' });
-    }, 3800);
-  };
-
+  // Actions
   const toggleWishlist = (sanctuaryId) => {
     setWishlist((prev) => {
       const exists = prev.includes(sanctuaryId);
       const updated = exists ? prev.filter((id) => id !== sanctuaryId) : [...prev, sanctuaryId];
       showToast(
         exists ? "Removed from your saved rooms." : "Room saved to your wishlist.",
-        exists ? "✕" : "♥"
+        exists ? "check" : "heart"
       );
       return updated;
     });
@@ -264,7 +262,7 @@ export function RentalProvider({ children }) {
     };
     setReservations((prev) => [fullRecord, ...prev]);
     setActiveReceipt(fullRecord);
-    showToast(`Official Boarding Pass issued for ${fullRecord.title}!`, '🎟️');
+    showToast(`Official Boarding Pass issued for ${fullRecord.title}!`, 'ticket');
     return fullRecord;
   };
 
@@ -272,12 +270,12 @@ export function RentalProvider({ children }) {
     setReservations((prev) =>
       prev.map((item) => (item.bookingId === bookingId ? { ...item, status: newStatus } : item))
     );
-    showToast(`Reservation #${bookingId} updated to "${newStatus}".`, '✓');
+    showToast(`Reservation #${bookingId} updated to "${newStatus}".`, 'check');
   };
 
   const dispatchDigitalKey = (bookingId) => {
     updateReservationStatus(bookingId, 'Key Dispatched');
-    showToast(`Digital access key code dispatched to guest WhatsApp & Email!`, '🔑');
+    showToast(`Digital access key code dispatched to guest WhatsApp & Email!`, 'key');
   };
 
   const createListing = (newListing) => {
@@ -299,7 +297,7 @@ export function RentalProvider({ children }) {
     };
 
     setListings((prev) => [listingWithDefaults, ...prev]);
-    showToast(`"${newListing.title}" published live for tenants!`, '🛏️');
+    showToast(`"${newListing.title}" published live for tenants!`, 'bed');
     setIsAddListingOpen(false);
   };
 
@@ -329,7 +327,7 @@ export function RentalProvider({ children }) {
         return item;
       })
     );
-    showToast("Thank you. Your room review has been published.", '★');
+    showToast("Thank you. Your room review has been published.", 'star');
     setAddReviewTarget(null);
   };
 
@@ -357,15 +355,16 @@ export function RentalProvider({ children }) {
     }, 1200);
   };
 
+  // Local Fast Authentication
   const loginUser = (userObj) => {
     setCurrentUser(userObj);
     setAuthModalState(null);
-    showToast(`Signed in as ${userObj.name} (${userObj.roleLabel}).`, '✦');
+    showToast(`Signed in as ${userObj.name} (${userObj.roleLabel || userObj.role}).`, 'sparkle');
   };
 
   const logoutUser = () => {
     setCurrentUser(null);
-    showToast("Signed out. Returned to guest visitor mode.", '✓');
+    showToast("Signed out. Returned to guest visitor mode.", 'check');
   };
 
   const quickDemoLogin = (role = 'guest') => {

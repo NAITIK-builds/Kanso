@@ -2,16 +2,58 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
 import SmoothImage from '../components/SmoothImage';
+import { IconHouse, IconCheck } from '../components/Icons';
 
 export default function HostPortalPage() {
   const {
     listings,
     reservations,
     dispatchDigitalKey,
-    setIsAddListingOpen
+    setIsAddListingOpen,
+    currentUser,
+    setAuthModalState,
+    logoutUser
   } = useKanso();
 
   const [activeTab, setActiveTab] = useState('bookings'); // 'bookings' | 'listings'
+
+  // If user is logged in as seeking home/guest, do not allow listing a room
+  if (currentUser?.role === 'guest') {
+    return (
+      <div className="host-portal-page container" style={{ padding: '80px 20px', minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ maxWidth: '560px', width: '100%', background: 'var(--bg-surface, #ffffff)', padding: '40px 32px', borderRadius: '16px', border: '1px solid var(--line-hairline, rgba(0,0,0,0.1))', textAlign: 'center', boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
+          <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'var(--bg-subtle, #f5f0e8)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+            <IconHouse size={28} style={{ color: 'var(--accent-earth)' }} />
+          </div>
+          <span style={{ display: 'inline-block', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 700, color: 'var(--accent-earth, #a05a32)', marginBottom: '8px' }}>
+            TENANT & SEEKER ACCOUNT
+          </span>
+          <h2 style={{ fontFamily: 'var(--font-display, serif)', fontSize: '24px', fontWeight: 600, color: 'var(--ink-primary)', marginBottom: '12px' }}>
+            Seeking Home Mode Active
+          </h2>
+          <p style={{ color: 'var(--ink-secondary)', fontSize: '14px', lineHeight: '1.6', marginBottom: '28px' }}>
+            You are currently signed in as <strong>{currentUser.name} (Seeking Home)</strong>. The ability to list rooms and manage properties is reserved for Room Owners and Hosts.
+          </p>
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link to="/" className="btn-architectural btn-primary" style={{ padding: '12px 24px' }}>
+              Explore Available Homes
+            </Link>
+            <button
+              type="button"
+              className="btn-architectural btn-secondary"
+              style={{ padding: '12px 20px' }}
+              onClick={() => {
+                logoutUser();
+                setAuthModalState({ initialRole: 'host', initialMode: 'login' });
+              }}
+            >
+              Sign In as Host
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const totalPayout = reservations.reduce((acc, r) => acc + (Number(r.total) || 0), 0);
 
@@ -41,7 +83,7 @@ export default function HostPortalPage() {
         <div className="custodian-metric-box scroll-reveal">
           <span className="c-metric-label">ACTIVE ROOMS</span>
           <strong className="c-metric-val">{listings.length}</strong>
-          <span className="c-metric-hint">Verified rooms on Rental</span>
+          <span className="c-metric-hint">Verified rooms on Rental House Finder</span>
         </div>
         <div className="custodian-metric-box scroll-reveal">
           <span className="c-metric-label">TOTAL TENANT RESERVATIONS</span>
@@ -148,7 +190,7 @@ export default function HostPortalPage() {
                       </button>
                     ) : (
                       <div className="key-dispatched-badge">
-                        <span className="check-icon">✓</span>
+                        <IconCheck size={14} className="check-icon" />
                         <span>Digital Key Dispatched</span>
                       </div>
                     )}

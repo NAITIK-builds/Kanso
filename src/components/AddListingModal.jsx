@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useKanso } from '../context/KansoContext';
+import { IconClose } from './Icons';
 
 const AMENITY_OPTIONS = [
   'Attached Bath',
@@ -15,7 +16,7 @@ const AMENITY_OPTIONS = [
 ];
 
 export default function AddListingModal() {
-  const { isAddListingOpen, setIsAddListingOpen, createListing } = useKanso();
+  const { isAddListingOpen, setIsAddListingOpen, createListing, currentUser } = useKanso();
 
   const [title, setTitle] = useState('');
   const [type, setType] = useState('Private Room');
@@ -37,7 +38,8 @@ export default function AddListingModal() {
     'Work Desk'
   ]);
 
-  if (!isAddListingOpen) return null;
+  // Do not render or allow if user is logged in as seeking home/guest
+  if (!isAddListingOpen || currentUser?.role === 'guest') return null;
 
   const handleAmenityToggle = (amenity) => {
     setSelectedAmenities((prev) =>
@@ -79,7 +81,7 @@ export default function AddListingModal() {
             onClick={() => setIsAddListingOpen(false)}
             aria-label="Close modal"
           >
-            ✕
+            <IconClose size={18} />
           </button>
         </div>
 
@@ -120,14 +122,15 @@ export default function AddListingModal() {
               value={region}
               onChange={(e) => setRegion(e.target.value)}
             >
+              <option value="Kanpur">Kanpur</option>
               <option value="Bangalore">Bangalore</option>
               <option value="Mumbai">Mumbai</option>
+              <option value="Delhi NCR">Delhi NCR</option>
+              <option value="Pune">Pune</option>
               <option value="Goa">Goa</option>
               <option value="Himachal Pradesh">Himachal Pradesh</option>
               <option value="Rajasthan">Rajasthan</option>
               <option value="Puducherry">Puducherry</option>
-              <option value="Delhi NCR">Delhi NCR</option>
-              <option value="Pune">Pune</option>
             </select>
           </div>
 
@@ -137,7 +140,7 @@ export default function AddListingModal() {
               type="text"
               id="listingLocation"
               required
-              placeholder="e.g. Indiranagar 100ft Rd, Bangalore"
+              placeholder="e.g. Swaroop Nagar, Kakadeo, or Indiranagar"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
             />

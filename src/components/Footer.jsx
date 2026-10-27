@@ -17,6 +17,10 @@ export default function Footer() {
 
   const handleHostClick = (e) => {
     e.preventDefault();
+    if (currentUser?.role === 'guest') {
+      showToast("You are logged in as Seeking Home. Only Room Owner / Host accounts can post listings.", "alert");
+      return;
+    }
     if (!currentUser) {
       setAuthModalState({ initialRole: 'host', initialMode: 'register' });
     } else {
@@ -31,7 +35,7 @@ export default function Footer() {
           <div className="brand-emblem">
             <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">RENTAL ROOMS</span>
+              <span className="brand-name">RENTAL HOUSE FINDER</span>
               <span className="brand-sub">VERIFIED ROOMS & CO-LIVING</span>
             </div>
           </div>
@@ -43,6 +47,11 @@ export default function Footer() {
         <div className="footer-links-col">
           <h5>LOCAL RESIDENTIAL HUBS</h5>
           <ul>
+            <li>
+              <a href="#" onClick={(e) => handleRegionClick(e, 'Kanpur')}>
+                Kanpur (Swaroop Nagar, Kakadeo & Kalyanpur)
+              </a>
+            </li>
             <li>
               <a href="#" onClick={(e) => handleRegionClick(e, 'Bengaluru')}>
                 Bengaluru (Indiranagar, HSR & Koramangala)
@@ -74,17 +83,19 @@ export default function Footer() {
         <div className="footer-links-col">
           <h5>ROOM OWNERS & FLATMATES</h5>
           <ul>
-            <li>
-              <a href="#" onClick={handleHostClick}>
-                Post Your Spare Room
-              </a>
-            </li>
+            {(!currentUser || currentUser.role === 'host') && (
+              <li>
+                <a href="#" onClick={handleHostClick}>
+                  Post Your Spare Room
+                </a>
+              </li>
+            )}
             <li>
               <a
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  showToast("Room Standards: High-speed fiber WiFi, natural light, lockable doors & clean washrooms.", '🛏️');
+                  showToast("Room Standards: High-speed fiber WiFi, natural light, lockable doors & clean washrooms.", 'bed');
                 }}
               >
                 Room Quality Standards
@@ -95,7 +106,7 @@ export default function Footer() {
                 href="#"
                 onClick={(e) => {
                   e.preventDefault();
-                  showToast("Flatmate Guidelines: Mutual privacy, quiet work hours, clean shared kitchen & respect.", '✦');
+                  showToast("Flatmate Guidelines: Mutual privacy, quiet work hours, clean shared kitchen & respect.", 'sparkle');
                 }}
               >
                 Flatmate Guidelines
@@ -118,7 +129,7 @@ export default function Footer() {
         <div className="footer-legal-col">
           <h5>VERIFIED DISCLOSURE</h5>
           <p>All room listings are verified for authenticity. Rents are direct in INR (₹/month) with zero broker commissions.</p>
-          <span className="copyright">© 2026 RENTAL ROOMS · All Rights Reserved.</span>
+          <span className="copyright">© 2026 RENTAL HOUSE FINDER · All Rights Reserved.</span>
         </div>
       </div>
     </footer>

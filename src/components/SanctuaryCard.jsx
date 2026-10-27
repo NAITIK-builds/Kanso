@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRental } from '../context/RentalContext';
 import SmoothImage from './SmoothImage';
+import { IconPin, IconMetro, IconLease, IconStar } from './Icons';
 
 export default function SanctuaryCard({ sanctuary, index }) {
   const navigate = useNavigate();
@@ -55,16 +56,21 @@ export default function SanctuaryCard({ sanctuary, index }) {
             {sanctuary.city || sanctuary.region} · {sanctuary.type}
           </span>
           <span className="card-rating">
-            ★ {sanctuary.rating} ({sanctuary.reviewsCount})
+            <IconStar size={13} style={{ marginRight: '3px', color: 'var(--accent-earth)' }} />
+            {sanctuary.rating} ({sanctuary.reviewsCount})
           </span>
         </div>
 
         {/* Local Area & Transit Badge */}
         <div className="card-local-meta-bar">
-          <span className="card-locality-tag">📍 {sanctuary.localArea}</span>
+          <span className="card-locality-tag">
+            <IconPin size={12} style={{ marginRight: '3px' }} />
+            {sanctuary.localArea}
+          </span>
           {sanctuary.metroProximity && (
             <span className="card-transit-tag" title={sanctuary.metroProximity}>
-              🚇 {sanctuary.metroProximity.split('(')[0].replace('from', '').trim()}
+              <IconMetro size={12} style={{ marginRight: '3px' }} />
+              {sanctuary.metroProximity.split('(')[0].replace('from', '').trim()}
             </span>
           )}
         </div>
@@ -78,7 +84,10 @@ export default function SanctuaryCard({ sanctuary, index }) {
 
         {/* Long Stay Terms & Amenities */}
         <div className="card-longstay-specs">
-          <span className="lease-tag">📋 {sanctuary.leaseTerm || '11-Mo Lease'}</span>
+          <span className="lease-tag">
+            <IconLease size={12} style={{ marginRight: '3px' }} />
+            {sanctuary.leaseTerm || '11-Mo Lease'}
+          </span>
           <span className="deposit-tag">
             ₹{sanctuary.deposit ? sanctuary.deposit.toLocaleString('en-IN') : (sanctuary.price * 2).toLocaleString('en-IN')} Dep.
           </span>

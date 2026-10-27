@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useKanso, DEMO_USERS } from '../context/KansoContext';
+import { useRental, DEMO_USERS } from '../context/RentalContext';
+import { IconSparkle, IconBed, IconCheck, IconAlert, IconHost, IconClose } from './Icons';
 
 export default function AuthModal() {
-  const { authModalState, setAuthModalState, loginUser } = useKanso();
+  const {
+    authModalState,
+    setAuthModalState,
+    loginUser
+  } = useRental();
 
   const [role, setRole] = useState('guest'); // 'guest' | 'host'
   const [mode, setMode] = useState('login'); // 'login' | 'register'
@@ -14,14 +19,22 @@ export default function AuthModal() {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('rental2026');
 
+  // UI status
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     if (authModalState) {
-      setRole(authModalState.initialRole || 'guest');
+      const initialRole = authModalState.initialRole || 'guest';
+      setRole(initialRole);
       setMode(authModalState.initialMode || 'login');
-      if (authModalState.initialRole === 'host') {
+      setErrorMessage('');
+      if (initialRole === 'host') {
         setEmail('ananya@varma-arch.in');
+        setFullName('Ananya Varma');
       } else {
         setEmail('kabir@example.com');
+        setFullName('Kabir Sen');
       }
     }
   }, [authModalState]);
@@ -34,15 +47,26 @@ export default function AuthModal() {
 
   const handleRoleChange = (newRole) => {
     setRole(newRole);
+    setErrorMessage('');
     if (newRole === 'host') {
       setEmail('ananya@varma-arch.in');
+      if (!fullName || fullName === 'Kabir Sen') setFullName('Ananya Varma');
     } else {
       setEmail('kabir@example.com');
+      if (!fullName || fullName === 'Ananya Varma') setFullName('Kabir Sen');
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrorMessage('');
+    setLoading(true);
+
+    if (!email.trim()) {
+      setErrorMessage('Please enter a valid email address.');
+      setLoading(false);
+      return;
+    }
 
     const name = fullName.trim() || (role === 'host' ? 'Ananya Varma' : 'Kabir Sen');
     const initials = name
@@ -56,21 +80,27 @@ export default function AuthModal() {
       name,
       email: email.trim(),
       role,
-      roleLabel: role === 'host' ? 'Host Custodian' : 'Seeking Stays',
+      roleLabel: role === 'host' ? 'Room Owner / Host' : 'Seeking Home / Tenant',
       initials: initials || (role === 'host' ? 'AV' : 'KS'),
-      practiceName: role === 'host' ? propertyName || 'Varma Studio Architecture' : undefined,
+      practiceName: role === 'host' ? propertyName || 'Verified Residence' : undefined,
       phone: phone || (role === 'host' ? '+91 98200 12345' : '+91 98765 43210')
     };
 
-    loginUser(userObj);
+    setTimeout(() => {
+      loginUser(userObj);
+      setLoading(false);
+      handleClose();
+    }, 200);
   };
 
   const handleDemoGuest = () => {
     loginUser(DEMO_USERS.guest);
+    handleClose();
   };
 
   const handleDemoHost = () => {
     loginUser(DEMO_USERS.host);
+    handleClose();
   };
 
   return (
@@ -81,7 +111,7 @@ export default function AuthModal() {
           <div className="brand-emblem">
             <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">RENTAL ROOMS</span>
+              <span className="brand-name">RENTAL HOUSE FINDER</span>
               <span className="brand-sub">VERIFIED ACCESS</span>
             </div>
           </div>
@@ -91,10 +121,11 @@ export default function AuthModal() {
             type="button"
             className="btn-return-sanctuaries"
             onClick={handleClose}
+            aria-label="Close and return"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            <span>Return to Sanctuaries</span>
-            <span className="close-icon-pill">✕</span>
+            <span className="return-label">Back</span>
+            <span className="close-icon-pill"><IconClose size={12} /></span>
           </button>
         </div>
       </header>
@@ -107,32 +138,38 @@ export default function AuthModal() {
             <div className="auth-brand-stamp">
               <span className="auth-rental-mark auth-kanso-mark">R</span>
               <div>
-                <strong>RENTAL ROOMS</strong>
+                <strong>RENTAL HOUSE FINDER</strong>
                 <span>VERIFIED ROOMS & CO-LIVING</span>
               </div>
             </div>
 
             <div className="auth-quote-wrap">
-              <div className="auth-tag-pill">MINDFUL ROOM LIVING</div>
+              <div className="auth-tag-pill">MINDFUL LIVING</div>
               <h2 className="auth-visual-heading">
-                Live peacefully.<br />Find verified rooms.
+                Live peacefully.<br />Find verified homes & rooms.
               </h2>
               <p className="auth-manifesto-quote">
                 "A great room gives you quiet focus, high-speed fiber internet, and respectful flatmates without the stress of broker commissions."
               </p>
-              <span className="auth-quote-author">— Rental Rooms Ethos</span>
+              <span className="auth-quote-author">— Rental House Finder Ethos</span>
             </div>
 
             {/* Dual Persona Value Offerings */}
             <div className="auth-perks-list">
               <div className="auth-perk-card">
-                <div className="perk-badge guest">✦ FOR TENANTS & SEEKERS</div>
+                <div className="perk-badge guest">
+                  <IconSparkle size={11} style={{ marginRight: '5px' }} />
+                  FOR SEEKERS & TENANTS
+                </div>
                 <p>
-                  Find verified furnished private bedrooms, master suites, and shared flats across top Indian hubs with zero brokerage and transparent monthly rent.
+                  Find verified furnished private bedrooms, master suites, and shared flats across Kanpur, Bengaluru, Mumbai & top Indian cities with zero brokerage and transparent monthly rent.
                 </p>
               </div>
               <div className="auth-perk-card">
-                <div className="perk-badge host">🛏️ FOR ROOM OWNERS & FLATMATES</div>
+                <div className="perk-badge host">
+                  <IconBed size={13} style={{ marginRight: '5px' }} />
+                  FOR ROOM OWNERS & HOSTS
+                </div>
                 <p>
                   List your spare bedroom, connect directly with background-checked professionals and students, and manage rent reservations with zero middleman fees.
                 </p>
@@ -140,9 +177,9 @@ export default function AuthModal() {
             </div>
 
             <div className="auth-trust-footer">
-              <span className="trust-item">✓ Verified Room Amenities</span>
-              <span className="trust-item">✓ Zero Brokerage Fees</span>
-              <span className="trust-item">✓ Direct Owner Connect</span>
+              <span className="trust-item"><IconCheck size={13} style={{ marginRight: '4px' }} />Verified Room Amenities</span>
+              <span className="trust-item"><IconCheck size={13} style={{ marginRight: '4px' }} />Zero Brokerage Fees</span>
+              <span className="trust-item"><IconCheck size={13} style={{ marginRight: '4px' }} />Direct Owner Connect</span>
             </div>
           </div>
         </div>
@@ -152,11 +189,32 @@ export default function AuthModal() {
           <div className="auth-form-container">
             <div className="auth-header-bar">
               <span className="modal-tag">SECURE ACCESS</span>
-              <h1 className="auth-main-title">Welcome to Rental Rooms</h1>
+              <h1 className="auth-main-title">Welcome to Rental House Finder</h1>
               <p className="auth-intro-sub">
-                Sign in to your account or register to rent or list verified furnished rooms across India.
+                {mode === 'login'
+                  ? 'Sign in to access your saved homes, reservations, and chat inquiries.'
+                  : 'Create an account to rent verified furnished rooms or list your spare bedroom.'}
               </p>
             </div>
+
+            {/* Error Message */}
+            {errorMessage && (
+              <div style={{
+                padding: '12px 16px',
+                borderRadius: '8px',
+                marginBottom: '16px',
+                fontSize: '13px',
+                backgroundColor: 'rgba(239, 68, 68, 0.12)',
+                color: '#ef4444',
+                border: '1px solid rgba(239, 68, 68, 0.25)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}>
+                <IconAlert size={16} />
+                <span>{errorMessage}</span>
+              </div>
+            )}
 
             {/* Role Persona Switcher */}
             <div className="auth-role-tabs">
@@ -165,10 +223,10 @@ export default function AuthModal() {
                 className={`auth-role-tab ${role === 'guest' ? 'active' : ''}`}
                 onClick={() => handleRoleChange('guest')}
               >
-                <span className="role-icon">✦</span>
+                <span className="role-icon"><IconSparkle size={13} /></span>
                 <div className="role-text-wrap">
-                  <span className="role-heading">Seeking Stays</span>
-                  <span className="role-sub">Rooms, Villas & Chalets</span>
+                  <span className="role-heading">Seeking Home</span>
+                  <span className="role-sub">Rooms, Flats & Suites</span>
                 </div>
               </button>
               <button
@@ -176,10 +234,10 @@ export default function AuthModal() {
                 className={`auth-role-tab ${role === 'host' ? 'active' : ''}`}
                 onClick={() => handleRoleChange('host')}
               >
-                <span className="role-icon">🏛️</span>
+                <span className="role-icon"><IconHost size={16} /></span>
                 <div className="role-text-wrap">
                   <span className="role-heading">Host Custodian</span>
-                  <span className="role-sub">List & Rent Architecture</span>
+                  <span className="role-sub">List & Rent Rooms</span>
                 </div>
               </button>
             </div>
@@ -189,14 +247,20 @@ export default function AuthModal() {
               <button
                 type="button"
                 className={`mode-tab ${mode === 'login' ? 'active' : ''}`}
-                onClick={() => setMode('login')}
+                onClick={() => {
+                  setMode('login');
+                  setErrorMessage('');
+                }}
               >
                 Sign In
               </button>
               <button
                 type="button"
                 className={`mode-tab ${mode === 'register' ? 'active' : ''}`}
-                onClick={() => setMode('register')}
+                onClick={() => {
+                  setMode('register');
+                  setErrorMessage('');
+                }}
               >
                 Create Account
               </button>
@@ -222,12 +286,12 @@ export default function AuthModal() {
               {/* Host practice name for host register */}
               {mode === 'register' && role === 'host' && (
                 <div className="form-group span-2">
-                  <label htmlFor="authPropertyName">Property / Architectural Practice Name *</label>
+                  <label htmlFor="authPropertyName">Property / Residence Label *</label>
                   <input
                     type="text"
                     id="authPropertyName"
                     required
-                    placeholder="e.g. Varma Studio Architecture / The Courtyard Villa"
+                    placeholder="e.g. Swaroop Nagar Residence / Studio Flat"
                     value={propertyName}
                     onChange={(e) => setPropertyName(e.target.value)}
                   />
@@ -250,7 +314,7 @@ export default function AuthModal() {
               {/* Phone for register */}
               {mode === 'register' && (
                 <div className="form-group span-2">
-                  <label htmlFor="authPhone">WhatsApp / Mobile Number *</label>
+                  <label htmlFor="authPhone">WhatsApp / Mobile Number</label>
                   <input
                     type="tel"
                     id="authPhone"
@@ -290,15 +354,18 @@ export default function AuthModal() {
               <div className="form-group span-2">
                 <button
                   type="submit"
+                  disabled={loading}
                   className="btn-architectural btn-primary btn-block btn-lg"
                 >
-                  {mode === 'login'
+                  {loading
+                    ? 'Signing in...'
+                    : mode === 'login'
                     ? role === 'host'
                       ? 'Sign In as Host Custodian'
-                      : 'Sign In as Traveler'
+                      : 'Sign In as Home Seeker'
                     : role === 'host'
                     ? 'Register as Host Custodian'
-                    : 'Create Traveler Account'}
+                    : 'Create Seeker Account'}
                 </button>
               </div>
             </form>
@@ -313,7 +380,7 @@ export default function AuthModal() {
                   onClick={handleDemoGuest}
                 >
                   <span className="demo-dot guest"></span>
-                  <span>Demo Guest (Kabir Sen)</span>
+                  <span>Demo Seeker (Kabir Sen)</span>
                 </button>
                 <button
                   type="button"

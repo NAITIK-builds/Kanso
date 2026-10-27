@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
 import SmoothImage from '../components/SmoothImage';
+import { IconBed } from '../components/Icons';
 
 export default function ReservationsPage() {
   const {
@@ -139,7 +140,9 @@ export default function ReservationsPage() {
           })
         ) : (
           <div className="journeys-empty-card">
-            <div className="empty-icon-wrap">🛏️</div>
+            <div className="empty-icon-wrap">
+              <IconBed size={32} style={{ color: 'var(--accent-earth)' }} />
+            </div>
             <h3>No Room Bookings Yet</h3>
             <p>You have no active room reservations or hold slips. Discover verified furnished rooms with zero brokerage across India.</p>
             <Link to="/" className="btn-architectural btn-primary">

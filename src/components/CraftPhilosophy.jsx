@@ -4,7 +4,7 @@ export default function CraftPhilosophy() {
   return (
     <section className="craft-manifesto-section">
       <div className="container craft-inner scroll-reveal">
-        <div className="craft-stamp">RENTAL ROOMS ETHOS</div>
+        <div className="craft-stamp">RENTAL HOUSE FINDER ETHOS</div>
         <blockquote className="craft-quote">
           "A mindful room is more than four walls; it is your personal sanctuary for deep work, restful sleep, and peaceful daily focus."
         </blockquote>

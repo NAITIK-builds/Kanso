@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useKanso } from '../context/KansoContext';
+import { IconClose, IconStar, IconCheck } from './Icons';
 
 export default function HostPortalModal() {
   const {
@@ -9,12 +10,13 @@ export default function HostPortalModal() {
     reservations,
     dispatchDigitalKey,
     setIsAddListingOpen,
-    setDetailSanctuaryId
+    setDetailSanctuaryId,
+    currentUser
   } = useKanso();
 
   const [activeTab, setActiveTab] = useState('listings'); // 'listings' | 'bookings'
 
-  if (!isHostPortalOpen) return null;
+  if (!isHostPortalOpen || currentUser?.role === 'guest') return null;
 
   const totalPayout = reservations.reduce((acc, r) => acc + (Number(r.total) || 0), 0);
 
@@ -28,20 +30,22 @@ export default function HostPortalModal() {
             <h2>Manage Your Rooms & Tenants</h2>
           </div>
           <div className="host-header-actions">
-            <button
-              type="button"
-              className="btn-architectural btn-primary"
-              onClick={() => setIsAddListingOpen(true)}
-            >
-              + Post a Room
-            </button>
+            {(!currentUser || currentUser.role === 'host') && (
+              <button
+                type="button"
+                className="btn-architectural btn-primary"
+                onClick={() => setIsAddListingOpen(true)}
+              >
+                + Post a Room
+              </button>
+            )}
             <button
               type="button"
               className="close-overlay-btn"
               onClick={() => setIsHostPortalOpen(false)}
               aria-label="Close Host Portal"
             >
-              ✕
+              <IconClose size={18} />
             </button>
           </div>
         </div>
@@ -51,7 +55,7 @@ export default function HostPortalModal() {
           <div className="metric-card">
             <span className="metric-label">ACTIVE ROOMS</span>
             <span className="metric-val">{listings.length}</span>
-            <span className="metric-sub">Listed on Rental Rooms</span>
+            <span className="metric-sub">Listed on Rental House Finder</span>
           </div>
           <div className="metric-card">
             <span className="metric-label">TENANT BOOKINGS</span>
@@ -104,7 +108,10 @@ export default function HostPortalModal() {
                     <span>/ night</span>
                   </div>
                   <div className="host-listing-rating">
-                    <span>★ {item.rating} ({item.reviewsCount} reviews)</span>
+                    <span>
+                      <IconStar size={12} fill="currentColor" style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: '3px' }} />
+                      {item.rating} ({item.reviewsCount} reviews)
+                    </span>
                   </div>
                   <div className="host-listing-actions">
                     <button
@@ -187,7 +194,10 @@ export default function HostPortalModal() {
                           Dispatch Key (WhatsApp)
                         </button>
                       ) : (
-                        <span className="key-dispatched-label">✓ Digital Key Sent</span>
+                        <span className="key-dispatched-label">
+                          <IconCheck size={14} style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: '4px' }} />
+                          Digital Key Sent
+                        </span>
                       )}
                     </div>
                   </div>

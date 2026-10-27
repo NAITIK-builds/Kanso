@@ -6,7 +6,7 @@ export default function TopRibbon() {
       <div className="ribbon-content">
         <span className="ribbon-tag">
           <span className="ribbon-tag-vol">VOL. 01 / </span>
-          <span>2026 ROOM DIRECTORY</span>
+          <span>2026 HOUSE & ROOM FINDER</span>
         </span>
         <span className="ribbon-text">
           <span className="ribbon-main-text">Verified furnished rooms & flatshares</span>

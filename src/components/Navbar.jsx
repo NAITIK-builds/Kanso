@@ -80,8 +80,8 @@ export default function Navbar() {
           <Link to="/" className="brand-emblem" onClick={handleBrandClick}>
             <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">RENTAL</span>
-              <span className="brand-sub">ROOMS · आवास</span>
+              <span className="brand-name">RENTAL HOUSE FINDER</span>
+              <span className="brand-sub">VERIFIED ROOMS · आवास</span>
             </div>
           </Link>
 
@@ -119,20 +119,22 @@ export default function Navbar() {
               <span className="badge-count">{reservations.length}</span>
             </Link>
 
-            {/* Host Switcher Button Route */}
-            <Link
-              to="/host"
-              className="host-cta-btn"
-              onClick={(e) => {
-                if (!currentUser) {
-                  e.preventDefault();
-                  handleOpenAuth('host', 'login');
-                }
-              }}
-            >
-              <span className="btn-dot"></span>
-              <span>+ List a Room</span>
-            </Link>
+            {/* Host Switcher Button Route - Hidden when logged in as seeking home */}
+            {(!currentUser || currentUser.role === 'host') && (
+              <Link
+                to="/host"
+                className="host-cta-btn"
+                onClick={(e) => {
+                  if (!currentUser) {
+                    e.preventDefault();
+                    handleOpenAuth('host', 'login');
+                  }
+                }}
+              >
+                <span className="btn-dot"></span>
+                <span>+ List a Room</span>
+              </Link>
+            )}
 
             {/* Unauthenticated Guest Auth Actions */}
             {!currentUser ? (
@@ -197,16 +199,18 @@ export default function Navbar() {
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                         Saved Sanctuaries ({wishlist.length})
                       </button>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => {
-                          setIsDropdownOpen(false);
-                          navigate('/host');
-                        }}
-                      >
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
-                        Host Custodian Suite
-                      </button>
+                      {currentUser.role === 'host' && (
+                        <button
+                          className="dropdown-item"
+                          onClick={() => {
+                            setIsDropdownOpen(false);
+                            navigate('/host');
+                          }}
+                        >
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                          Host Custodian Suite
+                        </button>
+                      )}
                       <div className="dropdown-divider"></div>
                       <button
                         className="dropdown-item text-earth"
@@ -308,8 +312,8 @@ export default function Navbar() {
           <div className="brand-emblem" onClick={handleBrandClick}>
             <span className="brand-monogram">R</span>
             <div className="brand-text">
-              <span className="brand-name">RENTAL</span>
-              <span className="brand-sub">ROOMS · आवास</span>
+              <span className="brand-name">RENTAL HOUSE FINDER</span>
+              <span className="brand-sub">VERIFIED ROOMS · आवास</span>
             </div>
           </div>
 
@@ -341,7 +345,7 @@ export default function Navbar() {
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <span>Search state, architect, vibe...</span>
+            <span>Search room, city, Kanpur, attached bath...</span>
             <span className="drawer-search-tag">⌘K</span>
           </div>
         </div>
@@ -403,26 +407,29 @@ export default function Navbar() {
             <span className="drawer-arrow">→</span>
           </button>
 
-          <button
-            type="button"
-            className="drawer-nav-item drawer-host-highlight"
-            onClick={() => {
-              if (!currentUser) {
-                handleOpenAuth('host', 'login');
-              } else {
-                handleNavClick('/host');
-              }
-            }}
-          >
-            <div className="nav-item-icon host-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-            </div>
-            <div className="nav-item-text">
-              <span className="item-title">Post a Room for Rent</span>
-              <span className="item-sub">List spare bedroom & find flatmates</span>
-            </div>
-            <span className="drawer-badge-live">HOST</span>
-          </button>
+          {(!currentUser || currentUser.role === 'host') && (
+            <button
+              type="button"
+              className="drawer-nav-item drawer-host-highlight"
+              onClick={() => {
+                if (!currentUser) {
+                  handleOpenAuth('host', 'login');
+                } else {
+                  handleNavClick('/host');
+                }
+              }}
+            >
+              <div className="nav-item-icon host-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+              </div>
+              <div className="nav-item-text">
+                <span className="item-title">Post a Room for Rent</span>
+                <span className="item-sub">List spare bedroom & find flatmates</span>
+              </div>
+              <span className="drawer-badge-live">HOST</span>
+            </button>
+          )}
+
         </nav>
 
         {/* User Persona & Authentication Block */}
@@ -503,7 +510,7 @@ export default function Navbar() {
             <span>28°36'N · 77°12'E</span>
             <span>VOL. 01 / 2026 ARCHIVE</span>
           </div>
-          <span className="drawer-copy">RENTAL ROOMS · ALL RIGHTS RESERVED</span>
+          <span className="drawer-copy">RENTAL HOUSE FINDER · ALL RIGHTS RESERVED</span>
         </div>
       </aside>
     </>

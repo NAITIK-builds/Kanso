@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useKanso } from '../context/KansoContext';
+import { IconClose } from './Icons';
 
 export default function AddReviewModal() {
   const { addReviewTarget, setAddReviewTarget, addReview, currentUser } = useKanso();
@@ -42,7 +43,7 @@ export default function AddReviewModal() {
             onClick={() => setAddReviewTarget(null)}
             aria-label="Close modal"
           >
-            ✕
+            <IconClose size={18} />
           </button>
         </div>
 
@@ -66,10 +67,10 @@ export default function AddReviewModal() {
               value={rating}
               onChange={(e) => setRating(e.target.value)}
             >
-              <option value="5">★★★★★ — Outstanding Room & Quiet Living (5.0)</option>
-              <option value="4.8">★★★★☆ — Peaceful & Clean Room (4.8)</option>
-              <option value="4.5">★★★★☆ — Very Good Stay & Fast WiFi (4.5)</option>
-              <option value="4.0">★★★★☆ — Good Room (4.0)</option>
+              <option value="5">5.0 / 5.0 — Outstanding Room & Quiet Living</option>
+              <option value="4.8">4.8 / 5.0 — Peaceful & Clean Room</option>
+              <option value="4.5">4.5 / 5.0 — Very Good Stay & Fast WiFi</option>
+              <option value="4.0">4.0 / 5.0 — Good Room</option>
             </select>
           </div>
 

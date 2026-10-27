@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRental } from '../context/RentalContext';
+import { IconClose } from './Icons';
 
 export default function BookingModal() {
   const {
@@ -99,7 +100,7 @@ export default function BookingModal() {
           <div className="ticket-brand">
             <span className="ticket-brand-mark">RR</span>
             <div>
-              <strong>RENTAL ROOMS</strong>
+              <strong>RENTAL HOUSE FINDER</strong>
               <span>ROOM LEASE SLIP · कमरा टोकन</span>
             </div>
           </div>
@@ -109,7 +110,7 @@ export default function BookingModal() {
             onClick={handleClose}
             aria-label="Close booking modal"
           >
-            ✕
+            <IconClose size={18} />
           </button>
         </div>
 
@@ -325,7 +326,7 @@ export default function BookingModal() {
                 <div className="barcode-graphic"></div>
                 <span className="barcode-code">RENTAL-ROOM-LEASE-TOKEN-INDIA-2026</span>
                 <p className="ticket-legal-micro">
-                  ISSUED UNDER RENTAL ROOMS ZERO-BROKERAGE CHARTER · VALID FOR DIRECT TENANT MOVE-IN
+                  ISSUED UNDER RENTAL HOUSE FINDER ZERO-BROKERAGE CHARTER · VALID FOR DIRECT TENANT MOVE-IN
                 </p>
               </div>
 

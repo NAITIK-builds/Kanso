@@ -1,8 +1,10 @@
 import React from 'react';
 import { useRental } from '../context/RentalContext';
+import { IconPin } from './Icons';
 
 const CITIES = [
   { id: 'all', label: 'All Cities' },
+  { id: 'Kanpur', label: 'Kanpur' },
   { id: 'Bengaluru', label: 'Bengaluru' },
   { id: 'Mumbai', label: 'Mumbai' },
   { id: 'Delhi-NCR', label: 'Delhi-NCR' },
@@ -11,6 +13,7 @@ const CITIES = [
 ];
 
 const LOCAL_AREAS_BY_CITY = {
+  Kanpur: ['Swaroop Nagar', 'Kakadeo', 'Kalyanpur (IIT)', 'Civil Lines', 'Tilak Nagar', 'Kidwai Nagar', 'Mall Road', 'Barra'],
   Bengaluru: ['Indiranagar', 'HSR Layout', 'Koramangala', 'Whitefield', 'BTM Layout'],
   Mumbai: ['Bandra West', 'Andheri West', 'Powai'],
   'Delhi-NCR': ['Cyber City Gurgaon', 'Noida Sector 62', 'Hauz Khas'],
@@ -19,6 +22,7 @@ const LOCAL_AREAS_BY_CITY = {
 };
 
 const ALL_POPULAR_AREAS = [
+  'Swaroop Nagar', 'Kakadeo', 'Kalyanpur (IIT)', 'Civil Lines',
   'Indiranagar', 'HSR Layout', 'Koramangala', 'Whitefield',
   'Bandra West', 'Powai', 'Cyber City Gurgaon', 'Hinjawadi', 'Hitec City'
 ];
@@ -117,7 +121,8 @@ export default function FilterBar() {
                   className={`area-pill ${isAreaActive ? 'active' : ''}`}
                   onClick={() => handleLocalAreaChange(area)}
                 >
-                  📍 {area}
+                  <IconPin size={13} style={{ marginRight: '4px' }} />
+                  {area}
                 </button>
               );
             })}

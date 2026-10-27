@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRental } from '../context/RentalContext';
+import { IconClose, IconPin } from './Icons';
 
 export default function QuickSearchModal() {
   const {
@@ -62,7 +63,7 @@ export default function QuickSearchModal() {
             onClick={() => setIsQuickSearchOpen(false)}
             aria-label="Close search"
           >
-            ✕
+            <IconClose size={16} />
           </button>
         </div>
 
@@ -85,7 +86,7 @@ export default function QuickSearchModal() {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Search by room type, Bangalore, Bandra, attached bath, AC..."
+              placeholder="Search by city (Kanpur, Bangalore, Mumbai), Kakadeo, attached bath, AC..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               style={{
@@ -107,10 +108,12 @@ export default function QuickSearchModal() {
                   border: 'none',
                   cursor: 'pointer',
                   color: 'var(--ink-tertiary)',
-                  fontSize: '14px'
+                  display: 'flex',
+                  alignItems: 'center'
                 }}
+                aria-label="Clear query"
               >
-                ✕
+                <IconClose size={14} />
               </button>
             )}
           </div>
@@ -161,8 +164,13 @@ export default function QuickSearchModal() {
                   <strong style={{ display: 'block', fontSize: '14px', color: 'var(--ink-primary)' }}>
                     {item.title}
                   </strong>
-                  <span style={{ fontSize: '12px', color: 'var(--ink-tertiary)' }}>
-                    {item.localArea ? `📍 ${item.localArea} · ` : ''}{item.location} · {item.type}
+                  <span style={{ fontSize: '12px', color: 'var(--ink-tertiary)', display: 'flex', alignItems: 'center', gap: '3px', flexWrap: 'wrap' }}>
+                    {item.localArea && (
+                      <>
+                        <IconPin size={11} style={{ display: 'inline-block', verticalAlign: '-1px' }} />
+                        {item.localArea} ·
+                      </>
+                    )} {item.location} · {item.type}
                   </span>
                 </div>
                 <div style={{ textAlign: 'right' }}>

@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import { useRental } from '../context/RentalContext';
 import SmoothImage from './SmoothImage';
+import {
+  IconPin,
+  IconStar,
+  IconClose,
+  IconLease,
+  IconDeposit,
+  IconMetro,
+  IconWork,
+  IconShopping,
+  IconUtility,
+  IconSparkle
+} from './Icons';
 
 export default function DetailModal() {
   const {
@@ -49,7 +61,7 @@ export default function DetailModal() {
         <div className="detail-modal-topbar">
           <div className="topbar-left">
             <span className="room-id-tag">ROOM // {sanctuary.id.toUpperCase()}</span>
-            <span className="room-type-tag">📍 {sanctuary.localArea?.toUpperCase()} · {sanctuary.city?.toUpperCase() || sanctuary.region?.toUpperCase()}</span>
+            <span className="room-type-tag"><IconPin size={12} style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: '3px' }} /> {sanctuary.localArea?.toUpperCase()} · {sanctuary.city?.toUpperCase() || sanctuary.region?.toUpperCase()}</span>
           </div>
           <div className="topbar-right">
             <button
@@ -68,7 +80,7 @@ export default function DetailModal() {
               onClick={handleClose}
               aria-label="Close details"
             >
-              ✕
+              <IconClose size={16} />
             </button>
           </div>
         </div>
@@ -103,7 +115,7 @@ export default function DetailModal() {
               <div className="detail-location-rating">
                 <span>{sanctuary.location}</span> ·{' '}
                 <span className="rating-badge">
-                  ★ <strong>{sanctuary.rating}</strong> ({sanctuary.reviewsCount} reviews)
+                  <IconStar size={13} fill="currentColor" style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: '2px' }} /> <strong>{sanctuary.rating}</strong> ({sanctuary.reviewsCount} reviews)
                 </span>
               </div>
             </div>
@@ -113,34 +125,34 @@ export default function DetailModal() {
             {/* Long-Stay Lease & Local Transit Specs */}
             <div className="detail-longstay-box">
               <div className="longstay-row">
-                <span className="ls-label">📋 Lease Agreement:</span>
+                <span className="ls-label"><IconLease size={14} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '4px' }} /> Lease Agreement:</span>
                 <span className="ls-val">{sanctuary.leaseTerm || '11-Month Renewable Agreement'} (Lock-in: {sanctuary.lockInPeriod || '3 Mos'})</span>
               </div>
               <div className="longstay-row">
-                <span className="ls-label">💰 Security Deposit:</span>
+                <span className="ls-label"><IconDeposit size={14} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '4px' }} /> Security Deposit:</span>
                 <span className="ls-val">{sanctuary.depositText || `₹${(sanctuary.price * 2).toLocaleString('en-IN')} (Refundable)`}</span>
               </div>
               {sanctuary.metroProximity && (
                 <div className="longstay-row">
-                  <span className="ls-label">🚇 Transit & Metro:</span>
+                  <span className="ls-label"><IconMetro size={14} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '4px' }} /> Transit & Metro:</span>
                   <span className="ls-val">{sanctuary.metroProximity}</span>
                 </div>
               )}
               {sanctuary.techParkProximity && (
                 <div className="longstay-row">
-                  <span className="ls-label">🏢 Work Proximity:</span>
+                  <span className="ls-label"><IconWork size={14} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '4px' }} /> Work Proximity:</span>
                   <span className="ls-val">{sanctuary.techParkProximity}</span>
                 </div>
               )}
               {sanctuary.dailyEssentials && (
                 <div className="longstay-row">
-                  <span className="ls-label">🛒 Daily Essentials:</span>
+                  <span className="ls-label"><IconShopping size={14} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '4px' }} /> Daily Essentials:</span>
                   <span className="ls-val">{sanctuary.dailyEssentials}</span>
                 </div>
               )}
               {sanctuary.utilityBillSharing && (
                 <div className="longstay-row">
-                  <span className="ls-label">⚡ Bills & Utilities:</span>
+                  <span className="ls-label"><IconUtility size={14} style={{ display: 'inline-block', verticalAlign: '-2px', marginRight: '4px' }} /> Bills & Utilities:</span>
                   <span className="ls-val">{sanctuary.utilityBillSharing}</span>
                 </div>
               )}
@@ -157,7 +169,7 @@ export default function DetailModal() {
               <div className="amenities-pill-grid">
                 {sanctuary.amenities.map((item, idx) => (
                   <span key={idx} className="amenity-pill-item">
-                    ✦ {item}
+                    <IconSparkle size={12} style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: '4px' }} /> {item}
                   </span>
                 ))}
               </div>
@@ -219,7 +231,7 @@ export default function DetailModal() {
                   <div key={i} className="impression-item">
                     <div className="impression-author-bar">
                       <span className="author-name">{r.author}</span>
-                      <span className="author-score">★ {r.score}</span>
+                      <span className="author-score"><IconStar size={12} fill="currentColor" style={{ display: 'inline-block', verticalAlign: '-1px', marginRight: '2px' }} /> {r.score}</span>
                       <span className="author-date">{r.date}</span>
                     </div>
                     <p className="impression-text">"{r.text}"</p>

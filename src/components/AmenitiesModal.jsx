@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useKanso } from '../context/KansoContext';
+import { IconClose } from './Icons';
 
 const ALL_PROVISIONS = [
   'Attached Bath',
@@ -84,7 +85,7 @@ export default function AmenitiesModal() {
             onClick={() => setIsAmenitiesModalOpen(false)}
             aria-label="Close modal"
           >
-            ✕
+            <IconClose size={18} />
           </button>
         </div>
 

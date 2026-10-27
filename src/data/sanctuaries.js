@@ -5,6 +5,262 @@
  */
 
 export const SEED_ROOMS = [
+  // ===================== KANPUR =====================
+  {
+    id: "rm-knp-01",
+    title: "Garden-Facing AC Room near Motijheel & Medical College",
+    type: "Private Room",
+    city: "Kanpur",
+    region: "Kanpur",
+    localArea: "Swaroop Nagar",
+    location: "Near Motijheel Lawns & Rave 3, Swaroop Nagar, Kanpur",
+    price: 11500,
+    pricePeriod: "/ month",
+    deposit: 23000,
+    depositText: "₹23,000 (2 months, 100% refundable)",
+    leaseTerm: "11-Month Renewable Agreement",
+    lockInPeriod: "3 Months",
+    noticePeriod: "30 Days Notice",
+    metroProximity: "600m from Motijheel Metro Station (Orange Line) — 7 mins walk",
+    techParkProximity: "1.2 km to GSVM Medical College & Hallet Hospital",
+    dailyEssentials: "Rave 3 Mall (700m), Swaroop Nagar Market (150m), Apollo Pharmacy (100m)",
+    utilityBillSharing: "Sub-metered electricity; 300 Mbps high-speed WiFi, RO water & maintenance included",
+    rating: 4.96,
+    reviewsCount: 32,
+    guests: 2,
+    tenantPreference: "Doctors / Working Professionals / Mindful Tenants",
+    specs: "Air-Conditioned Master Bedroom · Attached Bath · Balcony · 230 sq.ft · 11-mo lease",
+    coverImg: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
+    ],
+    narrative: "Located in prime Swaroop Nagar overlooking lush tree canopies near Motijheel. Features independent private entrance, attached Western ensuite with instant geyser, silent inverter AC, dedicated study work desk, full wardrobe, and private sit-out balcony. Walking distance to premier cafes, hospitals, and Metro station.",
+    amenities: ["Attached Bath", "High-Speed WiFi", "Air Conditioning", "Furnished", "Work Desk", "Shared Kitchen", "Power Backup", "Housekeeping", "Geyser", "Gated Security"],
+    host: {
+      name: "Dr. Alok & Sunita Tandon",
+      initials: "AT",
+      role: "Resident Owners & Senior Doctor",
+      bio: "Offering verified, secure, and peaceful living in central Kanpur. We prioritize clean habits and quiet professional environment.",
+      verified: true
+    },
+    reviews: [
+      { author: "Dr. Shubham Verma", score: 5.0, date: "October 2026", text: "Best location in Kanpur. Motijheel is 5 mins walk for morning jogs, and hospital commute is effortless. 100% zero brokerage." },
+      { author: "Kavita Rastogi", score: 4.9, date: "September 2026", text: "The room is peaceful with great ventilation and reliable power backup. Landlords are very polite and cooperative." }
+    ]
+  },
+  {
+    id: "rm-knp-02",
+    title: "Quiet Study Studio Room for Aspirants & Students",
+    type: "Single Room",
+    city: "Kanpur",
+    region: "Kanpur",
+    localArea: "Kakadeo",
+    location: "Coaching Corridor, Near Geeta Nagar Cross, Kakadeo, Kanpur",
+    price: 8000,
+    pricePeriod: "/ month",
+    deposit: 16000,
+    depositText: "₹16,000 (2 months, refundable)",
+    leaseTerm: "11-Month Renewable Agreement",
+    lockInPeriod: "3 Months",
+    noticePeriod: "30 Days Notice",
+    metroProximity: "950m to Geeta Nagar Metro Station (Kanpur Metro)",
+    techParkProximity: "Directly in Kakadeo coaching hub — walk to all top institutes & study libraries",
+    dailyEssentials: "24/7 Air-Conditioned Reading Library (40m), Tiffin service (on-call), Stationary & Book Market (100m)",
+    utilityBillSharing: "Electricity sub-metered; 200Mbps optical fiber WiFi & RO drinking water included",
+    rating: 4.93,
+    reviewsCount: 45,
+    guests: 1,
+    tenantPreference: "Competitive Exam Aspirants / Students / Solo Tenancy",
+    specs: "Solo Furnished Room · Attached Bathroom · Ergonomic Study Station · 190 sq.ft · 11-mo lease",
+    coverImg: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80"
+    ],
+    narrative: "Designed specifically for serious aspirants preparing for NEET, JEE, and Civil Services in Kakadeo. Sound-insulated windows, wide ergonomic wooden study desk with comfortable study chair, book shelving, bed with orthopedic mattress, attached ensuite with geyser, and peaceful study hours enforced.",
+    amenities: ["Attached Bath", "High-Speed WiFi", "Furnished", "Work Desk", "Power Backup", "Housekeeping", "Geyser", "Gated Security", "RO Water"],
+    host: {
+      name: "Rajesh & Meena Sachan",
+      initials: "RS",
+      role: "Host & Resident Educator",
+      bio: "Providing safe, strictly disciplined, and distraction-free student accommodation in Kakadeo for over 8 years.",
+      verified: true
+    },
+    reviews: [
+      { author: "Ankit Awasthi", score: 5.0, date: "October 2026", text: "Peaceful environment, high-speed WiFi for online lecture streaming, and zero landlord interference. Great study desk." }
+    ]
+  },
+  {
+    id: "rm-knp-03",
+    title: "Sunlit Campus-Facing Room near IIT Kanpur Gate",
+    type: "Private Room",
+    city: "Kanpur",
+    region: "Kanpur",
+    localArea: "Kalyanpur (IIT)",
+    location: "Near IIT Kanpur Main Gate, GT Road, Kalyanpur, Kanpur",
+    price: 9500,
+    pricePeriod: "/ month",
+    deposit: 19000,
+    depositText: "₹19,000 (2 months, 100% refundable)",
+    leaseTerm: "11-Month Renewable Agreement",
+    lockInPeriod: "3 Months",
+    noticePeriod: "30 Days Notice",
+    metroProximity: "450m from IIT Kanpur Metro Station (Orange Line) — 5 mins walk",
+    techParkProximity: "Walk to IIT Kanpur Innovation & Incubation Centre & CSJM University",
+    dailyEssentials: "Kalyanpur Main Market (250m), More Supermarket (400m), Medicine & Grocery (50m)",
+    utilityBillSharing: "Fixed ₹600/month for high-speed fiber & RO; electricity as per separate sub-meter",
+    rating: 4.97,
+    reviewsCount: 39,
+    guests: 2,
+    tenantPreference: "IIT Researchers / Project Fellows / University Faculty / Students",
+    specs: "Furnished Bedroom · Private Attached Bath · Balcony · 220 sq.ft · 11-mo lease",
+    coverImg: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
+    ],
+    narrative: "Located 5 minutes walk from IIT Kanpur entrance gate and Metro station. Airy cross-ventilated master bedroom with high ceiling, private balcony looking over open green fields, queen bed, study workstation, attached modern washroom with geyser, and washing machine access.",
+    amenities: ["Attached Bath", "High-Speed WiFi", "Furnished", "Work Desk", "Air Conditioning", "Power Backup", "Housekeeping", "Washing Machine", "Geyser", "Gated Security"],
+    host: {
+      name: "Prof. Amit & Neha Tripathi",
+      initials: "NT",
+      role: "Faculty & Resident Host",
+      bio: "Renting quiet upper-floor room to researchers, engineers, and long-term working professionals near IIT Kanpur.",
+      verified: true
+    },
+    reviews: [
+      { author: "Prateek Srivastava", score: 5.0, date: "October 2026", text: "I walk to my lab at IIT Kanpur in 6 minutes. The metro is right there to head into the city on weekends." }
+    ]
+  },
+  {
+    id: "rm-knp-04",
+    title: "Colonial High-Ceiling Suite near Green Park & VIP Road",
+    type: "Studio Room",
+    city: "Kanpur",
+    region: "Kanpur",
+    localArea: "Civil Lines",
+    location: "VIP Road, Near Green Park Stadium & Merchant Chambers, Civil Lines, Kanpur",
+    price: 13500,
+    pricePeriod: "/ month",
+    deposit: 27000,
+    depositText: "₹27,000 (2 months, refundable)",
+    leaseTerm: "11-Month Renewable Agreement",
+    lockInPeriod: "3 Months",
+    noticePeriod: "30 Days Notice",
+    metroProximity: "1.1 km to Bada Chauraha Metro Station",
+    techParkProximity: "5 mins to Green Park, Reserve Bank, Cawnpore Club, and Ganga Barrage scenic route",
+    dailyEssentials: "Z Square Mall (1.1km), Som Dutt Plaza (800m), Civil Lines Market (300m)",
+    utilityBillSharing: "Shared electricity; fiber broadband, 24/7 security guard, and daily housekeeping included",
+    rating: 4.98,
+    reviewsCount: 28,
+    guests: 2,
+    tenantPreference: "Corporate Executives / Bankers / Quiet Professionals",
+    specs: "Boutique Studio Suite · Ensuite Bath · Kitchenette · 270 sq.ft · 11-mo lease",
+    coverImg: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80"
+    ],
+    narrative: "Immersed in historic Civil Lines on tree-lined VIP Road. Features 14-foot high ceilings, polished terrazzo floors, private induction kitchenette with refrigerator, attached designer bath with hot geyser, silent Daikin AC, teakwood wardrobe, and peaceful gated compound parking.",
+    amenities: ["Attached Bath", "Air Conditioning", "High-Speed WiFi", "Furnished", "Work Desk", "Power Backup", "Housekeeping", "Kitchenette", "Gated Security"],
+    host: {
+      name: "Vikramaditya Singhania",
+      initials: "VS",
+      role: "Heritage Property Custodian",
+      bio: "Curating mindful long-term studio living in Kanpur's most prestigious green colonial quarter.",
+      verified: true
+    },
+    reviews: [
+      { author: "Deepak Chawla", score: 5.0, date: "October 2026", text: "Best peaceful location in the heart of Kanpur. Wide roads, zero noise, and Z Square mall is 3 minutes away." }
+    ]
+  },
+  {
+    id: "rm-knp-05",
+    title: "Modern Balcony Room near Company Bagh & HBTU",
+    type: "Private Room",
+    city: "Kanpur",
+    region: "Kanpur",
+    localArea: "Tilak Nagar",
+    location: "Lane 3, Near Company Bagh Lawns, Tilak Nagar, Kanpur",
+    price: 11000,
+    pricePeriod: "/ month",
+    deposit: 22000,
+    depositText: "₹22,000 (2 months, refundable)",
+    leaseTerm: "11-Month Renewable Agreement",
+    lockInPeriod: "3 Months",
+    noticePeriod: "30 Days Notice",
+    metroProximity: "850m to Motijheel Metro Station",
+    techParkProximity: "5 mins to HBTU East Campus & Swaroop Nagar corporate clinics",
+    dailyEssentials: "Company Bagh Park (150m), Fresh Fruit & Grocery Stalls (100m), Cult.fit (500m)",
+    utilityBillSharing: "Sub-metered electricity; fiber internet and building maintenance included",
+    rating: 4.94,
+    reviewsCount: 24,
+    guests: 2,
+    tenantPreference: "Working Professionals / Couple / Graduate Engineers",
+    specs: "Master Room · Private Balcony · Attached Ensuite · 230 sq.ft · 11-mo lease",
+    coverImg: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1200&q=80"
+    ],
+    narrative: "Located in serene, upscale Tilak Nagar directly adjacent to Company Bagh gardens. Comes with large private balcony, cross-ventilation, attached bathroom with geyser, split AC, double bed with storage, and access to common modular kitchen.",
+    amenities: ["Attached Bath", "Air Conditioning", "High-Speed WiFi", "Furnished", "Work Desk", "Shared Kitchen", "Power Backup", "Housekeeping", "Gated Security"],
+    host: {
+      name: "Neeraj & Archana Gupta",
+      initials: "NG",
+      role: "Homeowners & Entrepreneurs",
+      bio: "Renting quiet upper-floor room to verified professionals who value cleanliness and peace.",
+      verified: true
+    },
+    reviews: [
+      { author: "Rohit Kesarwani", score: 4.9, date: "October 2026", text: "Walk to Company Bagh for morning run every day. Very peaceful, safe, and prime neighborhood." }
+    ]
+  },
+  {
+    id: "rm-knp-06",
+    title: "Furnished Room in South Commercial Corridor",
+    type: "Co-Living",
+    city: "Kanpur",
+    region: "Kanpur",
+    localArea: "Kidwai Nagar",
+    location: "Block K, Near Saket Nagar & Deep Cinema, Kidwai Nagar, Kanpur",
+    price: 8500,
+    pricePeriod: "/ month",
+    deposit: 17000,
+    depositText: "₹17,000 (2 months, refundable)",
+    leaseTerm: "11-Month Renewable Agreement",
+    lockInPeriod: "3 Months",
+    noticePeriod: "30 Days Notice",
+    metroProximity: "Direct auto & e-rickshaw corridor to Kanpur Central Station (12 mins)",
+    techParkProximity: "Near South Kanpur commercial complexes, Saket Nagar hospitals & coaching centres",
+    dailyEssentials: "Kidwai Nagar Supermarket (100m), Deep Cinema (250m), Banks & ATMs (50m)",
+    utilityBillSharing: "Equally divided electricity; high-speed WiFi, RO water, and housekeeping included",
+    rating: 4.92,
+    reviewsCount: 27,
+    guests: 1,
+    tenantPreference: "Corporate Trainees / Bank Officers / Students",
+    specs: "Private Bedroom · Attached Bathroom · Shared Lounge · 200 sq.ft · 11-mo lease",
+    coverImg: "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
+    ],
+    narrative: "Located in prime South Kanpur hub Kidwai Nagar with immediate access to Saket Nagar and Govind Nagar. Fully furnished with double bed, attached private washroom, study desk, power backup, and shared refrigerator and kitchen access.",
+    amenities: ["Attached Bath", "High-Speed WiFi", "Furnished", "Work Desk", "Shared Kitchen", "Power Backup", "Housekeeping", "Washing Machine"],
+    host: {
+      name: "Sunil & Vandana Mishra",
+      initials: "SM",
+      role: "Residents & Hosts",
+      bio: "Providing warm, safe, zero-brokerage room rental for long-term working professionals and students.",
+      verified: true
+    },
+    reviews: [
+      { author: "Manish Tiwari", score: 5.0, date: "September 2026", text: "Very convenient for South Kanpur work. Everything is nearby, reliable power backup and good WiFi." }
+    ]
+  },
+
   // ===================== BENGALURU =====================
   {
     id: "rm-blr-01",

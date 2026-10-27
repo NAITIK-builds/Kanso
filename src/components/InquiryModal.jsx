@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useKanso } from '../context/KansoContext';
+import { IconClose } from './Icons';
 
 export default function InquiryModal() {
   const { inquiryTarget, setInquiryTarget, inquiries, sendInquiry } = useKanso();
@@ -49,7 +50,7 @@ export default function InquiryModal() {
             onClick={() => setInquiryTarget(null)}
             aria-label="Close modal"
           >
-            ✕
+            <IconClose size={16} />
           </button>
         </div>
 

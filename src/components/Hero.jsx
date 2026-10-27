@@ -153,6 +153,14 @@ export default function Hero() {
       setActiveFilter((prev) => ({ ...prev, region: cityName, localArea: 'all' }));
     } else {
       const areaToCityMap = {
+        'Swaroop Nagar': 'Kanpur',
+        'Kakadeo': 'Kanpur',
+        'Kalyanpur (IIT)': 'Kanpur',
+        'Civil Lines': 'Kanpur',
+        'Tilak Nagar': 'Kanpur',
+        'Kidwai Nagar': 'Kanpur',
+        'Mall Road': 'Kanpur',
+        'Barra': 'Kanpur',
         'Indiranagar': 'Bengaluru',
         'HSR Layout': 'Bengaluru',
         'Koramangala': 'Bengaluru',
@@ -217,6 +225,16 @@ export default function Hero() {
               onChange={handleLocationSelect}
             >
               <option value="all">All Local Areas</option>
+
+              <optgroup label="Kanpur Localities">
+                <option value="city:Kanpur">All Kanpur (All Areas)</option>
+                <option value="Swaroop Nagar">Swaroop Nagar (Motijheel / Rave 3 / GSVM)</option>
+                <option value="Kakadeo">Kakadeo (Coaching Hub & Study Libraries)</option>
+                <option value="Kalyanpur (IIT)">Kalyanpur (IIT Kanpur Gate & GT Road)</option>
+                <option value="Civil Lines">Civil Lines (Green Park & VIP Road)</option>
+                <option value="Tilak Nagar">Tilak Nagar (Company Bagh & HBTU)</option>
+                <option value="Kidwai Nagar">Kidwai Nagar (South Hub & Saket Nagar)</option>
+              </optgroup>
 
               <optgroup label="Bengaluru Neighborhoods">
                 <option value="city:Bengaluru">All Bengaluru (All Layouts)</option>
@@ -309,12 +327,13 @@ export default function Hero() {
           <span className="micro-label">Popular Local Areas:</span>
           {[
             { label: 'All Cities', region: 'all', localArea: 'all' },
+            { label: 'Kanpur', region: 'Kanpur', localArea: 'all' },
+            { label: 'Swaroop Nagar', region: 'Kanpur', localArea: 'Swaroop Nagar' },
+            { label: 'Kakadeo (Kanpur)', region: 'Kanpur', localArea: 'Kakadeo' },
+            { label: 'Kalyanpur (IIT)', region: 'Kanpur', localArea: 'Kalyanpur (IIT)' },
             { label: 'Indiranagar', region: 'Bengaluru', localArea: 'Indiranagar' },
             { label: 'HSR Layout', region: 'Bengaluru', localArea: 'HSR Layout' },
-            { label: 'Koramangala', region: 'Bengaluru', localArea: 'Koramangala' },
-            { label: 'Whitefield', region: 'Bengaluru', localArea: 'Whitefield' },
             { label: 'Bandra West', region: 'Mumbai', localArea: 'Bandra West' },
-            { label: 'Powai', region: 'Mumbai', localArea: 'Powai' },
             { label: 'Cyber City Gurgaon', region: 'Delhi-NCR', localArea: 'Cyber City Gurgaon' },
             { label: 'Hinjawadi', region: 'Pune', localArea: 'Hinjawadi' },
             { label: 'Hitec City', region: 'Hyderabad', localArea: 'Hitec City' }

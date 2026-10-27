@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useKanso } from '../context/KansoContext';
 import SanctuaryCard from '../components/SanctuaryCard';
+import { IconHeart } from '../components/Icons';
 
 export default function WishlistPage() {
   const { wishlist, listings } = useKanso();
@@ -28,7 +29,9 @@ export default function WishlistPage() {
         </div>
       ) : (
         <div className="journeys-empty-card">
-          <div className="empty-icon-wrap">♡</div>
+          <div className="empty-icon-wrap">
+            <IconHeart size={36} style={{ color: 'var(--accent-earth)' }} />
+          </div>
           <h3>Your Room Shortlist is Empty</h3>
           <p>Tap the bookmark heart icon on any room while browsing to save it to your private shortlist.</p>
           <Link to="/" className="btn-architectural btn-primary">

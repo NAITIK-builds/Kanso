@@ -1,5 +1,6 @@
 import React from 'react';
 import { useKanso } from '../context/KansoContext';
+import { IconClose } from './Icons';
 
 export default function ReservationsModal() {
   const {
@@ -32,7 +33,7 @@ export default function ReservationsModal() {
             onClick={() => setIsReservationsOpen(false)}
             aria-label="Close modal"
           >
-            ✕
+            <IconClose size={16} />
           </button>
         </div>
 
