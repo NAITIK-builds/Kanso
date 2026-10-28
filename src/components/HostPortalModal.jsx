@@ -10,6 +10,7 @@ export default function HostPortalModal() {
     reservations,
     dispatchDigitalKey,
     setIsAddListingOpen,
+    setEditingListing,
     setDetailSanctuaryId,
     currentUser
   } = useKanso();
@@ -34,7 +35,10 @@ export default function HostPortalModal() {
               <button
                 type="button"
                 className="btn-architectural btn-primary"
-                onClick={() => setIsAddListingOpen(true)}
+                onClick={() => {
+                  setEditingListing(null);
+                  setIsAddListingOpen(true);
+                }}
               >
                 + Post a Room
               </button>
@@ -113,7 +117,18 @@ export default function HostPortalModal() {
                       {item.rating} ({item.reviewsCount} reviews)
                     </span>
                   </div>
-                  <div className="host-listing-actions">
+                  <div className="host-listing-actions" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                    <button
+                      type="button"
+                      className="btn-architectural btn-sm btn-primary"
+                      onClick={() => {
+                        setIsHostPortalOpen(false);
+                        setEditingListing(item);
+                        setIsAddListingOpen(true);
+                      }}
+                    >
+                      Edit / Photos
+                    </button>
                     <button
                       type="button"
                       className="btn-architectural btn-sm btn-secondary"

@@ -10,6 +10,7 @@ export default function HostPortalPage() {
     reservations,
     dispatchDigitalKey,
     setIsAddListingOpen,
+    setEditingListing,
     currentUser,
     setAuthModalState,
     logoutUser
@@ -72,7 +73,10 @@ export default function HostPortalPage() {
         <button
           type="button"
           className="btn-architectural btn-primary"
-          onClick={() => setIsAddListingOpen(true)}
+          onClick={() => {
+            setEditingListing(null);
+            setIsAddListingOpen(true);
+          }}
         >
           <span>+ Post a Room</span>
         </button>
@@ -225,12 +229,25 @@ export default function HostPortalPage() {
                       <strong>₹{item.price.toLocaleString('en-IN')}</strong>
                       <span>/ night</span>
                     </div>
-                    <Link
-                      to={`/sanctuary/${item.id}`}
-                      className="btn-architectural btn-secondary btn-sm"
-                    >
-                      View Live
-                    </Link>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <button
+                        type="button"
+                        className="btn-architectural btn-primary btn-sm"
+                        style={{ padding: '6px 14px', fontSize: '12px' }}
+                        onClick={() => {
+                          setEditingListing(item);
+                          setIsAddListingOpen(true);
+                        }}
+                      >
+                        Edit / Photos
+                      </button>
+                      <Link
+                        to={`/sanctuary/${item.id}`}
+                        className="btn-architectural btn-secondary btn-sm"
+                      >
+                        View Live
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>

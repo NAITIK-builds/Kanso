@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useKanso } from '../context/KansoContext';
 import { IconClose } from './Icons';
+import ImageUploader from './ImageUploader';
 
 const AMENITY_OPTIONS = [
   'Attached Bath',
@@ -16,7 +17,16 @@ const AMENITY_OPTIONS = [
 ];
 
 export default function AddListingModal() {
-  const { isAddListingOpen, setIsAddListingOpen, createListing, currentUser } = useKanso();
+  const {
+    isAddListingOpen,
+    setIsAddListingOpen,
+    createListing,
+    updateListing,
+    editingListing,
+    setEditingListing,
+    currentUser,
+    showToast
+  } = useKanso();
 
   const [title, setTitle] = useState('');
   const [type, setType] = useState('Private Room');
@@ -26,9 +36,8 @@ export default function AddListingModal() {
   const [guests, setGuests] = useState('1');
   const [tenantPreference, setTenantPreference] = useState('Any (Working Professional)');
   const [specs, setSpecs] = useState('Queen Bed · Attached Bath · Balcony · 220 sq.ft');
-  const [coverImg, setCoverImg] = useState(
-    'https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1200&q=80'
-  );
+  const [coverImg, setCoverImg] = useState('');
+  const [gallery, setGallery] = useState([]);
   const [narrative, setNarrative] = useState('');
   const [selectedAmenities, setSelectedAmenities] = useState([
     'Attached Bath',
@@ -37,9 +46,61 @@ export default function AddListingModal() {
     'Furnished',
     'Work Desk'
   ]);
+  const [validationError, setValidationError] = useState('');
+
+  // Sync state whenever editingListing or modal visibility changes
+  useEffect(() => {
+    if (editingListing) {
+      setTitle(editingListing.title || '');
+      setType(editingListing.type || 'Private Room');
+      setRegion(editingListing.region || 'Bangalore');
+      setLocation(editingListing.location || '');
+      setPrice(String(editingListing.price || '14500'));
+      setGuests(String(editingListing.guests || '1'));
+      setTenantPreference(editingListing.tenantPreference || 'Any (Working Professional)');
+      setSpecs(editingListing.specs?.replace(/^\d+\s+Tenant\(s\)\s*·\s*/, '') || 'Queen Bed · Attached Bath · Balcony · 220 sq.ft');
+      setCoverImg(editingListing.coverImg || '');
+      setGallery(Array.isArray(editingListing.gallery) ? editingListing.gallery : (editingListing.coverImg ? [editingListing.coverImg] : []));
+      setNarrative(editingListing.narrative || '');
+      setSelectedAmenities(Array.isArray(editingListing.amenities) ? editingListing.amenities : [
+        'Attached Bath',
+        'High-Speed WiFi',
+        'Air Conditioning',
+        'Furnished',
+        'Work Desk'
+      ]);
+      setValidationError('');
+    } else {
+      // Defaults for brand new listing
+      setTitle('');
+      setType('Private Room');
+      setRegion('Bangalore');
+      setLocation('');
+      setPrice('14500');
+      setGuests('1');
+      setTenantPreference('Any (Working Professional)');
+      setSpecs('Queen Bed · Attached Bath · Balcony · 220 sq.ft');
+      setCoverImg('');
+      setGallery([]);
+      setNarrative('');
+      setSelectedAmenities([
+        'Attached Bath',
+        'High-Speed WiFi',
+        'Air Conditioning',
+        'Furnished',
+        'Work Desk'
+      ]);
+      setValidationError('');
+    }
+  }, [editingListing, isAddListingOpen]);
 
   // Do not render or allow if user is logged in as seeking home/guest
   if (!isAddListingOpen || currentUser?.role === 'guest') return null;
+
+  const handleClose = () => {
+    setIsAddListingOpen(false);
+    if (setEditingListing) setEditingListing(null);
+  };
 
   const handleAmenityToggle = (amenity) => {
     setSelectedAmenities((prev) =>
@@ -49,9 +110,27 @@ export default function AddListingModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !location.trim() || !narrative.trim()) return;
+    setValidationError('');
 
-    createListing({
+    if (!title.trim()) {
+      setValidationError('Please enter a room title.');
+      return;
+    }
+    if (!location.trim()) {
+      setValidationError('Please specify the neighborhood or area.');
+      return;
+    }
+    if (!coverImg) {
+      setValidationError('Please upload at least one room photo or select a preset room photo.');
+      if (showToast) showToast('Please upload at least one room photo.', 'bed');
+      return;
+    }
+    if (!narrative.trim()) {
+      setValidationError('Please provide a brief room description and flat rules.');
+      return;
+    }
+
+    const listingPayload = {
       title: title.trim(),
       type,
       region,
@@ -62,28 +141,45 @@ export default function AddListingModal() {
       tenantPreference,
       specs: `${guests} Tenant(s) · ${specs}`,
       coverImg: coverImg.trim(),
+      gallery: gallery.length > 0 ? gallery : [coverImg.trim()],
       narrative: narrative.trim(),
       amenities: selectedAmenities
-    });
+    };
+
+    if (editingListing && updateListing) {
+      updateListing(editingListing.id, listingPayload);
+    } else {
+      createListing(listingPayload);
+    }
   };
 
   return (
-    <div className="modal-backdrop" onClick={() => setIsAddListingOpen(false)}>
+    <div className="modal-backdrop" onClick={handleClose}>
       <div className="modal-box modal-lg" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <div>
-            <span className="modal-tag">ROOM SUBMISSION // ZERO BROKERAGE</span>
-            <h3 className="modal-title">Post a Room for Rent</h3>
+            <span className="modal-tag">
+              {editingListing ? 'ROOM MANAGEMENT // UPDATE LISTING' : 'ROOM SUBMISSION // ZERO BROKERAGE'}
+            </span>
+            <h3 className="modal-title">
+              {editingListing ? 'Edit Room Listing & Photos' : 'Post a Room for Rent'}
+            </h3>
           </div>
           <button
             type="button"
             className="modal-close-btn"
-            onClick={() => setIsAddListingOpen(false)}
+            onClick={handleClose}
             aria-label="Close modal"
           >
             <IconClose size={18} />
           </button>
         </div>
+
+        {validationError && (
+          <div className="form-error-alert" style={{ margin: '16px 24px 0', padding: '12px 16px', borderRadius: '8px', background: 'rgba(184, 83, 50, 0.1)', border: '1px solid var(--accent-earth, #b85332)', color: 'var(--accent-earth, #b85332)', fontSize: '13px', fontWeight: 500 }}>
+            ⚠️ {validationError}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="modal-body form-grid">
           <div className="form-group span-2">
@@ -94,7 +190,10 @@ export default function AddListingModal() {
               required
               placeholder="e.g. Sunlit Master Bedroom with Private Balcony"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={(e) => {
+                setTitle(e.target.value);
+                if (validationError) setValidationError('');
+              }}
             />
           </div>
 
@@ -142,7 +241,10 @@ export default function AddListingModal() {
               required
               placeholder="e.g. Swaroop Nagar, Kakadeo, or Indiranagar"
               value={location}
-              onChange={(e) => setLocation(e.target.value)}
+              onChange={(e) => {
+                setLocation(e.target.value);
+                if (validationError) setValidationError('');
+              }}
             />
           </div>
 
@@ -197,17 +299,19 @@ export default function AddListingModal() {
             />
           </div>
 
+          {/* UPGRADED IMAGE UPLOADER COMPONENT - USER CAN UPLOAD PHOTOS DIRECTLY */}
           <div className="form-group span-2">
-            <label htmlFor="listingImage">Cover Image URL (Clean Bedroom Photo) *</label>
-            <input
-              type="url"
-              id="listingImage"
-              required
-              placeholder="https://images.unsplash.com/..."
-              value={coverImg}
-              onChange={(e) => setCoverImg(e.target.value)}
+            <ImageUploader
+              coverImg={coverImg}
+              gallery={gallery}
+              onChange={({ coverImg: newCover, gallery: newGallery }) => {
+                setCoverImg(newCover);
+                setGallery(newGallery);
+                if (validationError) setValidationError('');
+              }}
+              required={true}
+              label="Room Photographs"
             />
-            <span className="field-hint">Defaults to a verified room photograph. You can paste any valid image URL.</span>
           </div>
 
           <div className="form-group span-2">
@@ -218,7 +322,10 @@ export default function AddListingModal() {
               required
               placeholder="Describe ventilation, sunlight, study desk, attached washroom, flatmates, and kitchen access..."
               value={narrative}
-              onChange={(e) => setNarrative(e.target.value)}
+              onChange={(e) => {
+                setNarrative(e.target.value);
+                if (validationError) setValidationError('');
+              }}
             ></textarea>
           </div>
 
@@ -242,12 +349,12 @@ export default function AddListingModal() {
             <button
               type="button"
               className="btn-text"
-              onClick={() => setIsAddListingOpen(false)}
+              onClick={handleClose}
             >
               Cancel
             </button>
             <button type="submit" className="btn-architectural btn-primary">
-              Post Room Listing
+              {editingListing ? 'Save Listing Changes' : 'Post Room Listing'}
             </button>
           </div>
         </form>

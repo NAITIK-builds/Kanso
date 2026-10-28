@@ -128,6 +128,7 @@ export function RentalProvider({ children }) {
   const [isAmenitiesModalOpen, setIsAmenitiesModalOpen] = useState(false);
   const [authModalState, setAuthModalState] = useState(null);
   const [isQuickSearchOpen, setIsQuickSearchOpen] = useState(false);
+  const [editingListing, setEditingListing] = useState(null);
 
   // 8. Toast State
   const [toast, setToast] = useState({ show: false, message: '', symbol: 'sparkle' });
@@ -280,12 +281,16 @@ export function RentalProvider({ children }) {
 
   const createListing = (newListing) => {
     const id = `rm-${Date.now().toString().slice(-4)}`;
+    const gallery = Array.isArray(newListing.gallery) && newListing.gallery.length > 0
+      ? newListing.gallery
+      : (newListing.coverImg ? [newListing.coverImg] : []);
+
     const listingWithDefaults = {
       id,
       reviewsCount: 0,
       rating: 5.0,
       reviews: [],
-      gallery: [newListing.coverImg, newListing.coverImg],
+      gallery,
       host: {
         name: currentUser?.name || "Room Owner / Host",
         initials: currentUser?.initials || "RO",
@@ -293,12 +298,42 @@ export function RentalProvider({ children }) {
         bio: "Providing clean, verified room rentals and peaceful shared living.",
         verified: true
       },
-      ...newListing
+      ...newListing,
+      coverImg: newListing.coverImg || gallery[0] || ''
     };
 
     setListings((prev) => [listingWithDefaults, ...prev]);
     showToast(`"${newListing.title}" published live for tenants!`, 'bed');
     setIsAddListingOpen(false);
+    setEditingListing(null);
+  };
+
+  const updateListing = (id, updatedFields) => {
+    setListings((prev) =>
+      prev.map((item) => {
+        if (item.id === id) {
+          const gallery = Array.isArray(updatedFields.gallery) && updatedFields.gallery.length > 0
+            ? updatedFields.gallery
+            : (updatedFields.coverImg ? [updatedFields.coverImg] : item.gallery);
+
+          return {
+            ...item,
+            ...updatedFields,
+            gallery,
+            coverImg: updatedFields.coverImg || gallery[0] || item.coverImg
+          };
+        }
+        return item;
+      })
+    );
+    showToast(`Listing updated successfully!`, 'check');
+    setIsAddListingOpen(false);
+    setEditingListing(null);
+  };
+
+  const deleteListing = (id) => {
+    setListings((prev) => prev.filter((item) => item.id !== id));
+    showToast(`Room listing removed from catalog.`, 'check');
   };
 
   const addReview = (propertyId, review) => {
@@ -410,6 +445,10 @@ export function RentalProvider({ children }) {
         updateReservationStatus,
         dispatchDigitalKey,
         createListing,
+        updateListing,
+        deleteListing,
+        editingListing,
+        setEditingListing,
         addReview,
         sendInquiry,
         loginUser,
