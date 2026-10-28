@@ -74,9 +74,9 @@ export const SEED_ROOMS = [
     guests: 1,
     tenantPreference: "Competitive Exam Aspirants / Students / Solo Tenancy",
     specs: "Solo Furnished Room · Attached Bathroom · Ergonomic Study Station · 190 sq.ft · 11-mo lease",
-    coverImg: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+    coverImg: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
     gallery: [
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80"
     ],
     narrative: "Designed specifically for serious aspirants preparing for NEET, JEE, and Civil Services in Kakadeo. Sound-insulated windows, wide ergonomic wooden study desk with comfortable study chair, book shelving, bed with orthopedic mattress, attached ensuite with geyser, and peaceful study hours enforced.",
@@ -414,9 +414,9 @@ export const SEED_ROOMS = [
     guests: 1,
     tenantPreference: "IT Professional / Graduate Engineer",
     specs: "Private High-Rise Bedroom · Ensuite Bath · Society Amenities · 220 sq.ft · 11-mo lease",
-    coverImg: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+    coverImg: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80",
     gallery: [
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80"
     ],
     narrative: "14th floor bedroom inside a premium gated apartment community in Whitefield. Features expansive skyline views, private attached bathroom, high-speed fiber line, 100% DG power backup, Olympic clubhouse gym, and swimming pool. Walk straight to the metro station.",
@@ -756,9 +756,9 @@ export const SEED_ROOMS = [
     guests: 1,
     tenantPreference: "IT Professional / Graduate Engineer",
     specs: "Furnished Bedroom · Attached Ensuite · Work Station · 220 sq.ft · 11-mo lease",
-    coverImg: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+    coverImg: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
     gallery: [
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80"
     ],
     narrative: "Located in Hinjawadi Phase 1, eliminating the notorious Hinjawadi bridge traffic completely. Fully furnished with study table, queen bed with storage, attached bath with instant geyser, refrigerator, washing machine, and 24/7 power backup.",

@@ -1389,43 +1389,127 @@ button {
   background: linear-gradient(135deg, #A8492A 0%, #8C3A1E 100%);
 }
 
-/* Regional Quick Jump Pills */
+/* Regional Quick Jump Local Area Filter */
 .hero-micro-pills {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  margin-top: 4px;
 }
 
-.micro-label {
-  font-size: 0.75rem;
+.micro-pills-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 2px;
+}
+
+.micro-pills-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--accent-moss);
   font-weight: 700;
+  user-select: none;
+}
+
+.micro-pills-icon {
+  color: var(--accent-earth, #b85332);
+  flex-shrink: 0;
+}
+
+.micro-pills-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.micro-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--bg-surface-elevated, #ffffff);
+  border: 1px solid var(--line-hairline, rgba(0, 0, 0, 0.12));
+  color: var(--ink-secondary, #555555);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.micro-nav-btn:hover {
+  background-color: var(--accent-moss, #2a3b2e);
+  border-color: var(--accent-moss, #2a3b2e);
+  color: #ffffff;
+  transform: scale(1.08);
+}
+
+.micro-nav-btn:active {
+  transform: scale(0.92);
+}
+
+.pills-scroll-track {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  padding: 2px 2px 6px 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  mask-image: linear-gradient(to right, black 0%, black calc(100% - 32px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 0%, black calc(100% - 32px), transparent 100%);
+}
+
+.pills-scroll-track::-webkit-scrollbar {
+  display: none;
 }
 
 .micro-pill {
-  font-size: 0.8rem;
+  flex-shrink: 0;
+  font-size: 0.77rem;
   font-weight: 600;
-  padding: 7px 16px;
-  background-color: var(--bg-surface-elevated);
-  border: 1.5px solid var(--line-hairline);
-  border-radius: var(--radius-pill);
-  color: var(--ink-secondary);
-  transition: var(--transition-smooth);
+  padding: 6px 14px;
+  background-color: var(--bg-surface-elevated, #ffffff);
+  border: 1px solid var(--line-hairline, rgba(0, 0, 0, 0.1));
+  border-radius: var(--radius-pill, 9999px);
+  color: var(--ink-secondary, #444444);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
 }
 
 .micro-pill:hover {
-  border-color: var(--accent-earth);
-  color: var(--accent-earth);
+  border-color: var(--accent-earth, #b85332);
+  color: var(--accent-earth, #b85332);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(184, 83, 50, 0.12);
 }
 
 .micro-pill.active {
-  background-color: var(--accent-moss);
-  color: #fff;
-  border-color: var(--accent-moss);
-  box-shadow: 0 3px 10px rgba(42, 59, 46, 0.25);
+  background-color: var(--accent-moss, #2a3b2e);
+  color: #ffffff;
+  border-color: var(--accent-moss, #2a3b2e);
+  box-shadow: 0 2px 8px rgba(42, 59, 46, 0.25);
+  transform: translateY(-1px);
 }
 
 /* Right Column: Architectural Exhibition Frame (Arched Warm Clay) */

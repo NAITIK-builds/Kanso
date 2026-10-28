@@ -48,13 +48,26 @@ export function RentalProvider({ children }) {
     try {
       const savedVersion = localStorage.getItem('rental_room_version') || localStorage.getItem('kanso_room_version');
       const saved = localStorage.getItem('rental_listings') || localStorage.getItem('kanso_listings');
-      if (saved && savedVersion === 'local_rooms_2026_kanpur_v1') {
+      if (saved && savedVersion === 'local_rooms_2026_kanpur_v2') {
         const parsed = JSON.parse(saved);
         if (parsed?.length && parsed[0]?.localArea) {
-          return parsed;
+          return parsed.map((item) => {
+            if (item.coverImg && item.coverImg.includes('photo-1540518614846-7ede433c4ef3')) {
+              return {
+                ...item,
+                coverImg: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80',
+                gallery: (item.gallery || []).map((g) =>
+                  g.includes('photo-1540518614846-7ede433c4ef3')
+                    ? 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80'
+                    : g
+                )
+              };
+            }
+            return item;
+          });
         }
       }
-      localStorage.setItem('rental_room_version', 'local_rooms_2026_kanpur_v1');
+      localStorage.setItem('rental_room_version', 'local_rooms_2026_kanpur_v2');
       localStorage.setItem('rental_listings', JSON.stringify(SEED_SANCTUARIES));
       return SEED_SANCTUARIES;
     } catch {

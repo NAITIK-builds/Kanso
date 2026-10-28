@@ -20,7 +20,7 @@ const CURATED_ROOM_PRESETS = [
     id: 'preset-3',
     title: 'Executive Master Suite',
     type: 'Attached Bath',
-    url: 'https://images.unsplash.com/photo-1540518614846-7ede433c4ef3?auto=format&fit=crop&w=1200&q=80'
+    url: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80'
   },
   {
     id: 'preset-4',
