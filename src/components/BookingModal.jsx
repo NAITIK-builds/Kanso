@@ -95,11 +95,14 @@ export default function BookingModal() {
   return (
     <div className="modal-backdrop" onClick={handleClose}>
       <div className="modal-box modal-ticket" onClick={(e) => e.stopPropagation()}>
-        {/* Room Pass Header */}
+        {/* Mobile pull indicator bar */}
+        <div className="modal-sheet-pull" aria-hidden="true" />
+
+        {/* Room Pass Header - Pinned at top */}
         <div className="ticket-header">
           <div className="ticket-brand">
             <span className="ticket-brand-mark">RR</span>
-            <div>
+            <div className="ticket-brand-text">
               <strong>RENTAL HOUSE FINDER</strong>
               <span>ROOM LEASE SLIP · कमरा टोकन</span>
             </div>
@@ -116,19 +119,19 @@ export default function BookingModal() {
 
         {/* View 1: Booking Form */}
         {!activeReceipt ? (
-          <div id="bookingFormView">
+          <form onSubmit={handleSubmit} className="booking-modal-form">
             <div className="ticket-body">
               <div className="ticket-property-preview">
                 <img src={sanctuary.coverImg} alt={sanctuary.title} />
-                <div>
+                <div className="ticket-preview-text">
                   <span className="ticket-cat">{sanctuary.type.toUpperCase()} · {sanctuary.region.toUpperCase()}</span>
                   <h3>{sanctuary.title}</h3>
-                  <span>{sanctuary.location}</span>
+                  <span className="ticket-loc">{sanctuary.location}</span>
                 </div>
               </div>
 
               {/* Form */}
-              <form onSubmit={handleSubmit} className="ticket-inputs-grid">
+              <div className="ticket-inputs-grid">
                 <div className="form-group">
                   <label htmlFor="bookMoveIn">Move-in Date *</label>
                   <input
@@ -232,25 +235,33 @@ export default function BookingModal() {
                     <span>Room Hold Token Amount (Payable Now)</span>
                     <span className="total-amount">₹{tokenAdvance.toLocaleString('en-IN')}</span>
                   </div>
-                  <p style={{ fontSize: '11px', color: 'var(--ink-tertiary)', marginTop: '4px' }}>
+                  <p className="ticket-token-note">
                     * Token amount is 100% credited against your 1st month rent upon room handover.
                   </p>
                 </div>
-
-                <div className="modal-footer span-2">
-                  <button type="button" className="btn-text" onClick={handleClose}>
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn-architectural btn-primary">
-                    Hold Room & Issue Reservation Slip
-                  </button>
-                </div>
-              </form>
+              </div>
             </div>
-          </div>
+
+            {/* Pinned Sticky Footer Action Bar */}
+            <div className="modal-ticket-footer">
+              <div className="footer-token-breakdown">
+                <span className="footer-token-label">Token Payable Now</span>
+                <span className="footer-token-amount">₹{tokenAdvance.toLocaleString('en-IN')}</span>
+              </div>
+              <div className="footer-action-buttons">
+                <button type="button" className="btn-text footer-cancel-btn" onClick={handleClose}>
+                  Cancel
+                </button>
+                <button type="submit" className="btn-architectural btn-primary footer-submit-btn">
+                  <span>Hold Room & Issue Slip</span>
+                  <span className="footer-btn-arrow">→</span>
+                </button>
+              </div>
+            </div>
+          </form>
         ) : (
           /* View 2: Generated Room Slip Receipt */
-          <div id="bookingReceiptView">
+          <div id="bookingReceiptView" className="ticket-receipt-scroll-wrap">
             <div className="ticket-receipt" id="printableTicketReceipt">
               {/* Header strip */}
               <div className="receipt-header-strip">

@@ -3308,147 +3308,363 @@ button {
 /* ==========================================================================
    THE KANSO RESERVATION SLIP WITH PHYSICAL NOTCHES (WARM BOARDING PASS)
    ========================================================================== */
+.modal-box.modal-ticket {
+  max-width: 580px;
+  width: 100%;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: var(--bg-surface-elevated, #FFFDF9);
+  border: 1.5px solid var(--line-strong, #D9CCB8);
+  box-shadow: var(--shadow-overlay);
+  position: relative;
+}
+
+.modal-sheet-pull {
+  display: none;
+}
+
 .ticket-header {
-  padding: 20px 26px;
+  padding: 16px 22px;
   background: linear-gradient(135deg, var(--accent-moss) 0%, #1A261D 100%);
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 20px 20px 0 0;
+  border-radius: 18px 18px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  flex-shrink: 0;
 }
 
 .ticket-brand {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  min-width: 0;
 }
 
 .ticket-brand-mark {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background-color: var(--accent-earth);
   color: #fff;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   letter-spacing: 0.06em;
   border-radius: 10px 4px 10px 4px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
-.ticket-brand strong {
+.ticket-brand-text strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  letter-spacing: 0.08em;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  white-space: nowrap;
 }
 
-.ticket-brand span {
-  font-size: 0.7rem;
+.ticket-brand-text span {
+  font-size: 0.65rem;
   color: #C5D4C9;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-top: 2px;
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(1.06);
+}
+
+.booking-modal-form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .ticket-body {
-  padding: 26px;
+  padding: 20px 24px;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
 }
 
 .ticket-property-preview {
   display: flex;
-  gap: 16px;
+  gap: 14px;
   align-items: center;
-  padding: 16px;
-  background-color: var(--bg-surface);
+  padding: 12px 14px;
+  background-color: var(--bg-surface, #FBF7F0);
   border: 1.5px solid var(--line-hairline);
-  border-radius: var(--radius-organic);
-  margin-bottom: 22px;
+  border-radius: var(--radius-organic, 14px);
+  margin-bottom: 18px;
 }
 
 .ticket-property-preview img {
-  width: 76px;
-  height: 76px;
+  width: 68px;
+  height: 68px;
   object-fit: cover;
-  border-radius: 12px 4px 12px 4px;
+  border-radius: 10px 4px 10px 4px;
+  flex-shrink: 0;
+}
+
+.ticket-preview-text {
+  min-width: 0;
 }
 
 .ticket-cat {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   letter-spacing: 0.12em;
   color: var(--accent-earth);
   font-weight: 800;
   text-transform: uppercase;
+  display: block;
 }
 
 .ticket-property-preview h3 {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
+  font-family: var(--font-display);
   margin: 2px 0;
+  line-height: 1.25;
+  color: var(--ink-primary);
 }
 
-.ticket-property-preview span {
-  font-size: 0.82rem;
+.ticket-preview-text .ticket-loc {
+  font-size: 0.78rem;
   color: var(--ink-secondary);
+  display: block;
 }
 
 .ticket-inputs-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
-/* Calculation & Perforation with Notches */
+.ticket-inputs-grid .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ticket-inputs-grid label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-primary);
+  letter-spacing: 0.02em;
+}
+
+.ticket-inputs-grid input,
+.ticket-inputs-grid select {
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  border-radius: 10px;
+  border: 1.5px solid var(--line-hairline, rgba(0, 0, 0, 0.12));
+  background: var(--bg-surface-elevated, #fff);
+  color: var(--ink-primary);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ticket-inputs-grid input:focus,
+.ticket-inputs-grid select:focus {
+  outline: none;
+  border-color: var(--accent-earth);
+  box-shadow: 0 0 0 3px rgba(184, 83, 50, 0.12);
+}
+
+/* Calculation Box with Protected Containment */
 .ticket-calculation {
-  background-color: var(--bg-subtle);
-  border: 1.5px solid var(--line-strong);
-  border-radius: var(--radius-organic);
-  padding: 20px 24px;
-  margin-top: 10px;
+  background-color: var(--bg-subtle, #f5efe6);
+  border: 1.5px solid var(--line-strong, #d9ccb8);
+  border-radius: 14px;
+  padding: 16px 20px;
+  margin-top: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .calc-row {
   display: flex;
   justify-content: space-between;
-  font-size: 0.88rem;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 0.85rem;
   color: var(--ink-secondary);
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
+}
+
+.calc-row span:first-child {
+  flex: 1;
+  line-height: 1.35;
+}
+
+.calc-row span:last-child {
+  flex-shrink: 0;
+  text-align: right;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .perforated-line {
-  border-top: 1.5px dashed var(--accent-earth);
-  margin: 14px 0;
+  border-top: 1.5px dashed var(--accent-earth, #b85332);
+  margin: 10px 0;
   position: relative;
+  opacity: 0.65;
 }
-
-.perforated-line::before,
-.perforated-line::after {
-  content: "";
-  position: absolute;
-  top: -9px;
-  width: 18px;
-  height: 18px;
-  background-color: var(--bg-canvas);
-  border-radius: 50%;
-  border: 1.5px solid var(--line-strong);
-}
-
-.perforated-line::before { left: -33px; }
-.perforated-line::after { right: -33px; }
 
 .calc-row.total-row {
-  margin-bottom: 0;
-  font-size: 1.1rem;
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.calc-row.total-row span:first-child {
+  font-size: 0.92rem;
   font-weight: 800;
   color: var(--ink-primary);
+  line-height: 1.25;
 }
 
 .total-amount {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.45rem;
   font-weight: 700;
-  color: var(--accent-earth);
+  color: var(--accent-earth, #B85332);
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: -0.02em;
+}
+
+.ticket-token-note {
+  font-size: 0.7rem;
+  color: var(--ink-tertiary);
+  margin-top: 4px;
+  line-height: 1.35;
+}
+
+/* Pinned Sticky Footer */
+.modal-ticket-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  flex-shrink: 0;
+  background-color: var(--bg-surface-elevated, #FFFDF9);
+  border-top: 1.5px solid var(--line-hairline, rgba(0, 0, 0, 0.1));
+  padding: 14px 24px max(14px, env(safe-area-inset-bottom, 14px));
+  box-shadow: 0 -4px 16px rgba(28, 25, 23, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer-token-breakdown {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.footer-token-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--accent-moss, #2A3B2E);
+}
+
+.footer-token-amount {
+  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--accent-earth, #B85332);
+  line-height: 1.1;
+}
+
+.footer-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-cancel-btn {
+  padding: 8px 12px;
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-pill);
+}
+
+.footer-submit-btn {
+  padding: 12px 22px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: var(--radius-pill);
+  background: var(--accent-earth, #B85332);
+  color: #fff !important;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(184, 83, 50, 0.28);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.footer-submit-btn:hover {
+  background-color: #9E4325;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(184, 83, 50, 0.35);
+}
+
+.footer-btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+.footer-submit-btn:hover .footer-btn-arrow {
+  transform: translateX(3px);
+}
+
+.ticket-receipt-scroll-wrap {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
 }
 
 /* Generated Boarding Pass Receipt */
@@ -4423,12 +4639,13 @@ html, body {
 @media (max-width: 900px) {
   /* Navbar Header Switch */
   .site-header {
-    height: 70px;
+    height: 64px;
   }
 
   .header-inner {
-    height: 70px;
+    height: 64px;
     padding: 0 16px;
+    gap: 10px;
   }
 
   .nav-search {
@@ -4441,21 +4658,54 @@ html, body {
 
   .nav-mobile-actions {
     display: flex !important;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-mobile-actions .nav-icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--line-hairline, rgba(0, 0, 0, 0.1));
+    background-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .brand-emblem {
+    gap: 10px;
+    min-width: 0;
   }
 
   .brand-monogram {
-    width: 38px;
-    height: 38px;
-    font-size: 1.15rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+
+  .brand-text {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .brand-name {
-    font-size: 1.2rem;
+    font-size: clamp(0.9rem, 3.6vw, 1.12rem);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .brand-sub {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   /* Detail Page Grid */
@@ -7832,18 +8082,38 @@ html, body {
   box-sizing: border-box;
 }
 
-/* 4. Mobile Top Ribbon Overflow Prevention */
-@media (max-width: 640px) {
+/* 4. Mobile Top Ribbon */
+@media (max-width: 768px) {
   .top-ribbon {
+    padding: 6px 0;
     overflow: hidden;
   }
   .ribbon-coords,
-  .ribbon-text {
+  .ribbon-sub-text,
+  .ribbon-tag-vol {
     display: none !important;
   }
   .ribbon-content {
     justify-content: center;
-    padding: 0 12px;
+    padding: 0 14px;
+    gap: 8px;
+  }
+  .ribbon-tag {
+    padding: 2px 8px;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+  }
+  .ribbon-text {
+    display: inline-flex !important;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ribbon-main-text {
+    display: inline !important;
   }
 }
 
@@ -7928,66 +8198,198 @@ html, body {
 
 /* 8. Booking Modal Ticket Responsiveness */
 @media (max-width: 640px) {
-  .modal-box.modal-ticket {
-    width: 94% !important;
-    max-width: 94% !important;
-    max-height: 92vh !important;
+  .modal-backdrop {
     padding: 0 !important;
-    margin: 16px auto;
-    overflow-y: auto;
-    border-radius: 18px !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    overflow-y: hidden !important;
   }
+
+  .modal-box.modal-ticket {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92dvh !important;
+    max-height: 92vh !important;
+    border-radius: 24px 24px 0 0 !important;
+    margin: 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    animation: sheetSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+  }
+
+  .modal-sheet-pull {
+    display: block !important;
+    width: 44px;
+    height: 4.5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.5);
+    margin: 8px auto 4px;
+    flex-shrink: 0;
+  }
+
   .ticket-header {
-    padding: 14px 16px;
+    padding: 10px 16px 14px !important;
+    border-radius: 24px 24px 0 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    flex-shrink: 0 !important;
   }
+
+  .ticket-brand-mark {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.82rem !important;
+  }
+
+  .ticket-brand-text strong {
+    font-size: 0.95rem !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .ticket-brand-text span {
+    font-size: 0.6rem !important;
+  }
+
+  .modal-close-btn {
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .booking-modal-form {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 !important;
+    overflow: hidden !important;
+    min-height: 0 !important;
+  }
+
   .ticket-body {
-    padding: 16px 14px;
+    padding: 14px 16px !important;
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-height: 0 !important;
   }
+
+  .ticket-property-preview {
+    padding: 10px 12px !important;
+    gap: 12px !important;
+    margin-bottom: 14px !important;
+    border-radius: 12px !important;
+  }
+
+  .ticket-property-preview img {
+    width: 58px !important;
+    height: 58px !important;
+  }
+
+  .ticket-cat {
+    font-size: 0.64rem !important;
+  }
+
+  .ticket-property-preview h3 {
+    font-size: 1rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .ticket-preview-text .ticket-loc {
+    font-size: 0.74rem !important;
+  }
+
   .ticket-inputs-grid {
     grid-template-columns: 1fr !important;
-    gap: 12px;
+    gap: 12px !important;
   }
+
   .ticket-inputs-grid .form-group.span-2,
   .ticket-inputs-grid .ticket-calculation.span-2 {
     grid-column: span 1 !important;
   }
-  .ticket-hero-preview {
-    flex-direction: row;
-    gap: 12px;
-    padding: 10px 12px;
+
+  .ticket-inputs-grid input,
+  .ticket-inputs-grid select {
+    padding: 10px 12px !important;
+    font-size: 0.88rem !important;
+    min-height: 44px !important;
   }
-  .ticket-hero-thumb {
-    width: 64px;
-    height: 64px;
-    flex-shrink: 0;
-  }
-  .ticket-hero-info h4 {
-    font-size: 0.95rem;
-    line-height: 1.3;
-  }
+
   .ticket-calculation {
-    padding: 12px 14px;
+    padding: 14px 16px !important;
+    margin-top: 10px !important;
+    border-radius: 12px !important;
   }
+
   .calc-row {
-    font-size: 0.82rem;
+    font-size: 0.82rem !important;
+    margin-bottom: 6px !important;
   }
-  .calc-row.total-row {
-    font-size: 0.95rem;
+
+  .calc-row.total-row span:first-child {
+    font-size: 0.88rem !important;
   }
+
+  .total-amount {
+    font-size: 1.35rem !important;
+  }
+
+  .modal-ticket-footer {
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom, 12px)) !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 20 !important;
+    flex-shrink: 0 !important;
+  }
+
+  .footer-token-label {
+    font-size: 0.62rem !important;
+  }
+
+  .footer-token-amount {
+    font-size: 1.15rem !important;
+  }
+
+  .footer-cancel-btn {
+    display: none !important;
+  }
+
+  .footer-submit-btn {
+    padding: 11px 18px !important;
+    font-size: 0.88rem !important;
+  }
+
+  .ticket-receipt-scroll-wrap {
+    padding: 0 !important;
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
   .ticket-receipt {
-    padding: 16px 14px;
+    padding: 16px 14px !important;
   }
+
   .receipt-meta-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
   }
+
   .receipt-actions {
-    flex-direction: column;
-    width: 100%;
+    flex-direction: column !important;
+    width: 100% !important;
   }
+
   .receipt-actions .btn-architectural {
-    width: 100%;
-    justify-content: center;
+    width: 100% !important;
+    justify-content: center !important;
   }
 
   /* Amenities Filter Modal */
